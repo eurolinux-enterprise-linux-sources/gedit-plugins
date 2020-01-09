@@ -1,0 +1,409 @@
+commit 8bb4196bf95a051246f54e2ac1096d122939432b
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:   2009-09-26
+
+    Release 2.28.0
+
+M	NEWS
+M	README
+M	configure.ac
+
+commit 7a2302b1765c9cda4678fae194d52af7a7af5d29
+Author: Yavor Doganov <yavor@gnu.org>
+Date:	2009-09-20
+
+    Updated Bulgarian translation
+
+M	po/bg.po
+
+commit aa5f3c85beeabd72fa53fdaa3a21bff00414f2c1
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-08-24
+
+    Release 2.27.1
+
+M	NEWS
+M	README
+M	configure.ac
+
+commit d25564c72e76427120c7bf0cbf6fca1fa81f9baa
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-08-23
+
+    Remember the bookmarks using metadata.
+
+    Save the bookmarks when a file is saved using the metadata system
+    provided by gio. Fixes bug #592497
+
+M	plugins/bookmarks/gedit-bookmarks-plugin.c
+
+commit b96ef6b64bad0574d89a481e7073be7a957593c4
+Author: Tomasz Dominikowski <dominikowski@gmail.com>
+Date:	2009-08-20
+
+    Updated Polish translation
+
+M	po/pl.po
+
+commit 72db45606d94bec3e6b4dc9fc994f293a9eee428
+Author: Ani <peter.ani@gmail.com>
+Date:	2009-08-17
+
+    Updated Malayalam translations
+
+M	po/ml.po
+
+commit 37e819e279120ff60109d2e74a58b5e1d831e8fa
+Author: Khaled Hosny <khaledhosny@eglug.org>
+Date:	2009-08-01
+
+    Updated Arabic translation
+
+M	po/ar.po
+
+commit c71ae7a81332379baa80266627104fc537e586f9
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-08-01
+
+    remove executable bit
+
+M	po/ne.po
+
+commit afcccb1a73fdf3764c82b78fedb57bd7e85da139
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-07-26
+
+    Release 2.26.3
+
+M	NEWS
+M	configure.ac
+
+commit 7173b157a8cc78c069a65336bbc38438f5a48407
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-07-26
+
+    Grab focus in the terminal widget
+
+M	plugins/terminal/terminal.py
+
+commit a178771b7d755d7aa11f74eea4b82bf130a1f799
+Author: root <root@murdock.localdomain>
+Date:	2009-07-19
+
+    Grab focus on the terminal on right-click
+
+M	plugins/terminal/terminal.py
+
+commit c0babfb1b83421da6f77af6550121ed4f2403002
+Author: A S Alam <aalam@users.sf.net>
+Date:	2009-07-03
+
+    Updating translation for Punjabi
+
+M	po/pa.po
+
+commit a8c805d57d4cf20fe8d206a7ff5615cd1e17ad09
+Author: Manoj Kumar Giri <mgiri@mgiri.csb>
+Date:	2009-06-29
+
+    Updated Oriya Translation
+
+M	po/or.po
+
+commit 910309a78aee2154f1102d4a5eff85adc848a87e
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-06-27
+
+    Enable silent build with modern automake
+
+M	configure.ac
+
+commit 558071dde8f1448616b88aeedc22e25c29cb7f4b
+Author: Konstantin Lukaschenko <k.lukaschenko@gmail.com>
+Date:	2009-06-24
+
+    Focus terminal after popup menu click. Bug #586847.
+
+M	plugins/terminal/terminal.py
+
+commit a3ed56626eb8a5379594d576e3b7abea7fc8d165
+Author: Runa Bhattacharjee <runab@redhat.com>
+Date:	2009-06-18
+
+    Added Bengali India (bn_IN) to the list of languages
+
+M	po/LINGUAS
+
+commit 329948bd3cd74a9b891e25919941ea809984febd
+Author: Runa Bhattacharjee <runab@redhat.com>
+Date:	2009-06-18
+
+    Adding new translations for Bengali India
+
+A	po/bn_IN.po
+
+commit beed7920f01275bbc4e46a5fbc5a9300e730127e
+Author: Martin Willi <martin@strongswan.org>
+Date:	2009-06-17
+
+    disable drawspaces plugin in deactivate for specific window only
+
+M	plugins/drawspaces/gedit-drawspaces-plugin.c
+
+commit 6628ab2cb8ac222eed8c98d81584725cd0de0f31
+Author: Shankar Prasad <svenkate@redhat.com>
+Date:	2009-06-17
+
+    Updated Kannada translations
+
+M	po/kn.po
+
+commit 952213d92e6599f8c8f8a35605eecef3094e741a
+Author: Amitakhya Phukan <amitakhya@git.gnome.org>
+Date:	2009-06-16
+
+    Added as to LINGUAS
+
+M	po/LINGUAS
+
+commit a647a9ca2510ea4e9de1f9c11d26b4bc1178b3b4
+Author: Amitakhya Phukan <amitakhya@git.gnome.org>
+Date:	2009-06-16
+
+    Updated Assamese translations
+
+A	po/as.po
+
+commit 2e5b81ecc91638a3c4dcd9ad95c74abae1a0a2db
+Author: ifelix <ifelix@redhat.com>
+Date:	2009-06-10
+
+    Tamil translation updated
+
+M	po/ChangeLog
+M	po/ta.po
+
+commit 0432822c9536968b8d3c37a674a65381bba47803
+Author: ifelix <ifelix@redhat.com>
+Date:	2009-06-10
+
+    Tamil translation updated
+
+M	po/ta.po
+
+commit cac02c2c947d677d52c3a450a41f16093ceb3dd5
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-05-23
+
+    Removed glade files.
+
+D	plugins/drawspaces/drawspaces.glade
+D	plugins/sessionsaver/sessionsaver.glade
+M	po/POTFILES.skip
+
+commit 0034f447793cfe7c6a633f8764af9a405004cb35
+Author: Antón Méixome <meixome@mancomun.org>
+Date:	2009-05-22
+
+    Updated Galician Translation.
+
+M	po/gl.po
+
+commit 0975aeec15434eba75b06b6ab7910d955907f2ee
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-05-17
+
+    Get the changelog from 2_26_1 instead of 2_26_2.
+
+M	Makefile.am
+
+commit 822ca722941a7d3c5024f40179193068c6b3db54
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-05-17
+
+    Release 2.26.2
+
+A	ChangeLog
+M	INSTALL
+M	Makefile.am
+M	NEWS
+M	README
+M	configure.ac
+
+commit c81b95108d9f21ee36c25cd2daa49ea9435e2bb7
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-05-05
+
+    Add git.mk to generate automatically the .gitignore file.
+
+M	Makefile.am
+A	git.mk
+M	plugins/Makefile.am
+M	plugins/bookmarks/Makefile.am
+M	plugins/bracketcompletion/Makefile.am
+M	plugins/charmap/Makefile.am
+M	plugins/codecomment/Makefile.am
+M	plugins/colorpicker/Makefile.am
+M	plugins/drawspaces/Makefile.am
+M	plugins/joinlines/Makefile.am
+M	plugins/sessionsaver/Makefile.am
+M	plugins/showtabbar/Makefile.am
+M	plugins/smartspaces/Makefile.am
+M	plugins/terminal/Makefile.am
+
+commit cbfceab5672f7d32237791aa7605e3b969cde4a9
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-05-01
+
+    Fix bug #580594
+
+    Properly disconnect the signal handler when deactivating the plugin
+
+M	plugins/drawspaces/gedit-drawspaces-plugin.c
+
+commit a7addf8bed5d3f65179af4822a23cbda614d658d
+Author: Sweta Kothari <swkothar@redhat.com>
+Date:	2009-04-27
+
+    Committed gu.po file
+
+M	po/gu.po
+
+commit b0336175db5bb753557658b91114967383ce720a
+Author: Mickaël Delahaye <mickael.delahaye@gmail.com>
+Date:	2009-04-20
+
+    Fix terminal plugin
+
+    Bug #579448
+    The 'Change directory' command of the terminal's popup menu used to
+    change the current directory to the parent of the parent directory
+    of the file being edited instead of the parent directory.
+
+M	plugins/terminal/terminal.py
+
+commit 0393f182a9b536b9d688e3df14ddc05c4710ee40
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-18
+
+    Whitespace cleanup
+
+    Whitespace cleanup in charmap panel
+
+M	plugins/charmap/gedit-charmap-panel.c
+
+commit f0183f826c8763949d7ef00d228d8bc0f8ab7d42
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-18
+
+    Fix compiler warnings
+
+    Fix compiler warnings in the charmap panel
+
+M	plugins/charmap/gedit-charmap-panel.c
+
+commit 0eb723542dafebd1cdd3f6e3516206596442d73e
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-18
+
+    Some Cleanups
+
+    Fix some compiler warnings and refactor code a bit
+
+M	plugins/bookmarks/gedit-bookmarks-plugin.c
+
+commit 42979aae56fa2ec78c825c772b0e957c63df7227
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-18
+
+    Remove some cruft from configure.ac
+
+    Remove unneeded lines
+
+D	ChangeLog
+M	configure.ac
+M	plugins/Makefile.am
+
+commit 47c647b2dde470613d907ab3bbb3e69d5e48bade
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-18
+
+    Autogenerate ChangeLog
+
+    Archive old ChangeLog and autogenerate it from the git log
+
+M	ChangeLog
+C100	ChangeLog	ChangeLog-20090414
+M	Makefile.am
+
+commit 3963115e862b36c93aaf1cee35ed90fc21e2fd48
+Author: Ignacio Casal Quinteiro <icq@gnome.org>
+Date:	2009-04-18
+
+    Removed GNOME_DOC_INIT.
+
+    We don't have a help directory so this is useless in the module.
+
+M	configure.ac
+
+commit b4209d82d35085b2b1991eef3f1d07c8f7ecb42b
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-17
+
+    Make xml well formed
+
+    Fix typo that made the doap file not well formed xml
+
+M	gedit-plugins.doap
+
+commit 9dc3687a67963fe8edc5b260e6fc78438afff285
+Author: Paolo Borelli <porelli@gnome.org>
+Date:	2009-04-17
+
+    Add gedit-plugins.doap
+
+    Add doap file used by cgit
+
+A	gedit-plugins.doap
+
+commit 0e20692ae96b25994f3258e4701c7c14406019e1
+Author: Paolo Borelli <pborelli@src.gnome.org>
+Date:	2009-04-11
+
+    fix warnings
+
+    svn path=/trunk/; revision=460
+
+M	plugins/drawspaces/gedit-drawspaces-plugin.c
+
+commit d7c615ef376ee9dac5a51ed812afb832d1cefb5a
+Author: Paolo Borelli <pborelli@src.gnome.org>
+Date:	2009-04-11
+
+    2.26.1
+
+    svn path=/trunk/; revision=458
+
+M	ChangeLog
+M	NEWS
+M	README
+M	configure.ac
+M	po/ChangeLog
+
+commit a2ce4166f9f41383c90aab65bd35a50c53abb381
+Author: Ignacio Casal Quinteiro <nacho.resa@gmail.com>
+Date:	2009-03-31
+
+    Draw spaces should be enabled first time the plugin is activated.
+
+    2009-03-31	Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
+
+	    * plugins/drawspaces/gedit-drawspaces-plugin.c:
+	    Draw spaces should be enabled first time the plugin is
+    activated.
+
+
+    svn path=/trunk/; revision=457
+
+M	ChangeLog
+M	plugins/drawspaces/gedit-drawspaces-plugin.c
