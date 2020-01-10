@@ -12,7 +12,7 @@
 
 Name:           gedit-plugins
 Version:        3.14.1
-Release:        2%{?dist}
+Release:        5%{?dist}
 Summary:        Plugins for gedit
 
 Group:          Applications/Editors
@@ -21,6 +21,8 @@ URL:            http://live.gnome.org/GeditPlugins
 Source0:        http://download.gnome.org/sources/%{name}/3.14/%{name}-%{version}.tar.xz
 Patch0:         gedit-plugins-disable-python3.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1239247
+Patch1: iter.get_char-returns-bytes-of-UTF-8-encoded-text.patch
 BuildRequires:  gedit-devel
 BuildRequires:  gnome-doc-utils
 BuildRequires:  gucharmap-devel
@@ -90,6 +92,7 @@ The gedit bookmarks plugin.
 %package -n     gedit-plugin-bracketcompletion
 Summary:        gedit bracketcompletion plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-bracketcompletion
 The gedit bracketcompletion plugin.
 
@@ -97,30 +100,35 @@ The gedit bracketcompletion plugin.
 Summary:        gedit charmap plugin
 Requires:       %{name}-data = %{version}-%{release}
 Requires:       gucharmap >= 2.33.2-6.fc15
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-charmap
 The gedit charmap plugin.
 
 %package -n     gedit-plugin-codecomment
 Summary:        gedit codecomment plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-codecomment
 The gedit codecomment plugin.
 
 %package -n     gedit-plugin-colorpicker
 Summary:        gedit colorpicker plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-colorpicker
 The gedit colorpicker plugin.
 
 %package -n     gedit-plugin-colorschemer
 Summary:        gedit colorschemer plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-colorschemer
 The gedit colorschemer plugin.
 
 %package -n     gedit-plugin-commander
 Summary:        gedit commander plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-commander
 The gedit commander plugin.
 
@@ -128,6 +136,7 @@ The gedit commander plugin.
 %package -n     gedit-plugin-dashboard
 Summary:        gedit dashboard plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-dashboard
 The gedit dashboard plugin.
 %endif
@@ -141,24 +150,28 @@ The gedit drawspaces plugin.
 %package -n     gedit-plugin-joinlines
 Summary:        gedit joinlines plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-joinlines
 The gedit joinlines plugin.
 
 %package -n     gedit-plugin-multiedit
 Summary:        gedit multiedit plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-multiedit
 The gedit multiedit plugin.
 
 %package -n     gedit-plugin-smartspaces
 Summary:        gedit smartspaces plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-smartspaces
 The gedit smartspaces plugin.
 
 %package -n     gedit-plugin-synctex
 Summary:        gedit synctex plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-synctex
 The gedit synctex plugin.
 
@@ -166,12 +179,14 @@ The gedit synctex plugin.
 Summary:        gedit terminal plugin
 Requires:       %{name}-data = %{version}-%{release}
 Requires:       vte291
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-terminal
 The gedit terminal plugin.
 
 %package -n     gedit-plugin-textsize
 Summary:        gedit textsize plugin
 Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-textsize
 The gedit textsize plugin.
 
@@ -196,6 +211,7 @@ The gedit zeitgeist plugin.
 %if !%{with_python3}
 %patch0 -p1 -b .disable-python3
 %endif
+%patch1 -p1 -b .iter-bytes
 
 %build
 aclocal
@@ -345,6 +361,18 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %endif
 
 %changelog
+* Mon Aug 01 2016 Ray Strode <rstrode@redhat.com> - 3.14.1-5
+- Updated patch from Matej Cepl for python3→python2
+  Resolves: #1360916
+
+* Tue Apr 12 2016 Ray Strode <rstrode@redhat.com> - 3.14.1-4
+- Require pygobject3 3.14
+  Resolves: #1293069
+
+* Wed Apr  7 2016 Matthias Clasen <mclasen@redhat.,com> 3.14.1-3
+- Fix a crash in text iter use
+  Resolves: #1239247
+
 * Thu Jun 25 2015 Ray Strode <rstrode@redhat.com> 3.14.1-2
 - Updated python2 support patch from Matěj Cepl
   Related: #1230752

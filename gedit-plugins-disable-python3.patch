@@ -279,3 +279,25 @@
  
          self._sw.get_vscrollbar().get_style_context().add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
  
+--- a/plugins/multiedit/multiedit/signals.py
++++ b/plugins/multiedit/multiedit/signals.py
+@@ -19,7 +19,7 @@
+ #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ #  Boston, MA 02110-1301, USA.
+ 
+-class Signals:
++class Signals(object):
+     def __init__(self):
+         self._signals = {}
+ 
+--- a/plugins/textsize/textsize/signals.py
++++ b/plugins/textsize/textsize/signals.py
+@@ -19,7 +19,7 @@
+ #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ #  Boston, MA 02110-1301, USA.
+ 
+-class Signals:
++class Signals(object):
+     def __init__(self):
+         self._signals = {}
+ 
