@@ -1,0 +1,281 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -126,7 +126,7 @@ AM_CONDITIONAL([ENABLE_ZEITGEIST], test
+ # ================================================================
+ if test "x$enable_python" = "xyes"
+ then
+-	AM_PATH_PYTHON(3)
++	AM_PATH_PYTHON
+ 	PLUGINS="$PLUGINS $PY_PLUGINS"
+ 
+ 	# ================================================================
+--- a/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in
++++ b/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=bracketcompletion
+ IAge=3
+ _Name=Bracket Completion
+--- a/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
++++ b/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=bracketcompletion
+ IAge=3
+ _Name=Bracket Completion
+--- a/plugins/charmap/charmap.plugin.desktop.in
++++ b/plugins/charmap/charmap.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=charmap
+ IAge=3
+ _Name=Character Map
+--- a/plugins/charmap/charmap.plugin.desktop.in.in
++++ b/plugins/charmap/charmap.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=charmap
+ IAge=3
+ _Name=Character Map
+--- a/plugins/codecomment/codecomment.plugin.desktop.in
++++ b/plugins/codecomment/codecomment.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=codecomment
+ IAge=3
+ _Name=Code Comment
+--- a/plugins/codecomment/codecomment.plugin.desktop.in.in
++++ b/plugins/codecomment/codecomment.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=codecomment
+ IAge=3
+ _Name=Code Comment
+--- a/plugins/colorpicker/colorpicker.plugin.desktop.in
++++ b/plugins/colorpicker/colorpicker.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=colorpicker
+ IAge=3
+ _Name=Color Picker
+--- a/plugins/colorpicker/colorpicker.plugin.desktop.in.in
++++ b/plugins/colorpicker/colorpicker.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=colorpicker
+ IAge=3
+ _Name=Color Picker
+--- a/plugins/colorschemer/colorschemer.plugin.desktop.in
++++ b/plugins/colorschemer/colorschemer.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=colorschemer
+ IAge=3
+ _Name=Color Scheme Editor
+--- a/plugins/colorschemer/colorschemer.plugin.desktop.in.in
++++ b/plugins/colorschemer/colorschemer.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=colorschemer
+ IAge=3
+ _Name=Color Scheme Editor
+--- a/plugins/commander/commander.plugin.desktop.in
++++ b/plugins/commander/commander.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=commander
+ IAge=3
+ _Name=Commander
+--- a/plugins/commander/commander.plugin.desktop.in.in
++++ b/plugins/commander/commander.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=commander
+ IAge=3
+ _Name=Commander
+--- a/plugins/dashboard/dashboard.plugin.desktop.in
++++ b/plugins/dashboard/dashboard.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=dashboard
+ IAge=3
+ _Name=Dashboard
+--- a/plugins/dashboard/dashboard.plugin.desktop.in.in
++++ b/plugins/dashboard/dashboard.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=dashboard
+ IAge=3
+ _Name=Dashboard
+--- a/plugins/joinlines/joinlines.plugin.desktop.in
++++ b/plugins/joinlines/joinlines.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=joinlines
+ IAge=3
+ _Name=Join/Split Lines
+--- a/plugins/joinlines/joinlines.plugin.desktop.in.in
++++ b/plugins/joinlines/joinlines.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=joinlines
+ IAge=3
+ _Name=Join/Split Lines
+--- a/plugins/multiedit/multiedit.plugin.desktop.in
++++ b/plugins/multiedit/multiedit.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=multiedit
+ IAge=3
+ _Name=Multi Edit
+--- a/plugins/multiedit/multiedit.plugin.desktop.in.in
++++ b/plugins/multiedit/multiedit.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=multiedit
+ IAge=3
+ _Name=Multi Edit
+--- a/plugins/smartspaces/smartspaces.plugin.desktop.in
++++ b/plugins/smartspaces/smartspaces.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=smartspaces
+ IAge=3
+ _Name=Smart Spaces
+--- a/plugins/smartspaces/smartspaces.plugin.desktop.in.in
++++ b/plugins/smartspaces/smartspaces.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=smartspaces
+ IAge=3
+ _Name=Smart Spaces
+--- a/plugins/synctex/synctex.plugin.desktop.in
++++ b/plugins/synctex/synctex.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=synctex
+ IAge=3
+ _Name=SyncTeX
+--- a/plugins/synctex/synctex.plugin.desktop.in.in
++++ b/plugins/synctex/synctex.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=synctex
+ IAge=3
+ _Name=SyncTeX
+--- a/plugins/terminal/terminal.plugin.desktop.in
++++ b/plugins/terminal/terminal.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=terminal
+ IAge=3
+ _Name=Embedded Terminal
+--- a/plugins/terminal/terminal.plugin.desktop.in.in
++++ b/plugins/terminal/terminal.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=terminal
+ IAge=3
+ _Name=Embedded Terminal
+--- a/plugins/textsize/textsize.plugin.desktop.in
++++ b/plugins/textsize/textsize.plugin.desktop.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=textsize
+ IAge=3
+ _Name=Text Size
+--- a/plugins/textsize/textsize.plugin.desktop.in.in
++++ b/plugins/textsize/textsize.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=textsize
+ IAge=3
+ _Name=Text Size
+--- a/plugins/commander/commander/entry.py
++++ b/plugins/commander/commander/entry.py
+@@ -89,7 +89,7 @@ class Entry(Gtk.Box):
+ 
+     def _setup_keybindings(self):
+         css = Gtk.CssProvider()
+-        css.load_from_data(bytes("""
++        css.load_from_data("""
+ @binding-set terminal-like-bindings {
+     unbind "<Control>A";
+ 
+@@ -110,7 +110,7 @@ GtkEntry#gedit-commander-entry {
+     border: 0;
+ }
+ 
+-""", 'utf-8'))
++""")
+ 
+         self._entry.get_style_context().add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+ 
+--- a/plugins/commander/commander/info.py
++++ b/plugins/commander/commander/info.py
+@@ -93,11 +93,11 @@ class Info(Gtk.Box):
+         self._sw.set_border_width(6)
+ 
+         css = Gtk.CssProvider()
+-        css.load_from_data(bytes("""
++        css.load_from_data("""
+ .trough {
+     background: transparent;
+ }
+-""", 'utf-8'))
++""")
+ 
+         self._sw.get_vscrollbar().get_style_context().add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+ 
