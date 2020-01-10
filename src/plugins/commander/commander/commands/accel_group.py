@@ -124,4 +124,4 @@ class AccelGroup:
 
         return name
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

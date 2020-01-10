@@ -26,4 +26,4 @@ class Execute(Exception):
     def __str__(self):
         return self.msg
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

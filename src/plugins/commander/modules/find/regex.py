@@ -145,7 +145,7 @@ class SemanticFinder(RegexFinder):
         ret = []
 
         for i in range(len(groups)):
-            ri = i // 2
+            ri = i / 2
 
             if i % 2 == 0:
                 if ri >= len(self.replaceparts):
@@ -255,4 +255,4 @@ Find and replace semantically"""
     fd = SemanticFinder(entry)
     yield fd.replace(findstr, True, replstr)
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

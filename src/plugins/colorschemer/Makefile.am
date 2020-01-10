@@ -1,16 +1,22 @@
-if ENABLE_PYTHON
-plugins_schemerdir = $(plugindir)/colorschemer
-plugins_schemer_PYTHON =				\
-	plugins/colorschemer/schemer/__init__.py	\
-	plugins/colorschemer/schemer/languages.py	\
-	plugins/colorschemer/schemer/schemer.py
+# colorschemer
 
-plugins_schemer_uidir = $(GEDIT_PLUGINS_DATA_DIR)/colorschemer/ui
-dist_plugins_schemer_ui_DATA = plugins/colorschemer/schemer.ui
+SUBDIRS = schemer
 
-plugin_in_files += plugins/colorschemer/colorschemer.plugin.desktop.in
-appstream_in_files += plugins/colorschemer/gedit-colorschemer.metainfo.xml.in
-else
-dist_plugin_in_files += plugins/colorschemer/colorschemer.plugin.desktop.in
-dist_appstream_in_files += plugins/colorschemer/gedit-colorschemer.metainfo.xml.in
-endif
+plugindir = $(GEDIT_PLUGINS_LIBS_DIR)
+
+plugin_in_files = colorschemer.plugin.desktop.in
+
+%.plugin: %.plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po)
+	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+plugin_DATA = $(plugin_in_files:.plugin.desktop.in=.plugin)
+
+EXTRA_DIST = $(plugin_in_files)
+
+CLEANFILES = $(plugin_DATA)
+
+DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk
+
+

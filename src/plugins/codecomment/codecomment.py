@@ -21,121 +21,84 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
-import gi
-gi.require_version('Gtk', '3.0')
-gi.require_version('GtkSource', '3.0')
-from gi.repository import GObject, Gio, Gtk, GtkSource, Gedit
+from gi.repository import GObject, Gtk, GtkSource, Gedit
+import copy
+import gettext
 from gpdefs import *
 
 try:
-    import gettext
-    gettext.bindtextdomain('gedit-plugins')
-    gettext.textdomain('gedit-plugins')
-    _ = gettext.gettext
+    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
+    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s);
 except:
     _ = lambda s: s
 
 # If the language is listed here we prefer block comments over line comments.
 # Maybe this list should be user configurable, but just C comes to my mind...
 block_comment_languages = [
-    'c', 'chdr'
+    'c',
 ]
 
-class CodeCommentAppActivatable(GObject.Object, Gedit.AppActivatable):
+ui_str = """
+<ui>
+  <menubar name="MenuBar">
+    <menu name="EditMenu" action="Edit">
+      <placeholder name="EditOps_4">
+            <menuitem name="Comment" action="CodeComment"/>
+            <menuitem name="Uncomment" action="CodeUncomment"/>
+      </placeholder>
+    </menu>
+  </menubar>
+</ui>
+"""
 
-    app = GObject.Property(type=Gedit.App)
+class CodeCommentPlugin(GObject.Object, Gedit.WindowActivatable):
+    __gtype_name__ = "CodeCommentPlugin"
+
+    window = GObject.property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
 
     def do_activate(self):
-        self.app.add_accelerator("<Primary>M", "win.comment", None)
-        self.app.add_accelerator("<Primary><Shift>M", "win.uncomment", None)
+        self._insert_menu()
 
     def do_deactivate(self):
-        self.app.remove_accelerator("win.comment", None)
-        self.app.remove_accelerator("win.uncomment", None)
-
-class CodeCommentWindowActivatable(GObject.Object, Gedit.WindowActivatable):
-
-    window = GObject.Property(type=Gedit.Window)
-
-    def __init__(self):
-        GObject.Object.__init__(self)
-
-    def do_activate(self):
-        action = Gio.SimpleAction(name="comment")
-        action.connect('activate', lambda a, p: self.do_comment())
-        self.window.add_action(action)
-
-        action = Gio.SimpleAction(name="uncomment")
-        action.connect('activate', lambda a, p: self.do_comment(True))
-        self.window.add_action(action)
-
-    def do_deactivate(self):
-        self.window.remove_action("comment")
-        self.window.remove_action("uncomment")
+        self._remove_menu()
 
     def do_update_state(self):
         sensitive = False
-        view = self.window.get_active_view()
-        if view and hasattr(view, "code_comment_view_activatable"):
-            sensitive = view.code_comment_view_activatable.doc_has_comment_tags()
-
-        self.window.lookup_action('comment').set_enabled(sensitive)
-        self.window.lookup_action('uncomment').set_enabled(sensitive)
-
-    def do_comment(self, unindent=False):
-        view = self.window.get_active_view()
-        if view and view.code_comment_view_activatable:
-            view.code_comment_view_activatable.do_comment(view.get_buffer(), unindent)
-
-class CodeCommentViewActivatable(GObject.Object, Gedit.ViewActivatable):
-
-    view = GObject.Property(type=Gedit.View)
-
-    def __init__(self):
-        self.popup_handler_id = 0
-        GObject.Object.__init__(self)
-
-    def do_activate(self):
-        self.view.code_comment_view_activatable = self
-        self.popup_handler_id = self.view.connect('populate-popup', self.populate_popup)
-
-    def do_deactivate(self):
-        if self.popup_handler_id != 0:
-            self.view.disconnect(self.popup_handler_id)
-            self.popup_handler_id = 0
-        delattr(self.view, "code_comment_view_activatable")
-
-    def populate_popup(self, view, popup):
-        if not isinstance(popup, Gtk.MenuShell):
-            return
-
-        item = Gtk.SeparatorMenuItem()
-        item.show()
-        popup.append(item)
-
-        item = Gtk.MenuItem.new_with_mnemonic(_("Co_mment Code"))
-        item.set_sensitive(self.doc_has_comment_tags())
-        item.show()
-        item.connect('activate', lambda i: self.do_comment(view.get_buffer()))
-        popup.append(item)
-
-        item = Gtk.MenuItem.new_with_mnemonic(_('U_ncomment Code'))
-        item.set_sensitive(self.doc_has_comment_tags())
-        item.show()
-        item.connect('activate', lambda i: self.do_comment(view.get_buffer(), True))
-        popup.append(item)
-
-    def doc_has_comment_tags(self):
-        has_comment_tags = False
-        doc = self.view.get_buffer()
+        doc = self.window.get_active_document()
         if doc:
             lang = doc.get_language()
             if lang is not None:
-                has_comment_tags = self.get_comment_tags(lang) != (None, None)
-        return has_comment_tags
+                sensitive = self.get_comment_tags(lang) != (None, None)
+        self._action_group.set_sensitive(sensitive)
+
+    def _remove_menu(self):
+        manager = self.window.get_ui_manager()
+        manager.remove_ui(self._ui_id)
+        manager.remove_action_group(self._action_group)
+        manager.ensure_update()
+
+    def _insert_menu(self):
+        manager = self.window.get_ui_manager()
+        self._action_group = Gtk.ActionGroup(name="GeditCodeCommentPluginActions")
+        self._action_group.add_actions([("CodeComment",
+                                         None,
+                                         _("Co_mment Code"),
+                                         "<control>M",
+                                         _("Comment the selected code"),
+                                         lambda a, w: self.do_comment (w.get_active_document())),
+                                        ('CodeUncomment',
+                                         None,
+                                         _('U_ncomment Code'),
+                                         "<control><shift>M",
+                                         _("Uncomment the selected code"),
+                                         lambda a, w: self.do_comment (w.get_active_document(), True))],
+                                        self.window)
+
+        manager.insert_action_group(self._action_group)
+        self._ui_id = manager.add_ui_from_string(ui_str)
 
     def get_block_comment_tags(self, lang):
         start_tag = lang.get_metadata('block-comment-start')

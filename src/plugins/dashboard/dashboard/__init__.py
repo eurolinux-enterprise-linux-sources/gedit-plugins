@@ -19,16 +19,12 @@
 #
 #
 
-import gi
-gi.require_version('Gedit', '3.0')
-gi.require_version('Zeitgeist', '2.0')
 from gi.repository import GObject, Gedit
 from .dashboard import Dashboard
 
-
 class DashboardWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
-    window = GObject.Property(type=Gedit.Window)
+    window = GObject.property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -76,7 +72,7 @@ class DashboardWindowActivatable(GObject.Object, Gedit.WindowActivatable):
                 tab.get_children()[0].hide()
                 d = Dashboard(self.window, show_doc)
                 tab.pack_start(d, True, True, 0)
-                doc.connect("loaded", lambda doc: show_doc())
+                doc.connect("loaded", lambda x, y: show_doc())
                 d.search.set_receives_default(True)
                 self.window.set_default(d.search)
                 d.search.grab_focus()

@@ -29,14 +29,6 @@ import urllib
 import dbus
 import datetime
 
-try:
-    import gettext
-    gettext.bindtextdomain('gedit-plugins')
-    gettext.textdomain('gedit-plugins')
-    _ = gettext.gettext
-except:
-    _ = lambda s: s
-
 CLIENT = Zeitgeist.Log.get_default()
 
 try:
@@ -147,15 +139,15 @@ class DashView(Gtk.Box):
 class SearchEntry(Gtk.Entry):
 
     __gsignals__ = {
-        "clear": (GObject.SignalFlags.RUN_FIRST,
-                  GObject.TYPE_NONE,
-                  ()),
-        "search": (GObject.SignalFlags.RUN_FIRST,
+        "clear": (GObject.SIGNAL_RUN_FIRST,
                    GObject.TYPE_NONE,
-                   (GObject.TYPE_STRING,)),
-        "close": (GObject.SignalFlags.RUN_FIRST,
-                  GObject.TYPE_NONE,
-                  ()),
+                   ()),
+        "search": (GObject.SIGNAL_RUN_FIRST,
+                    GObject.TYPE_NONE,
+                    (GObject.TYPE_STRING,)),
+        "close": (GObject.SIGNAL_RUN_FIRST,
+                   GObject.TYPE_NONE,
+                   ()),
     }
 
     search_timeout = 0
@@ -163,7 +155,7 @@ class SearchEntry(Gtk.Entry):
     def __init__(self, accel_group = None):
         Gtk.Entry.__init__(self)
         self.set_width_chars(40)
-        self.set_placeholder_text(_("Type here to search…"))
+        self.set_placeholder_text(_("Type here to search..."))
         self.connect("changed", lambda w: self._queue_search())
 
         search_icon =\
@@ -335,7 +327,7 @@ class Dashboard (Gtk.Box):
         print("Dashboard search for:", query)
         result_type_relevancy = 100
         self.template = Zeitgeist.Event()
-        self.template.set_property("actor", "application://org.gnome.gedit.desktop")
+        self.template.set_property("actor", "application://gedit.desktop")
         timerange = Zeitgeist.TimeRange.anytime()
         ZG_FTS.search(query + "*",
             timerange,
@@ -355,7 +347,7 @@ class Dashboard (Gtk.Box):
 
     def get_recent(self):
         template = Zeitgeist.Event()
-        template.set_property("actor", "application://org.gnome.gedit.desktop")
+        template.set_property("actor", "application://gedit.desktop")
         CLIENT.find_events(
             Zeitgeist.TimeRange.anytime(),
             [template],
@@ -369,7 +361,7 @@ class Dashboard (Gtk.Box):
     def get_frequent(self, log, res, data):
         events = CLIENT.find_events_finish(res)
         template = Zeitgeist.Event()
-        template.set_property("actor", "application://org.gnome.gedit.desktop")
+        template.set_property("actor", "application://gedit.desktop")
         now = time.time() * 1000
         # 14 being the amount of days
         # and 86400000 the amount of milliseconds per day

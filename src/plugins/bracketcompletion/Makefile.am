@@ -1,8 +1,15 @@
-if ENABLE_PYTHON
-plugin_PYTHON += plugins/bracketcompletion/bracketcompletion.py
-plugin_in_files += plugins/bracketcompletion/bracketcompletion.plugin.desktop.in
-appstream_in_files += plugins/bracketcompletion/gedit-bracketcompletion.metainfo.xml.in
-else
-dist_plugin_in_files += plugins/bracketcompletion/bracketcompletion.plugin.desktop.in
-dist_appstream_in_files += plugins/bracketcompletion/gedit-bracketcompletion.metainfo.xml.in
-endif
+plugindir = $(GEDIT_PLUGINS_LIBS_DIR)
+plugin_PYTHON = \
+	bracketcompletion.py
+
+plugin_in_files = bracketcompletion.plugin.desktop.in
+%.plugin: %.plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+plugin_DATA = $(plugin_in_files:.plugin.desktop.in=.plugin)
+
+EXTRA_DIST = $(plugin_in_files)
+
+CLEANFILES = $(plugin_DATA)
+DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk

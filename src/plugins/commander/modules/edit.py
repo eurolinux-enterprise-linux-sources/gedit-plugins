@@ -42,7 +42,7 @@ def __default__(filename, view):
     cwd = os.getcwd()
 
     if not doc.is_untitled():
-        cwd = doc.get_file().get_location().get_parent().get_path()
+        cwd = doc.get_location().get_parent().get_path()
     else:
         cwd = os.path.expanduser('~/')
 
@@ -82,10 +82,10 @@ def rename(view, newfile):
     if doc.get_modified():
         raise commander.commands.exceptions.Execute('You have unsaved changes in your document')
 
-    if not doc.get_file().is_local():
+    if not doc.is_local():
         raise commander.commands.exceptions.Execute('You can only rename local files')
 
-    f = doc.get_file().get_location()
+    f = doc.get_location()
 
     if not f.query_exists(None):
         raise commander.commands.exceptions.Execute('Current document file does not exist')
@@ -120,7 +120,7 @@ def rename(view, newfile):
     try:
         f.move(dest, Gio.FileCopyFlags.OVERWRITE, None, _dummy_cb, None)
 
-        doc.get_file().set_location(dest)
+        doc.set_location(dest)
         yield commander.commands.result.HIDE
     except Exception as e:
         raise commander.commands.exceptions.Execute('Could not move file: %s' % (e,))
@@ -201,7 +201,7 @@ def __default__(view, entry):
 Use this to apply the cool new feature\"\"\"
     pass
 
-# ex:ts=4:et
+# vi:ts=4:et
 """
 
 def new_command(view, entry, name):
@@ -238,4 +238,4 @@ def save_all(view):
 locals()['file'] = __default__
 move = rename
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

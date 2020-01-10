@@ -3,18 +3,18 @@
 # This file is distributed under the same license as the gedit-plugins package.
 #
 # Andraž Tori <andraz.tori1@guest.arnes.si>, 2000.
-# Matej Urbančič <mateju@svn.gnome.org>, 2007-2013.
+# Matej Urbančič <mateju@svn.gnome.org>, 2007 - 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gedit-plugins master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gedit&keywords=I18N+L10N&component=Plugins\n"
-"POT-Creation-Date: 2013-10-30 07:13+0000\n"
-"PO-Revision-Date: 2013-11-02 11:45+0100\n"
+"POT-Creation-Date: 2013-04-23 21:59+0000\n"
+"PO-Revision-Date: 2013-04-27 20:34+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
-"Language: sl\n"
+"Language: Slovenian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -74,7 +74,7 @@ msgid "Insert special characters just by clicking on them."
 msgstr "Vstavljanje posebnih znakov le s klikom nanje."
 
 #: ../plugins/codecomment/codecomment.plugin.desktop.in.in.h:1
-msgid "Code Comment"
+msgid "Code comment"
 msgstr "Opomba h kodi"
 
 #: ../plugins/codecomment/codecomment.plugin.desktop.in.in.h:2
@@ -129,58 +129,62 @@ msgid "Source code color scheme editor"
 msgstr "Urejevalnik shem barvnega označevanja kode"
 
 #: ../plugins/colorschemer/schemer/schemer.ui.h:2
+msgid "X"
+msgstr "X"
+
+#: ../plugins/colorschemer/schemer/schemer.ui.h:3
 msgid "Bold"
 msgstr "Krepko"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:3
+#: ../plugins/colorschemer/schemer/schemer.ui.h:4
 msgid "Italic"
 msgstr "Ležeče"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:4
+#: ../plugins/colorschemer/schemer/schemer.ui.h:5
 msgid "Underline"
 msgstr "Podčrtano"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:5
+#: ../plugins/colorschemer/schemer/schemer.ui.h:6
 msgid "Strikethrough"
 msgstr "Prečrtano"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:6
+#: ../plugins/colorschemer/schemer/schemer.ui.h:7
 msgid "Pick the background color"
 msgstr "Izbor barve ozadja"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:7
+#: ../plugins/colorschemer/schemer/schemer.ui.h:8
 msgid "Pick the foreground color"
 msgstr "Izbor barve pisave"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:8
+#: ../plugins/colorschemer/schemer/schemer.ui.h:9
 msgid "_Background"
 msgstr "_Ozadja"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:9
+#: ../plugins/colorschemer/schemer/schemer.ui.h:10
 msgid "_Foreground"
 msgstr "_Pisava"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:10
+#: ../plugins/colorschemer/schemer/schemer.ui.h:11
 msgid "_Clear "
 msgstr "_Počisti"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:11
+#: ../plugins/colorschemer/schemer/schemer.ui.h:12
 msgid "Name"
 msgstr "Ime"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:12
+#: ../plugins/colorschemer/schemer/schemer.ui.h:13
 msgid "ID"
 msgstr "ID"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:13
+#: ../plugins/colorschemer/schemer/schemer.ui.h:14
 msgid "Description"
 msgstr "Opis"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:14
+#: ../plugins/colorschemer/schemer/schemer.ui.h:15
 msgid "Author"
 msgstr "Avtor"
 
-#: ../plugins/colorschemer/schemer/schemer.ui.h:15
+#: ../plugins/colorschemer/schemer/schemer.ui.h:16
 msgid "Sample"
 msgstr "Vzorec"
 
@@ -223,8 +227,8 @@ msgid "Draw Spaces"
 msgstr "Izriši presledne znake"
 
 #: ../plugins/drawspaces/drawspaces.plugin.desktop.in.in.h:2
-msgid "Draw spaces and tabs"
-msgstr "Izriši presledke in tabulatorje"
+msgid "Draw Spaces and Tabs"
+msgstr "Izris presledkov in tabulatorjev"
 
 #: ../plugins/drawspaces/gedit-drawspaces-plugin.c:134
 msgid "Show _White Space"
@@ -274,14 +278,6 @@ msgstr "Izbrana možnost omogoča izrisovanje znakov."
 #: ../plugins/drawspaces/org.gnome.gedit.plugins.drawspaces.gschema.xml.in.in.h:4
 msgid "The type of spaces to be drawn."
 msgstr "Vrsta izrisanih preslednih znakov."
-
-#: ../plugins/git/git.plugin.desktop.in.in.h:1
-msgid "Git"
-msgstr "Git"
-
-#: ../plugins/git/git.plugin.desktop.in.in.h:2
-msgid "Highlight lines that have been changed since the last commit"
-msgstr "Poudari vrstice, ki so bile spremenjene od zadnje uveljavitve"
 
 #: ../plugins/joinlines/joinlines.plugin.desktop.in.in.h:1
 msgid "Join/Split Lines"
@@ -586,25 +582,28 @@ msgstr "Vgrajen terminal"
 msgid "Embed a terminal in the bottom pane."
 msgstr "Vgradi terminal v spodnji pladenj"
 
-#: ../plugins/terminal/terminal.py:316
+#: ../plugins/terminal/terminal.py:262
 msgid "Terminal"
 msgstr "Terminal"
 
-#: ../plugins/terminal/terminal.py:337
+#: ../plugins/terminal/terminal.py:283
 msgid "C_hange Directory"
 msgstr "Spremeni _mapo"
 
 #: ../plugins/textsize/textsize/__init__.py:142
+#| msgid "Large text style"
 msgid "_Larger Text"
-msgstr "_Večja pisava"
+msgstr "_Večje besedilo"
 
 #: ../plugins/textsize/textsize/__init__.py:145
+#| msgid "Small text style"
 msgid "S_maller Text"
-msgstr "_Manjša pisava"
+msgstr "_Manjše besedilo"
 
 #: ../plugins/textsize/textsize/__init__.py:148
+#| msgid "No resize"
 msgid "_Normal size"
-msgstr "_Običajna pisava"
+msgstr "_Običajna velikost"
 
 #. ex:ts=4:et:
 #: ../plugins/textsize/textsize.plugin.desktop.in.in.h:1
@@ -615,33 +614,10 @@ msgstr "Velikost besedila"
 msgid "Easily increase and decrease the text size"
 msgstr "Enostavno prilagajanje velikosti besedila"
 
-#: ../plugins/wordcompletion/gedit-word-completion-configure.ui.h:1
-msgid "Interactive completion"
-msgstr "Odzivno zaključevanje"
-
-#: ../plugins/wordcompletion/gedit-word-completion-configure.ui.h:2
-msgid "Minimum word size:"
-msgstr "Najkrajša velikost besede:"
-
-#: ../plugins/wordcompletion/gedit-word-completion-plugin.c:186
+#: ../plugins/wordcompletion/gedit-word-completion-plugin.c:153
+#: ../plugins/wordcompletion/gedit-word-completion-plugin.c:200
 msgid "Document Words"
 msgstr "Besedilo dokumenta"
-
-#: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:1
-msgid "Interactive Completion"
-msgstr "Odzivno zaključevanje"
-
-#: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:2
-msgid "Whether to enable interactive completion."
-msgstr "Ali naj bo omogočeno odzivno zaključevanje"
-
-#: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:3
-msgid "Minimum Word Size"
-msgstr "Najkrajša velikost besede"
-
-#: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:4
-msgid "The minimum word size to complete."
-msgstr "Najkrajša velikost besede, ki se dopolnjuje."
 
 #: ../plugins/wordcompletion/wordcompletion.plugin.desktop.in.in.h:1
 msgid "Word Completion"
@@ -650,12 +626,6 @@ msgstr "Dopolnjevanje besed"
 #: ../plugins/wordcompletion/wordcompletion.plugin.desktop.in.in.h:2
 msgid "Word completion using the completion framework"
 msgstr "Dopolnjevanje besed z uporabo ogrodja dopolnjevanja"
-
-#~ msgid "Git differences"
-#~ msgstr "Razlike Git"
-
-#~ msgid "X"
-#~ msgstr "X"
 
 #~ msgid "Scheme Editor"
 #~ msgstr "Urejevalnik sheme"

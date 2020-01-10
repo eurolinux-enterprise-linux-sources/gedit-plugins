@@ -23,7 +23,6 @@
 #endif
 
 #include "gedit-bookmarks-plugin.h"
-#include "gedit-bookmarks-app-activatable.h"
 #include "messages/messages.h"
 
 #include <stdlib.h>
@@ -82,14 +81,11 @@ static void on_begin_user_action		(GtkTextBuffer *buffer,
 static void on_end_user_action			(GtkTextBuffer *buffer,
 						 InsertData    *data);
 
-static void on_toggle_bookmark_activate 	(GAction              *action,
-                                                 GVariant             *parameter,
+static void on_toggle_bookmark_activate 	(GtkAction            *action,
 						 GeditBookmarksPlugin *plugin);
-static void on_next_bookmark_activate 		(GAction              *action,
-                                                 GVariant             *parameter,
+static void on_next_bookmark_activate 		(GtkAction            *action,
 						 GeditBookmarksPlugin *plugin);
-static void on_previous_bookmark_activate 	(GAction              *action,
-                                                 GVariant             *parameter,
+static void on_previous_bookmark_activate 	(GtkAction            *action,
 						 GeditBookmarksPlugin *plugin);
 static void on_tab_added 			(GeditWindow          *window,
 						 GeditTab             *tab,
@@ -115,9 +111,8 @@ struct _GeditBookmarksPluginPrivate
 {
 	GeditWindow *window;
 
-	GSimpleAction *action_toggle;
-	GSimpleAction *action_next;
-	GSimpleAction *action_prev;
+	GtkActionGroup *action_group;
+	guint ui_id;
 };
 
 enum
@@ -138,14 +133,20 @@ static void
 gedit_bookmarks_plugin_dispose (GObject *object)
 {
 	GeditBookmarksPlugin *plugin = GEDIT_BOOKMARKS_PLUGIN (object);
-	GeditBookmarksPluginPrivate *priv = plugin->priv;
 
 	gedit_debug_message (DEBUG_PLUGINS, "GeditBookmarksPlugin disposing");
 
-	g_clear_object (&priv->action_toggle);
-	g_clear_object (&priv->action_next);
-	g_clear_object (&priv->action_prev);
-	g_clear_object (&priv->window);
+	if (plugin->priv->action_group != NULL)
+	{
+		g_object_unref (plugin->priv->action_group);
+		plugin->priv->action_group = NULL;
+	}
+
+	if (plugin->priv->window != NULL)
+	{
+		g_object_unref (plugin->priv->window);
+		plugin->priv->window = NULL;
+	}
 
 	G_OBJECT_CLASS (gedit_bookmarks_plugin_parent_class)->dispose (object);
 }
@@ -196,67 +197,93 @@ free_insert_data (InsertData *data)
 	g_slice_free (InsertData, data);
 }
 
+static GtkActionEntry const action_entries[] = {
+	{"ToggleBookmark", NULL, N_("Toggle Bookmark"), "<Control><Alt>B",
+	 N_("Toggle bookmark status of the current line"),
+	 G_CALLBACK (on_toggle_bookmark_activate)},
+	{"NextBookmark", NULL, N_("Goto Next Bookmark"), "<Control>B",
+	 N_("Goto the next bookmark"),
+	 G_CALLBACK (on_next_bookmark_activate)},
+	{"PreviousBookmark", NULL, N_("Goto Previous Bookmark"), "<Control><Shift>B",
+	 N_("Goto the previous bookmark"),
+	 G_CALLBACK (on_previous_bookmark_activate)}
+};
+
+static gchar const uidefinition[] = ""
+"<ui>"
+"  <menubar name='MenuBar'>"
+"    <menu name='EditMenu' action='Edit'>"
+"      <placeholder name='EditOps_6'>"
+"        <menuitem action='ToggleBookmark'/>"
+"        <menuitem action='PreviousBookmark'/>"
+"        <menuitem action='NextBookmark'/>"
+"      </placeholder>"
+"    </menu>"
+"  </menubar>"
+"</ui>";
+
 static void
-install_actions (GeditBookmarksPlugin *plugin)
+install_menu (GeditBookmarksPlugin *plugin)
 {
 	GeditBookmarksPluginPrivate *priv;
+	GtkUIManager *manager;
+	GError *error = NULL;
 
 	priv = plugin->priv;
 
-	priv->action_toggle = g_simple_action_new ("bookmark-toggle", NULL);
-	g_signal_connect (priv->action_toggle, "activate",
-	                  G_CALLBACK (on_toggle_bookmark_activate), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->window),
-	                         G_ACTION (priv->action_toggle));
+	manager = gedit_window_get_ui_manager (priv->window);
+	priv->action_group = gtk_action_group_new ("GeditBookmarksPluginActions");
 
-	priv->action_next = g_simple_action_new ("bookmark-next", NULL);
-	g_signal_connect (priv->action_next, "activate",
-	                  G_CALLBACK (on_next_bookmark_activate), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->window),
-	                         G_ACTION (priv->action_next));
+	gtk_action_group_set_translation_domain (priv->action_group,
+						 GETTEXT_PACKAGE);
 
-	priv->action_prev = g_simple_action_new ("bookmark-prev", NULL);
-	g_signal_connect (priv->action_prev, "activate",
-	                  G_CALLBACK (on_previous_bookmark_activate), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->window),
-	                         G_ACTION (priv->action_prev));
+	gtk_action_group_add_actions (priv->action_group,
+				      action_entries,
+				      G_N_ELEMENTS (action_entries),
+				      plugin);
+
+	gtk_ui_manager_insert_action_group (manager, priv->action_group, -1);
+	priv->ui_id = gtk_ui_manager_add_ui_from_string (manager, uidefinition, -1, &error);
+
+	if (!priv->ui_id)
+	{
+		g_warning ("Could not load UI: %s", error->message);
+		g_error_free (error);
+	}
 }
 
 static void
-uninstall_actions (GeditBookmarksPlugin *plugin)
+uninstall_menu (GeditBookmarksPlugin *plugin)
 {
 	GeditBookmarksPluginPrivate *priv;
+	GtkUIManager *manager;
 
 	priv = plugin->priv;
 
-	g_action_map_remove_action (G_ACTION_MAP (priv->window), "bookmark-toggle");
-	g_action_map_remove_action (G_ACTION_MAP (priv->window), "bookmark-next");
-	g_action_map_remove_action (G_ACTION_MAP (priv->window), "bookmark-prev");
-}
+	manager = gedit_window_get_ui_manager (priv->window);
 
-static void
-remove_all_bookmarks (GtkSourceBuffer *buffer)
-{
-	GtkTextIter start;
-	GtkTextIter end;
+	gtk_ui_manager_remove_ui (manager, priv->ui_id);
+	gtk_ui_manager_remove_action_group (manager, priv->action_group);
 
-	gedit_debug (DEBUG_PLUGINS);
-
-	gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
-	gtk_source_buffer_remove_source_marks (buffer,
-					       &start,
-					       &end,
-					       BOOKMARK_CATEGORY);
+	g_object_unref (priv->action_group);
+	priv->action_group = NULL;
 }
 
 static void
 disable_bookmarks (GeditView *view)
 {
+	GtkTextIter start;
+	GtkTextIter end;
 	GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 	gpointer data;
 
 	gtk_source_view_set_show_line_marks (GTK_SOURCE_VIEW (view), FALSE);
-	remove_all_bookmarks (GTK_SOURCE_BUFFER (buffer));
+
+	gtk_text_buffer_get_bounds (buffer, &start, &end);
+	gtk_source_buffer_remove_source_marks (GTK_SOURCE_BUFFER (buffer),
+					       &start,
+					       &end,
+					       BOOKMARK_CATEGORY);
 
 	g_signal_handlers_disconnect_by_func (buffer, on_style_scheme_notify, view);
 	g_signal_handlers_disconnect_by_func (buffer, on_delete_range, NULL);
@@ -360,10 +387,10 @@ enable_bookmarks (GeditView            *view,
 				  G_CALLBACK (on_style_scheme_notify),
 				  view);
 
-		g_signal_connect (buffer,
-				  "delete-range",
-				  G_CALLBACK (on_delete_range),
-				  NULL);
+		g_signal_connect_after (buffer,
+				        "delete-range",
+				        G_CALLBACK (on_delete_range),
+				        NULL);
 
 		data = g_slice_new0 (InsertData);
 
@@ -402,8 +429,6 @@ load_bookmarks (GeditView *view,
 	GtkTextIter iter;
 	gint tot_lines;
 	gint i;
-
-	gedit_debug (DEBUG_PLUGINS);
 
 	buf = GTK_SOURCE_BUFFER (gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
 
@@ -739,23 +764,8 @@ gedit_bookmarks_plugin_activate (GeditWindowActivatable *activatable)
 	g_signal_connect (priv->window, "tab-removed",
 			  G_CALLBACK (on_tab_removed), activatable);
 
-	install_actions (GEDIT_BOOKMARKS_PLUGIN (activatable));
+	install_menu (GEDIT_BOOKMARKS_PLUGIN (activatable));
 	install_messages (priv->window);
-}
-
-static void
-gedit_bookmarks_plugin_update_state (GeditWindowActivatable *activatable)
-{
-	GeditBookmarksPluginPrivate *priv;
-	gboolean enabled;
-
-	priv = GEDIT_BOOKMARKS_PLUGIN (activatable)->priv;
-
-	enabled = gedit_window_get_active_view (priv->window) != NULL;
-
-	g_simple_action_set_enabled (priv->action_toggle, enabled);
-	g_simple_action_set_enabled (priv->action_next, enabled);
-	g_simple_action_set_enabled (priv->action_prev, enabled);
 }
 
 static void
@@ -817,7 +827,7 @@ gedit_bookmarks_plugin_deactivate (GeditWindowActivatable *activatable)
 
 	priv = GEDIT_BOOKMARKS_PLUGIN (activatable)->priv;
 
-	uninstall_actions (GEDIT_BOOKMARKS_PLUGIN (activatable));
+	uninstall_menu (GEDIT_BOOKMARKS_PLUGIN (activatable));
 	uninstall_messages (priv->window);
 
 	views = gedit_window_get_views (priv->window);
@@ -872,43 +882,28 @@ on_delete_range (GtkTextBuffer *buffer,
 		 GtkTextIter   *end,
 		 gpointer       user_data)
 {
-	GtkTextIter start_iter;
-	GtkTextIter end_iter;
-	gboolean keep_bookmark;
+	GtkTextIter iter;
+	GSList *marks;
+	GSList *item;
 
-	/* Nothing to do for us here. The bookmark, if any, will stay at the
-	   beginning of the line due to its left gravity. */
-	if (gtk_text_iter_get_line (start) == gtk_text_iter_get_line (end))
-	{
+	iter = *start;
+
+	/* move to start of line */
+	gtk_text_iter_set_line_offset (&iter, 0);
+
+	/* remove any bookmarks that are collapsed on each other due to this */
+	marks = gtk_source_buffer_get_source_marks_at_iter (GTK_SOURCE_BUFFER (buffer),
+							    &iter,
+							    BOOKMARK_CATEGORY);
+
+	if (marks == NULL)
 		return;
-	}
 
-	start_iter = *start;
-	gtk_text_iter_set_line_offset (&start_iter, 0);
+	/* remove all but the first mark */
+	for (item = marks->next; item; item = item->next)
+		gtk_text_buffer_delete_mark (buffer, GTK_TEXT_MARK (item->data));
 
-	end_iter = *end;
-	gtk_text_iter_set_line_offset (&end_iter, 0);
-
-	keep_bookmark = ((gtk_source_buffer_get_source_marks_at_iter (GTK_SOURCE_BUFFER (buffer),
-								     &start_iter,
-								     BOOKMARK_CATEGORY) != NULL) ||
-			 (gtk_source_buffer_get_source_marks_at_iter (GTK_SOURCE_BUFFER (buffer),
-								      &end_iter,
-								      BOOKMARK_CATEGORY) != NULL));
-
-	/* Remove all bookmarks in the range. */
-	gtk_source_buffer_remove_source_marks (GTK_SOURCE_BUFFER (buffer),
-					       &start_iter,
-					       &end_iter,
-					       BOOKMARK_CATEGORY);
-
-	if (keep_bookmark)
-	{
-		gtk_source_buffer_create_source_mark (GTK_SOURCE_BUFFER (buffer),
-						      NULL,
-						      BOOKMARK_CATEGORY,
-						      &start_iter);
-	}
+	g_slist_free (marks);
 }
 
 static void
@@ -1087,11 +1082,6 @@ toggle_bookmark (GtkSourceBuffer *buffer,
 	GtkTextIter start;
 	GtkSourceMark *bookmark = NULL;
 
-	if (buffer == NULL)
-	{
-		return;
-	}
-
 	bookmark = get_bookmark_and_iter (buffer, iter, &start);
 
 	if (bookmark != NULL)
@@ -1105,21 +1095,18 @@ toggle_bookmark (GtkSourceBuffer *buffer,
 }
 
 static void
-on_toggle_bookmark_activate (GAction              *action,
-                             GVariant             *parameter,
-                             GeditBookmarksPlugin *plugin)
+on_toggle_bookmark_activate (GtkAction            *action,
+			     GeditBookmarksPlugin *plugin)
 {
 	GtkSourceBuffer *buffer;
 
 	buffer = GTK_SOURCE_BUFFER (gedit_window_get_active_document (plugin->priv->window));
-
 	toggle_bookmark (buffer, NULL);
 }
 
 static void
-on_next_bookmark_activate (GAction              *action,
-                           GVariant             *parameter,
-                           GeditBookmarksPlugin *plugin)
+on_next_bookmark_activate (GtkAction            *action,
+			   GeditBookmarksPlugin *plugin)
 {
 	goto_bookmark (plugin->priv->window,
 	               NULL,
@@ -1129,9 +1116,8 @@ on_next_bookmark_activate (GAction              *action,
 }
 
 static void
-on_previous_bookmark_activate (GAction              *action,
-                               GVariant             *parameter,
-                               GeditBookmarksPlugin *plugin)
+on_previous_bookmark_activate (GtkAction            *action,
+			       GeditBookmarksPlugin *plugin)
 {
 	goto_bookmark (plugin->priv->window,
 	               NULL,
@@ -1142,19 +1128,24 @@ on_previous_bookmark_activate (GAction              *action,
 
 static void
 on_document_loaded (GeditDocument *doc,
+		    const GError  *error,
 		    GeditView     *view)
 {
-	/* Reverting can leave one bookmark at the start, remove it. */
-	remove_all_bookmarks (GTK_SOURCE_BUFFER (doc));
-
-	load_bookmark_metadata (view);
+	if (error == NULL)
+	{
+		load_bookmark_metadata (view);
+	}
 }
 
 static void
 on_document_saved (GeditDocument *doc,
+		   const GError  *error,
 		   GeditView     *view)
 {
-	save_bookmark_metadata (view);
+	if (error == NULL)
+	{
+		save_bookmark_metadata (view);
+	}
 }
 
 static void
@@ -1200,14 +1191,12 @@ gedit_window_activatable_iface_init (GeditWindowActivatableInterface *iface)
 {
 	iface->activate = gedit_bookmarks_plugin_activate;
 	iface->deactivate = gedit_bookmarks_plugin_deactivate;
-	iface->update_state = gedit_bookmarks_plugin_update_state;
 }
 
 G_MODULE_EXPORT void
 peas_register_types (PeasObjectModule *module)
 {
 	gedit_bookmarks_plugin_register_type (G_TYPE_MODULE (module));
-	gedit_bookmarks_app_activatable_register (G_TYPE_MODULE (module));
 
 	peas_object_module_register_extension_type (module,
 						    GEDIT_TYPE_WINDOW_ACTIVATABLE,

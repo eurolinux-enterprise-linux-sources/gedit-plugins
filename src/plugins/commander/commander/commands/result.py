@@ -67,4 +67,4 @@ class Suspend(Result):
             args = cb[1]
             cb[0](*args)
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

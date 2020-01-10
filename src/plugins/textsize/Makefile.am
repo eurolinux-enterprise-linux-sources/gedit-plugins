@@ -1,13 +1,20 @@
-if ENABLE_PYTHON
-plugins_textsizedir = $(plugindir)/textsize
-plugins_textsize_PYTHON =				\
-	plugins/textsize/textsize/__init__.py		\
-	plugins/textsize/textsize/viewactivatable.py	\
-	plugins/textsize/textsize/signals.py
+# Textsize
 
-plugin_in_files += plugins/textsize/textsize.plugin.desktop.in
-appstream_in_files += plugins/textsize/gedit-textsize.metainfo.xml.in
-else
-dist_plugin_in_files += plugins/textsize/textsize.plugin.desktop.in
-dist_appstream_in_files += plugins/textsize/gedit-textsize.metainfo.xml.in
-endif
+SUBDIRS = textsize
+
+plugindir = $(GEDIT_PLUGINS_LIBS_DIR)
+
+plugin_in_files = textsize.plugin.desktop.in
+
+%.plugin: %.plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po)
+	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+plugin_DATA = $(plugin_in_files:.plugin.desktop.in=.plugin)
+
+EXTRA_DIST = $(plugin_in_files)
+
+CLEANFILES = $(plugin_DATA)
+
+DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk

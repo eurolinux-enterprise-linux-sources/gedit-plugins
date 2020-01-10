@@ -279,4 +279,4 @@ The regular expression will be matched in case-insensitive mode"""
 
     yield _regex(view, reg, align_group, padding, padding_group, re.IGNORECASE)
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

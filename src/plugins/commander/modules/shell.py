@@ -68,17 +68,15 @@ class Process:
                 ret = fd.read()
 
                 # This seems to happen on OS X...
-                if len(ret) == 0:
-                    condition = condition | GLib.IOCondition.HUP
+                if ret == '':
+                    condition = condition | GLib.IOConditiom.HUP
                 else:
-                    self._buffer += ret.decode('utf-8')
+                    self._buffer += ret
 
                     if not self.replace:
                         self.update()
-            except Exception as e:
-                if len(self._buffer) > 0:
-                    self.entry.info_show(self._buffer.strip("\n"))
-
+            except:
+                self.entry.info_show(self._buffer.strip("\n"))
                 self.stop()
                 return False
 
@@ -94,7 +92,7 @@ class Process:
 
                 buf.insert_at_cursor(self._buffer)
                 buf.end_user_action()
-            elif len(self._buffer) > 0:
+            else:
                 self.entry.info_show(self._buffer.strip("\n"))
 
             self.stop()
@@ -127,8 +125,8 @@ def _run_command(entry, replace, background, argstr):
     cwd = None
     doc = entry.view().get_buffer()
 
-    if not doc.is_untitled() and doc.get_file().is_local():
-        gfile = doc.get_file().get_location()
+    if not doc.is_untitled() and doc.is_local():
+        gfile = doc.get_location()
         cwd = os.path.dirname(gfile.get_path())
 
     if '<!' in argstr:
@@ -141,7 +139,7 @@ def _run_command(entry, replace, background, argstr):
 
         # Write to temporary file
         tmpin = tempfile.NamedTemporaryFile(delete=False)
-        tmpin.write(inp.encode('utf-8'))
+        tmpin.write(inp)
         tmpin.flush()
 
         # Replace with temporary file
@@ -196,4 +194,4 @@ locals()['!'] = __default__
 locals()['!!'] = replace
 locals()['!&'] = background
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

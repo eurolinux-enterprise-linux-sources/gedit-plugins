@@ -18,8 +18,8 @@ bs
 ca
 ca@valencia
 crh
-cs
 cy
+cs
 da
 de
 dz
@@ -34,7 +34,6 @@ eu
 fa
 fi
 fr
-fur
 ga
 gl
 gu
@@ -84,6 +83,7 @@ sl
 sq
 sr
 sr@latin
+sr@Latn
 sv
 ta
 te
@@ -97,3 +97,4 @@ xh
 zh_CN
 zh_HK
 zh_TW
+

@@ -17,30 +17,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-import sys
-
-import gi
-gi.require_version('Gedit', '3.0')
-gi.require_version('Pango', '1.0')
-gi.require_version('Gtk', '3.0')
-gi.require_version('Gucharmap', '2.90')
 from gi.repository import GObject, Gio, Pango, Gtk, Gedit, Gucharmap
 from .panel import CharmapPanel
+import sys
+import gettext
 from gpdefs import *
 
 try:
-    import gettext
-    gettext.bindtextdomain('gedit-plugins')
-    gettext.textdomain('gedit-plugins')
-    _ = gettext.gettext
+    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
+    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s);
 except:
     _ = lambda s: s
-
 
 class CharmapPlugin(GObject.Object, Gedit.WindowActivatable):
     __gtype_name__ = "CharmapPlugin"
 
-    window = GObject.Property(type=Gedit.Window)
+    window = GObject.property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -52,16 +44,18 @@ class CharmapPlugin(GObject.Object, Gedit.WindowActivatable):
         self.system_settings = Gio.Settings.new("org.gnome.desktop.interface")
         self.system_settings.connect("changed::monospace-font-name", self.font_changed)
 
-        self.create_charmap_panel()
         panel = self.window.get_side_panel()
-        panel.add_titled(self.panel, "GeditCharmapPanel", _("Character Map"))
+        image = Gtk.Image.new_from_icon_name("accessories-character-map", Gtk.IconSize.MENU)
+
+        self.create_charmap_panel()
+        panel.add_item(self.panel, "GeditCharmapPanel", _("Character Map"), image)
 
         statusbar = self.window.get_statusbar()
         self.context_id = statusbar.get_context_id("Character Description")
 
     def do_deactivate(self):
         panel = self.window.get_side_panel()
-        panel.remove(self.panel)
+        panel.remove_item(self.panel)
 
     def do_update_state(self):
         self.panel.set_sensitive(len(self.window.get_documents()) >= 1)

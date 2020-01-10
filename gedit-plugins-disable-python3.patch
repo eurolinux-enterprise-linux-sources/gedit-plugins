@@ -1,678 +1,234 @@
-From 61a02d97f9f294537992a42f5f28432bd359caf1 Mon Sep 17 00:00:00 2001
-From: Ray Strode <rstrode@redhat.com>
-Date: Wed, 15 Mar 2017 15:04:47 -0400
-Subject: [PATCH] plugins: disable python 3
-
-We only have python2 in rhel7
----
- configure.ac                                                  | 2 +-
- .../bracketcompletion/bracketcompletion.plugin.desktop.in.in  | 2 +-
- plugins/charmap/charmap.plugin.desktop.in.in                  | 2 +-
- plugins/codecomment/codecomment.plugin.desktop.in.in          | 2 +-
- plugins/colorpicker/colorpicker.plugin.desktop.in.in          | 2 +-
- plugins/colorschemer/colorschemer.plugin.desktop.in.in        | 2 +-
- plugins/commander/commander.plugin.desktop.in.in              | 2 +-
- plugins/commander/commander/entry.py                          | 4 ++--
- plugins/commander/commander/info.py                           | 4 ++--
- plugins/dashboard/dashboard.plugin.desktop.in.in              | 2 +-
- plugins/git/git/appactivatable.py                             | 2 +-
- plugins/git/git/debug.py                                      | 2 +-
- plugins/joinlines/joinlines.plugin.desktop.in.in              | 2 +-
- plugins/multiedit/multiedit.plugin.desktop.in.in              | 2 +-
- plugins/smartspaces/smartspaces.plugin.desktop.in.in          | 2 +-
- plugins/synctex/synctex.plugin.desktop.in.in                  | 2 +-
- plugins/terminal/terminal.plugin.desktop.in.in                | 2 +-
- plugins/textsize/textsize.plugin.desktop.in.in                | 2 +-
- plugins/translate/translate.plugin.desktop.in.in              | 2 +-
- plugins/translate/translate/services/service.py               | 3 ++-
- 20 files changed, 23 insertions(+), 22 deletions(-)
-
-diff --git a/configure.ac b/configure.ac
-index 870bd3a..3c071c4 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -66,61 +66,61 @@ PKG_CHECK_MODULES(GEDIT, [
- GLIB_GSETTINGS
- 
- # C plugins that don't need special dependencies
- C_PLUGINS="bookmarks drawspaces wordcompletion"
- 
- # Python plugins that don't need special dependencies, besides Python
- PY_PLUGINS="bracketcompletion codecomment colorpicker colorschemer commander joinlines multiedit smartspaces textsize translate"
- 
- # Vala plugins that don't need special dependencies, besides Vala
- VALA_PLUGINS="findinfiles"
- 
- PLUGINS="$C_PLUGINS"
- disabled_plugins=""
- 
- # Check all plugins are built
- AC_ARG_ENABLE([verify-all],
-               AC_HELP_STRING([--enable-verify-all], [verify that all plugins are enabled]),
-               [enable_verify_all=$enableval],
-               [enable_verify_all="no"])
- 
- # Python
- AC_MSG_CHECKING([whether Python support is requested])
- AC_ARG_ENABLE([python],
-               AS_HELP_STRING([--enable-python], [Enable Python support]),
-               [enable_python=$enableval],
-               [enable_python=auto])
- AC_MSG_RESULT([$enable_python])
- 
- if test "x$enable_python" != "xno"
- then
--	AM_PATH_PYTHON(3, [have_python=yes], [have_python=no])
-+	AM_PATH_PYTHON(2, [have_python=yes], [have_python=no])
- 	if test "x$enable_python" = "xyes" -a "x$have_python" = "xno"; then
- 		AC_MSG_ERROR([Python support explicitly requested, but not found])
- 	fi
- fi
- 
- AM_CONDITIONAL([ENABLE_PYTHON], [test "x$have_python" = "xyes"])
- 
- # Vala
- AC_MSG_CHECKING([whether Vala support is requested])
- AC_ARG_ENABLE([vala],
-               AS_HELP_STRING([--enable-vala], [Enable Vala support]),
-               [enable_vala=$enableval],
-               [enable_vala=auto])
- AC_MSG_RESULT([$enable_vala])
- 
- if test "x$enable_vala" != "xno"
- then
- 	# This could probably be lower, but let's take the current version
- 	VALA_REQUIRED=0.28.0
- 	AM_PROG_VALAC([$VALA_REQS])
- 	if test "x$VALAC" = "x"; then
- 		if test "x$enable_vala" = "xyes"; then
- 			AC_MSG_ERROR([Vala support explicitly requested, but not found])
- 		fi
- 		have_vala=no
- 	else
- 		have_vala=yes
- 	fi
- else
- 	have_vala=no
-diff --git a/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in b/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
-index 71b32b6..0b1c05b 100644
---- a/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
-+++ b/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=bracketcompletion
  IAge=3
  _Name=Bracket Completion
- _Description=Automatically adds closing brackets.
- Authors=Steve Frécinaux <steve@istique.net>
- Copyright=Copyright @ 2006 Steve Frécinaux
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/charmap/charmap.plugin.desktop.in.in b/plugins/charmap/charmap.plugin.desktop.in.in
-index bb82259..719dc9f 100644
---- a/plugins/charmap/charmap.plugin.desktop.in.in
-+++ b/plugins/charmap/charmap.plugin.desktop.in.in
-@@ -1,11 +1,11 @@
+--- gedit-plugins-3.8.1/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/bracketcompletion/bracketcompletion.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=bracketcompletion
+ IAge=3
+ _Name=Bracket Completion
+--- gedit-plugins-3.8.1/plugins/charmap/charmap.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/charmap/charmap.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=charmap
  IAge=3
  _Name=Character Map
- _Description=Insert special characters just by clicking on them.
- Icon=accessories-character-map
- Authors=Steve Frécinaux <steve@istique.net>;Ignacio Casal Quinteiro <icq@gnome.org>
- Copyright=Copyright @ 2006 Steve Frécinaux
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/codecomment/codecomment.plugin.desktop.in.in b/plugins/codecomment/codecomment.plugin.desktop.in.in
-index 6561a2d..837fbee 100644
---- a/plugins/codecomment/codecomment.plugin.desktop.in.in
-+++ b/plugins/codecomment/codecomment.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/charmap/charmap.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/charmap/charmap.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=charmap
+ IAge=3
+ _Name=Character Map
+--- gedit-plugins-3.8.1/plugins/codecomment/codecomment.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/codecomment/codecomment.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=codecomment
  IAge=3
- _Name=Code Comment
- _Description=Comment out or uncomment a selected block of code.
- Authors=Alejandro Garcia <alex@igalia.com>;Matthew Dugan <matthew.dugan@gmail.com>
- Copyright=Copyright @ 2005-2006 Igalia, S.L.;Copyright @ 2006 Matthew Dugan
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/colorpicker/colorpicker.plugin.desktop.in.in b/plugins/colorpicker/colorpicker.plugin.desktop.in.in
-index c02867e..1cc2c1e 100644
---- a/plugins/colorpicker/colorpicker.plugin.desktop.in.in
-+++ b/plugins/colorpicker/colorpicker.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+ _Name=Code comment
+--- gedit-plugins-3.8.1/plugins/codecomment/codecomment.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/codecomment/codecomment.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=codecomment
+ IAge=3
+ _Name=Code comment
+--- gedit-plugins-3.8.1/plugins/colorpicker/colorpicker.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/colorpicker/colorpicker.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=colorpicker
  IAge=3
  _Name=Color Picker
- _Description=Pick a color from a dialog and insert its hexadecimal representation.
- Authors=Jesse van den Kieboom <jesse@icecrew.nl>;Ignacio Casal Quinteiro <icq@gnome.org>
- Copyright=Copyright © 2006 Jesse van den Kieboom;Copyright © 2012 Ignacio Casal Quinteiro
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/colorschemer/colorschemer.plugin.desktop.in.in b/plugins/colorschemer/colorschemer.plugin.desktop.in.in
-index 2d2b1f0..f9d30f3 100644
---- a/plugins/colorschemer/colorschemer.plugin.desktop.in.in
-+++ b/plugins/colorschemer/colorschemer.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/colorpicker/colorpicker.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/colorpicker/colorpicker.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=colorpicker
+ IAge=3
+ _Name=Color Picker
+--- gedit-plugins-3.8.1/plugins/colorschemer/colorschemer.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/colorschemer/colorschemer.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=colorschemer
  IAge=3
  _Name=Color Scheme Editor
- _Description=Source code color scheme editor
- Authors=Jono <jono@foodnotblogs.com>
- Copyright=Copyright © 2013 Jono Finger
- Website=https://github.com/jonocodes/GeditSchemer
- Version=@VERSION@
-diff --git a/plugins/commander/commander.plugin.desktop.in.in b/plugins/commander/commander.plugin.desktop.in.in
-index 0f0cb01..05cbe14 100644
---- a/plugins/commander/commander.plugin.desktop.in.in
-+++ b/plugins/commander/commander.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/colorschemer/colorschemer.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/colorschemer/colorschemer.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=colorschemer
+ IAge=3
+ _Name=Color Scheme Editor
+--- gedit-plugins-3.8.1/plugins/commander/commander.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/commander/commander.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=commander
  IAge=3
  _Name=Commander
- _Description=Command line interface for advanced editing
- Authors=Jesse van den Kieboom <jessevdk@gnome.org>
- Copyright=Copyright © 2009 Jesse van den Kieboom
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/commander/commander/entry.py b/plugins/commander/commander/entry.py
-index 0a376b3..85bd1af 100644
---- a/plugins/commander/commander/entry.py
-+++ b/plugins/commander/commander/entry.py
-@@ -66,82 +66,82 @@ class Entry(Gtk.Box):
-         self._cancel_button = None
-         self._info = None
-         self._info_revealer = None
- 
-         self._suspended = None
- 
-         self._handlers = [
-             [0, Gdk.KEY_Up, self._on_history_move, -1],
-             [0, Gdk.KEY_Down, self._on_history_move, 1],
-             [None, Gdk.KEY_Return, self._on_execute, None],
-             [None, Gdk.KEY_KP_Enter, self._on_execute, None],
-             [0, Gdk.KEY_Tab, self._on_complete, None],
-             [0, Gdk.KEY_ISO_Left_Tab, self._on_complete, None]
-         ]
- 
-         self._re_complete = re.compile('("((?:\\\\"|[^"])*)"?|\'((?:\\\\\'|[^\'])*)\'?|[^\s]+)')
-         self._command_state = commands.Commands.State()
- 
-         self.connect('destroy', self._on_destroy)
- 
-         self._build_ui()
-         self._setup_keybindings()
- 
-         self._attach()
- 
-     def view(self):
-         return self._view
- 
-     def _setup_keybindings(self):
-         css = Gtk.CssProvider()
--        css.load_from_data(bytes("""
-+        css.load_from_data("""
- @binding-set terminal-like-bindings {
-     unbind "<Control>A";
- 
-     bind "<Control>W" { "delete-from-cursor" (word-ends, -1) };
-     bind "<Control>A" { "move-cursor" (buffer-ends, -1, 0) };
-     bind "<Control>U" { "delete-from-cursor" (display-line-ends, -1) };
-     bind "<Control>K" { "delete-from-cursor" (display-line-ends, 1) };
-     bind "<Control>E" { "move-cursor" (buffer-ends, 1, 0) };
-     bind "Escape" { "delete-from-cursor" (display-lines, 1) };
- }
- 
- GtkEntry#gedit-commander-entry {
-     gtk-key-bindings: terminal-like-bindings;
- 
-     background-image: none;
-     box-shadow: 0 0;
-     transition: none;
-     border: 0;
- }
- 
--""", 'utf-8'))
-+""")
- 
-         self._entry.get_style_context().add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
- 
-     def _find_overlay(self, view):
-         parent = view.get_parent()
- 
-         while not isinstance(parent, Gtk.Overlay):
-             parent = parent.get_parent()
- 
-         return parent
- 
-     def _build_ui(self):
-         self.set_orientation(Gtk.Orientation.VERTICAL)
- 
-         self._overlay = self._find_overlay(self._view)
- 
-         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-         hbox.show()
- 
-         self.pack_end(hbox, False, False, 0)
- 
-         self._info_revealer = Gtk.Revealer()
- 
-         self._info_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
-         self._info_revealer.set_transition_duration(150)
- 
-         self.pack_start(self._info_revealer, False, False, 0)
-         self._info_revealer.connect('notify::child-revealed', self._on_info_revealer_child_revealed)
- 
-         self._prompt_label = Gtk.Label(label='<b>&gt;&gt;&gt;</b>', use_markup=True)
-diff --git a/plugins/commander/commander/info.py b/plugins/commander/commander/info.py
-index a18c240..7f96f1f 100644
---- a/plugins/commander/commander/info.py
-+++ b/plugins/commander/commander/info.py
-@@ -66,65 +66,65 @@ class ScrolledWindow(Gtk.ScrolledWindow):
- 
-         if vp == Gtk.PolicyType.NEVER and ret[0] > self._max_height:
-             self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.ALWAYS)
-             self.set_min_content_height(self._max_height)
-         elif vp == Gtk.PolicyType.ALWAYS and ret[0] < self._max_height:
-             self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
-             self.set_min_content_height(0)
- 
-         return Gtk.ScrolledWindow.do_get_preferred_height(self)
- 
- class Info(Gtk.Box):
-     __gtype_name__ = "CommanderInfo"
- 
-     def __init__(self):
-         super(Info, self).__init__()
- 
-         self._button_bar = None
-         self._status_label = None
- 
-         self._build_ui()
- 
-     def _build_ui(self):
-         self.set_orientation(Gtk.Orientation.VERTICAL)
-         self.set_spacing(3)
-         self.set_can_focus(False)
- 
-         self._sw = ScrolledWindow()
-         self._sw.set_border_width(6)
- 
-         css = Gtk.CssProvider()
--        css.load_from_data(bytes("""
-+        css.load_from_data("""
- .trough {
-     background: transparent;
- }
--""", 'utf-8'))
-+""")
- 
-         self._sw.get_vscrollbar().get_style_context().add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
- 
-         self._sw.show()
-         self.add(self._sw)
- 
-         self._attr_map = {
-             Pango.AttrType.STYLE: ('style', Pango.AttrInt),
-             Pango.AttrType.WEIGHT: ('weight', Pango.AttrInt),
-             Pango.AttrType.VARIANT: ('variant', Pango.AttrInt),
-             Pango.AttrType.STRETCH: ('stretch', Pango.AttrInt),
-             Pango.AttrType.SIZE: ('size', Pango.AttrInt),
-             Pango.AttrType.FOREGROUND: ('foreground', Pango.AttrColor),
-             Pango.AttrType.BACKGROUND: ('background', Pango.AttrColor),
-             Pango.AttrType.UNDERLINE: ('underline', Pango.AttrInt),
-             Pango.AttrType.STRIKETHROUGH: ('strikethrough', Pango.AttrInt),
-             Pango.AttrType.RISE: ('rise', Pango.AttrInt),
-             Pango.AttrType.SCALE: ('scale', Pango.AttrFloat)
-         }
- 
-     @property
-     def text_view(self):
-         return self._sw.view
- 
-     @property
-     def is_empty(self):
-         buf = self.text_view.get_buffer()
-         return buf.get_start_iter().equal(buf.get_end_iter())
- 
-     def status(self, text=None):
-diff --git a/plugins/dashboard/dashboard.plugin.desktop.in.in b/plugins/dashboard/dashboard.plugin.desktop.in.in
-index 2e74944..8150515 100644
---- a/plugins/dashboard/dashboard.plugin.desktop.in.in
-+++ b/plugins/dashboard/dashboard.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/commander/commander.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/commander/commander.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=commander
+ IAge=3
+ _Name=Commander
+--- gedit-plugins-3.8.1/plugins/dashboard/dashboard.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/dashboard/dashboard.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=dashboard
  IAge=3
  _Name=Dashboard
- _Description=A Dashboard for new tabs
- Authors=Seif Lotfy <seif@lotfy.com>
- Copyright=Copyright © 2011 Collabora Ltd.
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/git/git/appactivatable.py b/plugins/git/git/appactivatable.py
-index d746c21..f8d978e 100644
---- a/plugins/git/git/appactivatable.py
-+++ b/plugins/git/git/appactivatable.py
-@@ -20,61 +20,61 @@
- from gi.repository import GLib, GObject, Gio, Gedit, Ggit
- 
- 
- class GitAppActivatable(GObject.Object, Gedit.AppActivatable):
-     app = GObject.Property(type=Gedit.App)
- 
-     __instance = None
- 
-     def __init__(self):
-         super().__init__()
- 
-         Ggit.init()
- 
-         GitAppActivatable.__instance = self
- 
-     def do_activate(self):
-         self.clear_repositories()
- 
-     def do_deactivate(self):
-         self.__git_repos = None
-         self.__workdir_repos = None
- 
-     @classmethod
-     def get_instance(cls):
-         return cls.__instance
- 
-     def clear_repositories(self):
-         self.__git_repos = {}
-         self.__workdir_repos = {}
- 
--    def get_repository(self, location, is_dir, *, allow_git_dir=False):
-+    def get_repository(self, location, is_dir, allow_git_dir=False):
-         # The repos are cached by the directory
-         dir_location = location if is_dir else location.get_parent()
-         dir_uri = dir_location.get_uri()
- 
-         # Fast Path
-         try:
-             return self.__workdir_repos[dir_uri]
- 
-         except KeyError:
-             pass
- 
-         try:
-             repo = self.__git_repos[dir_uri]
- 
-         except KeyError:
-             pass
- 
-         else:
-             return repo if allow_git_dir else None
- 
-         # Doing remote operations is too slow
-         if not location.has_uri_scheme('file'):
-             return None
- 
-         # Must check every dir, otherwise submodules will have issues
-         try:
-             repo_file = Ggit.Repository.discover(location)
- 
-         except GLib.Error:
-             # Prevent trying to find a git repository
-diff --git a/plugins/git/git/debug.py b/plugins/git/git/debug.py
-index d608574..a661ab5 100644
---- a/plugins/git/git/debug.py
-+++ b/plugins/git/git/debug.py
-@@ -1,60 +1,60 @@
- # -*- coding: utf-8 -*-
-  
- #  Copyright (C) 2014 - Garrett Regier
- #
- #  This program is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or
- #  (at your option) any later version.
- #
- #  This program is distributed in the hope that it will be useful,
- #  but WITHOUT ANY WARRANTY; without even the implied warranty of
- #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- #  GNU General Public License for more details.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc.  51 Franklin Street, Fifth Floor, Boston, MA
- #  02110-1301 USA.
-  
- import inspect
- import io
- import os
- import sys
- import traceback
-  
-  
- _DEBUG = os.getenv('GEDIT_DEBUG_GIT_PLUGIN') is not None
-  
-  
--def debug(msg, *, frames=1, print_stack=False, limit=None):
-+def debug(msg, frames=1, print_stack=False, limit=None):
-     """Mimicks Gedit's gedit_debug_message() output, but only prints
-        when the GEDIT_DEBUG_GIT_PLUGIN enviroment variable exists.
-     """
-     if not _DEBUG:
-         return
-  
-     current_frame = inspect.currentframe()
-     calling_frame = current_frame
-  
-     try:
-         for i in range(frames):
-             calling_frame = calling_frame.f_back
-  
-         info = inspect.getframeinfo(calling_frame)
-  
-         path = min(info.filename.replace(x, '') for x in sys.path)
-         if path[0] == os.path.sep:
-             path = path[1:]
-  
-         full_message = io.StringIO()
-         full_message.writelines((path, ':', str(info.lineno),
-                                  ' (', info.function, ') ', msg, '\n'))
-  
-         if print_stack:
-             full_message.write('Stack (most recent call last):\n')
-             traceback.print_stack(calling_frame,
-                                   file=full_message, limit=limit)
-  
-         if full_message.getvalue()[-1] != '\n':
-             full_message.write('\n')
-diff --git a/plugins/joinlines/joinlines.plugin.desktop.in.in b/plugins/joinlines/joinlines.plugin.desktop.in.in
-index 5ea1a42..b76bd63 100644
---- a/plugins/joinlines/joinlines.plugin.desktop.in.in
-+++ b/plugins/joinlines/joinlines.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/dashboard/dashboard.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/dashboard/dashboard.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=dashboard
+ IAge=3
+ _Name=Dashboard
+--- gedit-plugins-3.8.1/plugins/joinlines/joinlines.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/joinlines/joinlines.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=joinlines
  IAge=3
  _Name=Join/Split Lines
- _Description=Join several lines or split long ones
- Authors=Steve Frécinaux <steve@istique.net>;André Homeyer
- Copyright=Copyright @ 2006-2007 Steve Frécinaux, André Homeyer
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/multiedit/multiedit.plugin.desktop.in.in b/plugins/multiedit/multiedit.plugin.desktop.in.in
-index 7b7b137..6f315ef 100644
---- a/plugins/multiedit/multiedit.plugin.desktop.in.in
-+++ b/plugins/multiedit/multiedit.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/joinlines/joinlines.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/joinlines/joinlines.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=joinlines
+ IAge=3
+ _Name=Join/Split Lines
+--- gedit-plugins-3.8.1/plugins/multiedit/multiedit.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/multiedit/multiedit.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=multiedit
  IAge=3
  _Name=Multi Edit
- _Description=Edit document in multiple places at once
- Authors=Jesse van den Kieboom <jessevdk@gnome.org>
- Copyright=Copyright © 2009 Jesse van den Kieboom
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/smartspaces/smartspaces.plugin.desktop.in.in b/plugins/smartspaces/smartspaces.plugin.desktop.in.in
-index f9ca79a..9671fe3 100644
---- a/plugins/smartspaces/smartspaces.plugin.desktop.in.in
-+++ b/plugins/smartspaces/smartspaces.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/multiedit/multiedit.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/multiedit/multiedit.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=multiedit
+ IAge=3
+ _Name=Multi Edit
+--- gedit-plugins-3.8.1/plugins/smartspaces/smartspaces.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/smartspaces/smartspaces.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=smartspaces
  IAge=3
  _Name=Smart Spaces
- _Description=Forget you’re not using tabulations.
- Authors=Steve Frécinaux <steve@istique.net>
- Copyright=Copyright © 2006 Steve Frécinaux
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/synctex/synctex.plugin.desktop.in.in b/plugins/synctex/synctex.plugin.desktop.in.in
-index b465129..1bb8da1 100644
---- a/plugins/synctex/synctex.plugin.desktop.in.in
-+++ b/plugins/synctex/synctex.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/smartspaces/smartspaces.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/smartspaces/smartspaces.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=smartspaces
+ IAge=3
+ _Name=Smart Spaces
+--- gedit-plugins-3.8.1/plugins/synctex/synctex.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/synctex/synctex.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=synctex
  IAge=3
  _Name=SyncTeX
- _Description=Synchronize between LaTeX and PDF with gedit and evince.
- Authors=José Aliste <jaliste@src.gnome.org>
- Copyright=Copyright © 2010 José Aliste
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/terminal/terminal.plugin.desktop.in.in b/plugins/terminal/terminal.plugin.desktop.in.in
-index dac9ac1..fcbe266 100644
---- a/plugins/terminal/terminal.plugin.desktop.in.in
-+++ b/plugins/terminal/terminal.plugin.desktop.in.in
-@@ -1,11 +1,11 @@
+--- gedit-plugins-3.8.1/plugins/synctex/synctex.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/synctex/synctex.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=synctex
+ IAge=3
+ _Name=SyncTeX
+--- gedit-plugins-3.8.1/plugins/terminal/terminal.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/terminal/terminal.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=terminal
  IAge=3
  _Name=Embedded Terminal
- _Description=Embed a terminal in the bottom pane.
- Icon=utilities-terminal
- Authors=Paolo Borelli
- Copyright=Copyright © 2005 Paolo Borelli
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/textsize/textsize.plugin.desktop.in.in b/plugins/textsize/textsize.plugin.desktop.in.in
-index 8c12009..c4cecea 100644
---- a/plugins/textsize/textsize.plugin.desktop.in.in
-+++ b/plugins/textsize/textsize.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/terminal/terminal.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/terminal/terminal.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
+ [Plugin]
+-Loader=python3
++Loader=python
+ Module=terminal
+ IAge=3
+ _Name=Embedded Terminal
+--- gedit-plugins-3.8.1/plugins/textsize/textsize.plugin.desktop.in
++++ gedit-plugins-3.8.1/plugins/textsize/textsize.plugin.desktop.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
  Module=textsize
  IAge=3
  _Name=Text Size
- _Description=Easily increase and decrease the text size
- Authors=Konstantin Mikhaylov <jtraub.devel@gmail.com>;Wouter Bolsterlee <wbolster@gnome.org>;Jesse van den Kieboom <jessevdk@gnome.org>
- Copyright=Copyright © 2008 by the authors
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/translate/translate.plugin.desktop.in.in b/plugins/translate/translate.plugin.desktop.in.in
-index 76ecfb7..4e75739 100644
---- a/plugins/translate/translate.plugin.desktop.in.in
-+++ b/plugins/translate/translate.plugin.desktop.in.in
-@@ -1,10 +1,10 @@
+--- gedit-plugins-3.8.1/plugins/textsize/textsize.plugin.desktop.in.in
++++ gedit-plugins-3.8.1/plugins/textsize/textsize.plugin.desktop.in.in
+@@ -1,5 +1,5 @@
  [Plugin]
 -Loader=python3
 +Loader=python
- Module=translate
+ Module=textsize
  IAge=3
- _Name=Translate
- _Description=Translates text into different languages
- Authors=Jordi Mas i Hernàndez <jmas@softcatala.org>
- Copyright=Copyright @ 2017 Jordi Mas i Hernàndez. Powered by Apertium and Yandex.Translate translation engines. 
- Website=http://www.gedit.org
- Version=@VERSION@
-diff --git a/plugins/translate/translate/services/service.py b/plugins/translate/translate/services/service.py
-index 5406c6e..05a4182 100644
---- a/plugins/translate/translate/services/service.py
-+++ b/plugins/translate/translate/services/service.py
-@@ -1,52 +1,53 @@
- # -*- coding: utf-8 -*-
- #
- #  Copyrignt (C) 2017 Jordi Mas <jmas@softcatala.org>
- #
- #  This program is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or
- #  (at your option) any later version.
- #
- #  This program is distributed in the hope that it will be useful,
- #  but WITHOUT ANY WARRANTY; without even the implied warranty of
- #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- #  GNU General Public License for more details.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
- #  Boston, MA 02110-1301, USA.
- 
- from abc import ABCMeta, abstractmethod
- 
--class Service(metaclass=ABCMeta):
-+class Service:
-+    __metaclass__ = ABCMeta
- 
-     @abstractmethod
-     def translate_text(self, text, language_pair):
-         pass
- 
-     @abstractmethod
-     def get_language_names(self):
-         pass
- 
-     @abstractmethod
-     def get_language_codes(self):
-         pass
- 
-     @abstractmethod
-     def get_language_pair_name(self, source, target, locales_names=None):
-         pass
- 
-     @abstractmethod
-     def get_default_language_codes(self):
-         pass
- 
-     @abstractmethod
-     def has_api_key(self):
-         pass
- 
-     @abstractmethod
-     def get_api_hint(self):
-         pass
-     
-     @abstractmethod    
--- 
-2.17.1
-
+ _Name=Text Size

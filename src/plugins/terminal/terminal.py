@@ -20,60 +20,84 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301  USA
 
-import os
-
 import gi
-gi.require_version('Gedit', '3.0')
-gi.require_version('Gtk', '3.0')
-gi.require_version('Vte', '2.91')
+gi.require_version('Vte', '2.90')
 from gi.repository import GObject, GLib, Gio, Pango, Gdk, Gtk, Gedit, Vte
-
+import os
+import gettext
 from gpdefs import *
 
 try:
-    import gettext
-    gettext.bindtextdomain('gedit-plugins')
-    gettext.textdomain('gedit-plugins')
-    _ = gettext.gettext
+    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
+    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s);
 except:
     _ = lambda s: s
 
-class GeditTerminal(Vte.Terminal):
+class GeditTerminal(Gtk.Box):
+    """VTE terminal which follows gnome-terminal default profile options"""
 
-    defaults = {
-        'audible_bell'          : False,
+    __gsignals__ = {
+        "populate-popup": (
+            GObject.SIGNAL_RUN_LAST,
+            None,
+            (GObject.TYPE_OBJECT,)
+        )
     }
 
-    TARGET_URI_LIST = 200
+    defaults = {
+        'emulation'             : 'xterm',
+        'visible_bell'          : False,
+    }
 
     def __init__(self):
-        Vte.Terminal.__init__(self)
-
-        self.set_size(self.get_column_count(), 5)
-        self.set_size_request(200, 50)
-
-        tl = Gtk.TargetList.new([])
-        tl.add_uri_targets(self.TARGET_URI_LIST)
-
-        self.drag_dest_set(Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP,
-                           [], Gdk.DragAction.DEFAULT | Gdk.DragAction.COPY)
-        self.drag_dest_set_target_list(tl)
+        Gtk.Box.__init__(self)
 
         self.profile_settings = self.get_profile_settings()
         self.profile_settings.connect("changed", self.on_profile_settings_changed)
         self.system_settings = Gio.Settings.new("org.gnome.desktop.interface")
         self.system_settings.connect("changed::monospace-font-name", self.font_changed)
 
+        self._vte = Vte.Terminal()
+        self._vte.set_background_image(None)
+        self._vte.set_background_transparent(False)
         self.reconfigure_vte()
+        self._vte.set_size(self._vte.get_column_count(), 5)
+        self._vte.set_size_request(200, 50)
+        self._vte.show()
+        self.pack_start(self._vte, True, True, 0)
 
-        self.spawn_sync(Vte.PtyFlags.DEFAULT, None, [Vte.get_user_shell()], None, GLib.SpawnFlags.SEARCH_PATH, None, None, None)
+        scrollbar = Gtk.Scrollbar.new(Gtk.Orientation.VERTICAL, self._vte.get_vadjustment())
+        scrollbar.show()
+        self.pack_start(scrollbar, False, False, 0)
 
-    def do_drag_data_received(self, drag_context, x, y, data, info, time):
-        if info == self.TARGET_URI_LIST:
-            self.feed_child(' '.join(["'" + Gio.file_new_for_uri(item).get_path() + "'" for item in Gedit.utils_drop_get_uris(data)]), -1)
-            Gtk.drag_finish(drag_context, True, False, time);
-        else:
-            Vte.Terminal.do_drag_data_received(self, drag_context, x, y, data, info, time)
+        # we need to reconf colors if the style changes
+        #FIXME: why?
+        #self._vte.connect("style-update", lambda term, oldstyle: self.reconfigure_vte())
+        self._vte.connect("key-press-event", self.on_vte_key_press)
+        self._vte.connect("button-press-event", self.on_vte_button_press)
+        self._vte.connect("popup-menu", self.on_vte_popup_menu)
+        self._vte.connect("child-exited", self.on_child_exited)
+
+        self._accel_base = '<gedit>/plugins/terminal'
+        self._accels = {
+            'copy-clipboard': [Gdk.KEY_C, Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK, self.copy_clipboard],
+            'paste-clipboard': [Gdk.KEY_V, Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK, self.paste_clipboard]
+        }
+        
+        for name in self._accels:
+            path = self._accel_base + '/' + name
+            accel = Gtk.AccelMap.lookup_entry(path)
+
+            if not accel[0]:
+                 Gtk.AccelMap.add_entry(path, self._accels[name][0], self._accels[name][1])
+
+        self._vte.fork_command_full(Vte.PtyFlags.DEFAULT, None, [Vte.get_user_shell()], None, GLib.SpawnFlags.SEARCH_PATH, None, None)
+
+    def on_child_exited(self):
+        self._vte.fork_command_full(Vte.PtyFlags.DEFAULT, None, [Vte.get_user_shell()], None, GLib.SpawnFlags.SEARCH_PATH, None, None)
+
+    def do_grab_focus(self):
+        self._vte.grab_focus()
 
     def settings_try_new(self, schema):
         schemas = Gio.Settings.list_schemas()
@@ -110,14 +134,14 @@ class GeditTerminal(Vte.Terminal):
         font = self.get_font()
         font_desc = Pango.font_description_from_string(font)
 
-        self.set_font(font_desc)
+        self._vte.set_font(font_desc)
 
     def reconfigure_vte(self):
         # Fonts
         self.font_changed()
 
         # colors
-        context = self.get_style_context()
+        context = self._vte.get_style_context()
         fg = context.get_color(Gtk.StateFlags.NORMAL)
         bg = context.get_background_color(Gtk.StateFlags.NORMAL)
         palette = []
@@ -142,76 +166,25 @@ class GeditTerminal(Vte.Terminal):
                     palette = []
                     break
 
-        self.set_colors(fg, bg, palette)
-        self.set_cursor_blink_mode(self.profile_settings.get_enum("cursor-blink-mode"))
-        self.set_cursor_shape(self.profile_settings.get_enum("cursor-shape"))
-        self.set_audible_bell(self.profile_settings.get_boolean("audible-bell"))
-        self.set_allow_bold(self.profile_settings.get_boolean("allow-bold"))
-        self.set_scroll_on_keystroke(self.profile_settings.get_boolean("scroll-on-keystroke"))
-        self.set_scroll_on_output(self.profile_settings.get_boolean("scroll-on-output"))
-        self.set_audible_bell(self.defaults['audible_bell'])
+        self._vte.set_colors_rgba(fg, bg, palette)
+        self._vte.set_cursor_blink_mode(self.profile_settings.get_enum("cursor-blink-mode"))
+        self._vte.set_cursor_shape(self.profile_settings.get_enum("cursor-shape"))
+        self._vte.set_audible_bell(self.profile_settings.get_boolean("audible-bell"))
+        self._vte.set_allow_bold(self.profile_settings.get_boolean("allow-bold"))
+        self._vte.set_scroll_on_keystroke(self.profile_settings.get_boolean("scroll-on-keystroke"))
+        self._vte.set_scroll_on_output(self.profile_settings.get_boolean("scroll-on-output"))
+        self._vte.set_word_chars(self.profile_settings.get_string("word-chars"))
+        self._vte.set_emulation(self.defaults['emulation'])
+        self._vte.set_visible_bell(self.defaults['visible_bell'])
 
         if self.profile_settings.get_boolean("scrollback-unlimited"):
             lines = -1
         else:
             lines = self.profile_settings.get_int("scrollback-lines")
-        self.set_scrollback_lines(lines)
+        self._vte.set_scrollback_lines(lines)
 
     def on_profile_settings_changed(self, settings, key):
         self.reconfigure_vte()
-
-class GeditTerminalPanel(Gtk.Box):
-    """VTE terminal which follows gnome-terminal default profile options"""
-
-    __gsignals__ = {
-        "populate-popup": (
-            GObject.SignalFlags.RUN_LAST,
-            None,
-            (GObject.TYPE_OBJECT,)
-        )
-    }
-
-    def __init__(self):
-        Gtk.Box.__init__(self)
-
-        self._accel_base = '<gedit>/plugins/terminal'
-        self._accels = {
-            'copy-clipboard': [Gdk.KEY_C, Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK, self.copy_clipboard],
-            'paste-clipboard': [Gdk.KEY_V, Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK, self.paste_clipboard]
-        }
-
-        for name in self._accels:
-            path = self._accel_base + '/' + name
-            accel = Gtk.AccelMap.lookup_entry(path)
-
-            if not accel[0]:
-                 Gtk.AccelMap.add_entry(path, self._accels[name][0], self._accels[name][1])
-
-        self.add_terminal()
-
-    def add_terminal(self):
-        self._vte = GeditTerminal()
-        self._vte.show()
-        self.pack_start(self._vte, True, True, 0)
-
-        self._vte.connect("child-exited", self.on_vte_child_exited)
-        self._vte.connect("key-press-event", self.on_vte_key_press)
-        self._vte.connect("button-press-event", self.on_vte_button_press)
-        self._vte.connect("popup-menu", self.on_vte_popup_menu)
-
-        scrollbar = Gtk.Scrollbar.new(Gtk.Orientation.VERTICAL, self._vte.get_vadjustment())
-        scrollbar.show()
-        self.pack_start(scrollbar, False, False, 0)
-
-    def on_vte_child_exited(self, term, status):
-        for child in self.get_children():
-            child.destroy()
-
-        self.add_terminal()
-        self._vte.grab_focus()
-
-    def do_grab_focus(self):
-        self._vte.grab_focus()
 
     def on_vte_key_press(self, term, event):
         modifiers = event.state & Gtk.accelerator_get_default_mod_mask()
@@ -231,18 +204,7 @@ class GeditTerminalPanel(Gtk.Box):
                 self._accels[name][2]()
                 return True
 
-        keyval_name = Gdk.keyval_name(Gdk.keyval_to_upper(event.keyval))
-
-        # Special case some Vte.Terminal shortcuts
-        # so the global shortcuts do not override them
-        if modifiers == Gdk.ModifierType.CONTROL_MASK and keyval_name in 'ACDEHKLRTUWZ':
-            return False
-
-        if modifiers == Gdk.ModifierType.MOD1_MASK and keyval_name in 'BF':
-            return False
-
-        return Gtk.accel_groups_activate(self.get_toplevel(),
-                                         event.keyval, modifiers)
+        return False
 
     def on_vte_button_press(self, term, event):
         if event.button == 3:
@@ -302,22 +264,24 @@ class GeditTerminalPanel(Gtk.Box):
 class TerminalPlugin(GObject.Object, Gedit.WindowActivatable):
     __gtype_name__ = "TerminalPlugin"
 
-    window = GObject.Property(type=Gedit.Window)
+    window = GObject.property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
 
     def do_activate(self):
-        self._panel = GeditTerminalPanel()
+        self._panel = GeditTerminal()
         self._panel.connect("populate-popup", self.on_panel_populate_popup)
         self._panel.show()
 
+        image = Gtk.Image.new_from_icon_name("utilities-terminal", Gtk.IconSize.MENU)
+
         bottom = self.window.get_bottom_panel()
-        bottom.add_titled(self._panel, "GeditTerminalPanel", _("Terminal"))
+        bottom.add_item(self._panel, "GeditTerminalPanel", _("Terminal"), image)
 
     def do_deactivate(self):
         bottom = self.window.get_bottom_panel()
-        bottom.remove(self._panel)
+        bottom.remove_item(self._panel)
 
     def do_update_state(self):
         pass
@@ -325,7 +289,7 @@ class TerminalPlugin(GObject.Object, Gedit.WindowActivatable):
     def get_active_document_directory(self):
         doc = self.window.get_active_document()
         if doc:
-            location = doc.get_file().get_location()
+            location = doc.get_location()
             if location and location.has_uri_scheme("file"):
                 directory = location.get_parent()
                 return directory.get_path()

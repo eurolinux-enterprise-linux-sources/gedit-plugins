@@ -20,21 +20,28 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
-import gi
-gi.require_version('Gtk', '3.0')
-gi.require_version('Gedit', '3.0')
-from gi.repository import GObject, Gio, Gtk, Gdk, Gedit
+from gi.repository import GObject, Gtk, Gdk, Gedit
 import re
+import gettext
 from gpdefs import *
 
 try:
-    import gettext
-    gettext.bindtextdomain('gedit-plugins')
-    gettext.textdomain('gedit-plugins')
-    _ = gettext.gettext
+    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
+    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s);
 except:
     _ = lambda s: s
 
+ui_str = """
+<ui>
+  <menubar name="MenuBar">
+    <menu name="ToolsMenu" action="Tools">
+      <placeholder name="ToolsOps_2">
+        <menuitem name="ColorPicker" action="ColorPicker"/>
+      </placeholder>
+    </menu>
+  </menubar>
+</ui>
+"""
 
 class ColorHelper:
 
@@ -50,7 +57,7 @@ class ColorHelper:
 
             if char.lower() not in \
                     ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                     'a', 'b', 'c', 'd', 'e', 'f'):
+                    'a', 'b', 'c', 'd', 'e', 'f'):
                 return
 
             if not next_char(iter):
@@ -120,26 +127,9 @@ class ColorHelper:
         else:
             return None
 
-
-class ColorPickerAppActivatable(GObject.Object, Gedit.AppActivatable):
-
-    app = GObject.Property(type=Gedit.App)
-
-    def __init__(self):
-        GObject.Object.__init__(self)
-
-    def do_activate(self):
-        self.menu_ext = self.extend_menu("tools-section")
-        item = Gio.MenuItem.new(_("Pick _Color…"), "win.colorpicker")
-        self.menu_ext.prepend_menu_item(item)
-
-    def do_deactivate(self):
-        self.menu_ext = None
-
-
 class ColorPickerWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
-    window = GObject.Property(type=Gedit.Window)
+    window = GObject.property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -147,30 +137,46 @@ class ColorPickerWindowActivatable(GObject.Object, Gedit.WindowActivatable):
         self._color_helper = ColorHelper()
 
     def do_activate(self):
-        action = Gio.SimpleAction(name="colorpicker")
-        action.connect('activate', lambda a, p: self.on_color_picker_activate())
-        self.window.add_action(action)
+        self._insert_menu()
         self._update()
 
     def do_deactivate(self):
-        self.window.remove_action("colorpicker")
+        self._remove_menu()
 
     def do_update_state(self):
         self._update()
 
     def _update(self):
         tab = self.window.get_active_tab()
-        self.window.lookup_action("colorpicker").set_enabled(tab is not None)
+        self._action_group.set_sensitive(tab != None)
 
         if not tab and self._dialog and \
                 self._dialog.get_transient_for() == self.window:
             self._dialog.response(Gtk.ResponseType.CLOSE)
 
+    def _insert_menu(self):
+        manager = self.window.get_ui_manager()
+        self._action_group = Gtk.ActionGroup(name="GeditColorPickerPluginActions")
+        self._action_group.add_actions(
+                [("ColorPicker", None, _("Pick _Color..."), None,
+                 _("Pick a color from a dialog"),
+                 lambda a: self.on_color_picker_activate())])
+
+        manager.insert_action_group(self._action_group)
+        self._ui_id = manager.add_ui_from_string(ui_str)
+
+    def _remove_menu(self):
+        manager = self.window.get_ui_manager()
+        manager.remove_ui(self._ui_id)
+        manager.remove_action_group(self._action_group)
+        manager.ensure_update()
+
     # Signal handlers
 
     def on_color_picker_activate(self):
         if not self._dialog:
-            self._dialog = Gtk.ColorChooserDialog.new(_('Pick Color'), self.window)
+            self._dialog = Gtk.ColorChooserDialog(_('Pick Color'), self.window)
+
             self._dialog.connect_after('response', self.on_dialog_response)
 
         rgba_str = self._color_helper.get_current_color(self.window.get_active_document(), False)
@@ -189,8 +195,8 @@ class ColorPickerWindowActivatable(GObject.Object, Gedit.WindowActivatable):
             rgba = dialog.get_rgba()
 
             self._color_helper.insert_color(self.window.get_active_view(),
-                                            "%02x%02x%02x" % (self._color_helper.scale_color_component(rgba.red),
-                                                              self._color_helper.scale_color_component(rgba.green),
+                                            "%02x%02x%02x" % (self._color_helper.scale_color_component(rgba.red), \
+                                                              self._color_helper.scale_color_component(rgba.green), \
                                                               self._color_helper.scale_color_component(rgba.blue)))
         else:
             self._dialog.destroy()
@@ -199,7 +205,7 @@ class ColorPickerWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
 class ColorPickerViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
-    view = GObject.Property(type=Gedit.View)
+    view = GObject.property(type=Gedit.View)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -251,13 +257,14 @@ class ColorPickerViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
                     start, end = bounds
                     location = self.view.get_iter_location(start)
+                    win_x, win_y = self.view.buffer_to_window_coords(Gtk.TextWindowType.TEXT, location.x, location.y)
                     min_width, nat_width = self._color_button.get_preferred_width()
                     min_height, nat_height = self._color_button.get_preferred_height()
-                    x = location.x
-                    if location.y - nat_height > 0:
-                        y = location.y - nat_height
+                    x = win_x
+                    if win_y - nat_height > 0:
+                        y = win_y - nat_height
                     else:
-                        y = location.y + location.height
+                        y = win_y + location.height
 
                     self.view.add_child_in_window(self._color_button, Gtk.TextWindowType.TEXT, x, y)
         elif not rgba_str and self._color_button is not None:
@@ -265,11 +272,12 @@ class ColorPickerViewActivatable(GObject.Object, Gedit.ViewActivatable):
             self._color_button = None
 
     def on_color_set(self, color_button):
-        rgba = color_button.get_rgba()
+        rgba = Gdk.RGBA()
+        color_button.get_rgba(rgba)
 
         self._color_helper.insert_color(self.view,
-                                        "%02x%02x%02x" % (self._color_helper.scale_color_component(rgba.red),
-                                                          self._color_helper.scale_color_component(rgba.green),
+                                        "%02x%02x%02x" % (self._color_helper.scale_color_component(rgba.red), \
+                                                          self._color_helper.scale_color_component(rgba.green), \
                                                           self._color_helper.scale_color_component(rgba.blue)))
 
 # ex:ts=4:et:

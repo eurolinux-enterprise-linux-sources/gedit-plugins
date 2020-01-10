@@ -192,7 +192,7 @@ class Commands(Singleton):
 
         try:
             monitor = gfile.monitor_directory(Gio.FileMonitorFlags.NONE, None)
-        except Exception as e:
+        except Gio.Error as e:
             # Could not create monitor, this happens on systems where file monitoring is
             # not supported, but we don't really care
             pass
@@ -459,4 +459,4 @@ class Commands(Singleton):
             # Reload the module
             self.reload_module(path)
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

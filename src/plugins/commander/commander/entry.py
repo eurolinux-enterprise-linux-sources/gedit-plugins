@@ -25,7 +25,6 @@ import os
 import re
 import inspect
 import sys
-import colorsys
 
 import commander.commands as commands
 import commands.completion
@@ -41,57 +40,25 @@ from info import Info
 from xml.sax import saxutils
 import traceback
 
-class Entry(Gtk.Box):
+class Entry(Gtk.EventBox):
     __gtype_name__ = "CommanderEntry"
 
-    def _show(self):
-        self._reveal.set_reveal_child(True)
-
-    def _hide(self):
-        self._reveal.set_reveal_child(False)
-
     def __init__(self, view):
-        super(Entry, self).__init__()
-
+        Gtk.EventBox.__init__(self)
         self._view = view
-        view.connect("destroy", self._on_view_destroyed)
 
-        self._history = History(os.path.join(GLib.get_user_config_dir(), 'gedit/commander/history'))
-        self._history_prefix = None
+        self.set_visible_window(False)
 
-        self._prompt_text = None
-        self._accel_group = None
+        hbox = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 3)
+        hbox.show()
+        hbox.set_border_width(3)
 
-        self._wait_timeout = 0
-        self._cancel_button = None
-        self._info = None
-        self._info_revealer = None
+        # context for the view
+        self._entry = Gtk.Entry()
+        self._entry.set_has_frame(False)
+        self._entry.set_name('gedit-commander-entry')
+        self._entry.show()
 
-        self._suspended = None
-
-        self._handlers = [
-            [0, Gdk.KEY_Up, self._on_history_move, -1],
-            [0, Gdk.KEY_Down, self._on_history_move, 1],
-            [None, Gdk.KEY_Return, self._on_execute, None],
-            [None, Gdk.KEY_KP_Enter, self._on_execute, None],
-            [0, Gdk.KEY_Tab, self._on_complete, None],
-            [0, Gdk.KEY_ISO_Left_Tab, self._on_complete, None]
-        ]
-
-        self._re_complete = re.compile('("((?:\\\\"|[^"])*)"?|\'((?:\\\\\'|[^\'])*)\'?|[^\s]+)')
-        self._command_state = commands.Commands.State()
-
-        self.connect('destroy', self._on_destroy)
-
-        self._build_ui()
-        self._setup_keybindings()
-
-        self._attach()
-
-    def view(self):
-        return self._view
-
-    def _setup_keybindings(self):
         css = Gtk.CssProvider()
         css.load_from_data(bytes("""
 @binding-set terminal-like-bindings {
@@ -108,214 +75,145 @@ class Entry(Gtk.Box):
 GtkEntry#gedit-commander-entry {
     gtk-key-bindings: terminal-like-bindings;
 
-    background-image: none;
-    box-shadow: 0 0;
+    /* Override background to anything. This is weird, but doing this we can
+       then in code use widget.override_background to set the color dynamically
+       to the same color as the gedit view */
+    background: transparent;
+    border-width: 0;
+    box-shadow: 0 0 transparent;
     transition: none;
-    border: 0;
 }
-
 """, 'utf-8'))
 
-        self._entry.get_style_context().add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-
-    def _find_overlay(self, view):
-        parent = view.get_parent()
-
-        while not isinstance(parent, Gtk.Overlay):
-            parent = parent.get_parent()
-
-        return parent
-
-    def _build_ui(self):
-        self.set_orientation(Gtk.Orientation.VERTICAL)
-
-        self._overlay = self._find_overlay(self._view)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-        hbox.show()
-
-        self.pack_end(hbox, False, False, 0)
-
-        self._info_revealer = Gtk.Revealer()
-
-        self._info_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
-        self._info_revealer.set_transition_duration(150)
-
-        self.pack_start(self._info_revealer, False, False, 0)
-        self._info_revealer.connect('notify::child-revealed', self._on_info_revealer_child_revealed)
+        # FIXME: remove hardcopy of 600 (GTK_STYLE_PROVIDER_PRIORITY_APPLICATION)
+        # https://bugzilla.gnome.org/show_bug.cgi?id=646860
+        self._entry.get_style_context().add_provider(css, 600)
 
         self._prompt_label = Gtk.Label(label='<b>&gt;&gt;&gt;</b>', use_markup=True)
-        self._prompt_label.set_margin_top(3)
-        self._prompt_label.set_margin_bottom(3)
-        self._prompt_label.set_margin_start(3)
-
         self._prompt_label.show()
-        hbox.add(self._prompt_label)
 
-        self._entry = Gtk.Entry()
-        self._entry.set_has_frame(False)
-        self._entry.set_name('gedit-commander-entry')
-        self._entry.set_hexpand(True)
-        self._entry.set_margin_top(3)
-        self._entry.set_margin_bottom(3)
-        self._entry.set_margin_end(3)
+        self._entry.connect('focus-out-event', self.on_entry_focus_out)
+        self._entry.connect('key-press-event', self.on_entry_key_press)
 
-        self._entry.connect('key-press-event', self._on_entry_key_press)
+        self._history = History(os.path.join(GLib.get_user_config_dir(), 'gedit/commander/history'))
+        self._prompt = None
 
-        self._entry.show()
-        hbox.add(self._entry)
+        self._accel_group = None
 
-        self._copy_style_from_view()
-        self._view_style_updated_id = self._view.connect('style-updated', self._on_view_style_updated)
+        hbox.pack_start(self._prompt_label, False, False, 0)
+        hbox.pack_start(self._entry, True, True, 0)
 
-    def _on_view_destroyed (self, widget, user_data=None):
-        self._view.disconnect(self._view_style_updated_id)
-        self._view_style_updated_id = None
+        self.copy_style_from_view()
+        self.view_style_updated_id = self._view.connect('style-updated', self.on_view_style_updated)
 
-    def _on_view_style_updated(self, widget):
-        self._copy_style_from_view()
+        self.add(hbox)
+        self.attach()
+        self._entry.grab_focus()
 
-    @property
-    def _border_color(self):
-        style = self._view.get_buffer().get_style_scheme().get_style('right-margin')
+        self._wait_timeout = 0
+        self._info_window = None
 
-        if not style is None and style.props.foreground_set:
-            color = Gdk.RGBA()
-            color.parse(style.props.foreground)
-        else:
-            color = self._get_background_color(Gtk.StateFlags.NORMAL, 'bottom').copy()
-            color.red = 1 - color.red
-            color.green = 1 - color.green
-            color.blue = 1 - color.blue
+        self.connect('destroy', self.on_destroy)
+        self.connect_after('size-allocate', self.on_size_allocate)
+        self.view_draw_id = self._view.connect_after('draw', self.on_draw)
 
-        color.alpha = 0.3
+        self._history_prefix = None
+        self._suspended = None
+        self._handlers = [
+            [0, Gdk.KEY_Up, self.on_history_move, -1],
+            [0, Gdk.KEY_Down, self.on_history_move, 1],
+            [None, Gdk.KEY_Return, self.on_execute, None],
+            [None, Gdk.KEY_KP_Enter, self.on_execute, None],
+            [0, Gdk.KEY_Tab, self.on_complete, None],
+            [0, Gdk.KEY_ISO_Left_Tab, self.on_complete, None]
+        ]
+
+        self._re_complete = re.compile('("((?:\\\\"|[^"])*)"?|\'((?:\\\\\'|[^\'])*)\'?|[^\s]+)')
+        self._command_state = commands.Commands.State()
+
+    def on_view_style_updated(self, widget):
+        self.copy_style_from_view()
+
+    def get_border_color(self):
+        color = self.get_background_color().copy()
+        color.red = 1 - color.red
+        color.green = 1 - color.green
+        color.blue = 1 - color.blue
+        color.alpha = 0.5
+
         return color
 
-    def _get_background_color(self, state, cls=None):
+    def get_background_color(self):
         context = self._view.get_style_context()
-
-        context.save()
-
-        if not cls is None:
-            context.add_class(cls)
-
-        ret = context.get_background_color(state)
-
-        context.restore()
-
-        return ret
-
-    def _get_foreground_color(self, state, cls=None):
+        return context.get_background_color(Gtk.StateFlags.NORMAL)
+    
+    def get_foreground_color(self):
         context = self._view.get_style_context()
+        return context.get_color(Gtk.StateFlags.NORMAL)
 
-        context.save()
-
-        if not cls is None:
-            context.add_class(cls)
-
-        ret = context.get_color(state)
-
-        context.restore()
-
-        return ret
-
-    def _get_font(self):
+    def get_font(self):
         context = self._view.get_style_context()
         return context.get_font(Gtk.StateFlags.NORMAL)
 
-    def _styled_widgets(self):
-        widgets = [self, self._entry, self._prompt_label]
+    def copy_style_from_view(self, widget=None):
+        if widget != None:
+            context = self._view.get_style_context()
+            font = context.get_font(Gtk.StateFlags.NORMAL)
 
-        if not self._info is None:
-            widgets.append(self._info)
-            widgets.append(self._info.text_view)
-
-        return widgets
-
-    def _modify_bg(self, col, widget):
-        if self._info is None or (self._info.text_view != widget and self._info != widget):
-            return col
-
-        d = 0.1
-
-        h, l, s = colorsys.rgb_to_hls(col.red, col.green, col.blue)
-
-        if l < 0.5:
-            factor = 1 + d
+            widget.override_color(Gtk.StateFlags.NORMAL, self.get_foreground_color())
+            widget.override_font(self.get_font())
         else:
-            factor = 1 - d
+            if self._entry:
+                self.copy_style_from_view(self._entry)
 
-        l = max(0, min(1, l * factor))
-        s = max(0, min(1, s * factor))
+            if self._prompt_label:
+                self.copy_style_from_view(self._prompt_label)
 
-        r, g, b = colorsys.hls_to_rgb(h, l, s)
+    def view(self):
+        return self._view
 
-        return Gdk.RGBA(r, g, b, col.alpha)
+    def on_size_allocate(self, widget, alloc):
+        alloc = self.get_allocation()
+        self._view.set_border_window_size(Gtk.TextWindowType.BOTTOM, alloc.height)
 
-    def _copy_style_from_view(self, widgets=None):
-        font = self._get_font()
-        fg = self._get_foreground_color(Gtk.StateFlags.NORMAL, 'bottom')
-        bg = self._get_background_color(Gtk.StateFlags.NORMAL, 'bottom')
+        win = self._view.get_window(Gtk.TextWindowType.BOTTOM)
+        self.set_size_request(win.get_width(), -1)
 
-        fgsel = self._get_foreground_color(Gtk.StateFlags.SELECTED)
-        bgsel = self._get_background_color(Gtk.StateFlags.SELECTED)
+        # NOTE: we need to do this explicitly somehow, otherwise the window
+        # size will not be updated unless something else happens, not exactly
+        # sure what. This might be caused by the multi notebook, or custom
+        # animation layouting?
+        self._view.get_parent().resize_children()
 
-        cursor = self._view.style_get_property('cursor-color')
+    def attach(self):
+        # Attach ourselves in the text view, and position just above the
+        # text window
+        win = self._view.get_window(Gtk.TextWindowType.TEXT)
+        alloc = self.get_allocation()
 
-        if not cursor is None:
-            cursor = Gdk.RGBA.from_color(cursor)
+        self._view.set_border_window_size(Gtk.TextWindowType.BOTTOM, max(alloc.height, 1))
+        self._view.add_child_in_window(self, Gtk.TextWindowType.BOTTOM, 0, 0)
 
-        secondary_cursor = self._view.style_get_property('secondary-cursor-color')
+        win = self._view.get_window(Gtk.TextWindowType.BOTTOM)
 
-        if not secondary_cursor is None:
-            secondary_cursor = Gdk.RGBA.from_color(secondary_cursor)
-
-        if widgets is None:
-            widgets = self._styled_widgets()
-
-        for widget in widgets:
-            widget.override_color(Gtk.StateFlags.NORMAL, fg)
-            widget.override_background_color(Gtk.StateFlags.NORMAL, self._modify_bg(bg, widget))
-
-            widget.override_color(Gtk.StateFlags.SELECTED, fgsel)
-            widget.override_background_color(Gtk.StateFlags.SELECTED, self._modify_bg(bgsel, widget))
-
-            widget.override_font(font)
-            widget.override_cursor(cursor, secondary_cursor)
-
-    def _attach(self):
-        reveal = Gtk.Revealer()
-        reveal.add(self)
         self.show()
+        self.set_size_request(win.get_width(), -1)
 
-        reveal.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
-        reveal.set_transition_duration(200)
+    def on_entry_focus_out(self, widget, evnt):
+        if self._entry.get_sensitive():
+            self.destroy()
 
-        reveal.set_valign(Gtk.Align.END)
-        reveal.set_halign(Gtk.Align.FILL)
-
-        self._overlay.add_overlay(reveal)
-        reveal.show()
-
-        reveal.set_reveal_child(True)
-        self._reveal = reveal
-
-        self._entry.grab_focus()
-
-    def grab_focus(self):
-        self._entry.grab_focus()
-
-    def _on_entry_key_press(self, widget, evnt):
+    def on_entry_key_press(self, widget, evnt):
         state = evnt.state & Gtk.accelerator_get_default_mod_mask()
         text = self._entry.get_text()
 
         if evnt.keyval == Gdk.KEY_Escape:
-            if not self._info is None:
-                if not self._suspended is None:
+            if self._info_window:
+                if self._suspended:
                     self._suspended.resume()
 
-                if not self._info is None:
-                    self._info_revealer.set_reveal_child(False)
+                if self._info_window:
+                    self._info_window.destroy()
 
                 self._entry.set_sensitive(True)
             elif self._accel_group:
@@ -325,15 +223,15 @@ GtkEntry#gedit-commander-entry {
                     self._entry.set_editable(True)
                     self._accel_group = None
 
-                self._prompt()
+                self.prompt()
             elif text:
                 self._entry.set_text('')
             elif self._command_state:
                 self._command_state.clear()
-                self._prompt()
+                self.prompt()
             else:
                 self._view.grab_focus()
-                self._reveal.set_reveal_child(False)
+                self.destroy()
 
             return True
 
@@ -350,12 +248,12 @@ GtkEntry#gedit-commander-entry {
                 self._accel_group = accel
                 self._entry.set_text('')
                 self._entry.set_editable(False)
-                self._prompt()
+                self.prompt()
 
                 return True
             elif isinstance(accel, commands.accel_group.AccelCallback):
                 self._entry.set_editable(True)
-                self._run_command(lambda: accel.activate(self._command_state, self))
+                self.run_command(lambda: accel.activate(self._command_state, self))
                 return True
 
         if not self._entry.get_editable():
@@ -365,13 +263,13 @@ GtkEntry#gedit-commander-entry {
             if (handler[0] == None or handler[0] == state) and evnt.keyval == handler[1] and handler[2](handler[3], state):
                 return True
 
-        if not self._info is None and self._info.is_empty:
-            self._info_revealer.set_reveal_child(False)
+        if self._info_window and self._info_window.empty():
+            self._info_window.destroy()
 
         self._history_prefix = None
         return False
 
-    def _on_history_move(self, direction, modifier):
+    def on_history_move(self, direction, modifier):
         pos = self._entry.get_position()
 
         self._history.update(self._entry.get_text())
@@ -395,8 +293,8 @@ GtkEntry#gedit-commander-entry {
 
         return True
 
-    def _prompt(self, pr=''):
-        self._prompt_text = pr
+    def prompt(self, pr=''):
+        self._prompt = pr
 
         if self._accel_group != None:
             pr = '<i>%s</i>' % (saxutils.escape(self._accel_group.full_name()),)
@@ -408,51 +306,48 @@ GtkEntry#gedit-commander-entry {
 
         self._prompt_label.set_markup('<b>&gt;&gt;&gt;</b>%s' % pr)
 
-    def _make_info(self):
-        if self._info is None:
-            self._info = Info()
+    def make_info(self):
+        if self._info_window == None:
+            self._info_window = Info(self)
+            self._info_window.show()
 
-            self._copy_style_from_view([self._info, self._info.text_view])
+            self._info_window.connect('destroy', self.on_info_window_destroy)
 
-            self._info_revealer.add(self._info)
-            self._info.show()
-
-            self._info_revealer.show()
-            self._info_revealer.set_reveal_child(True)
-
-            self._info.connect('destroy', self._on_info_destroy)
-
-    def _on_info_revealer_child_revealed(self, widget, pspec):
-        if not self._info_revealer.get_child_revealed():
-            self._info.destroy()
-            self._info_revealer.hide()
-
-    def _on_info_destroy(self, widget):
-        self._info = None
+    def on_info_window_destroy(self, widget):
+        self._info_window = None
 
     def info_show(self, text='', use_markup=False):
-        self._make_info()
-        self._info.add_lines(text, use_markup)
+        self.make_info()
+        self._info_window.add_lines(text, use_markup)
 
     def info_status(self, text):
-        self._make_info()
-        self._info.status(text)
+        self.make_info()
+        self._info_window.status(text)
 
-    def _info_add_action(self, stock, callback, data=None):
-        self._make_info()
-        return self._info.add_action(stock, callback, data)
+    def info_add_action(self, stock, callback, data=None):
+        self.make_info()
+        return self._info_window.add_action(stock, callback, data)
 
-    def _command_history_done(self):
+    def command_history_done(self):
         self._history.add(self._entry.get_text())
         self._history_prefix = None
         self._entry.set_text('')
 
-    def _on_wait_cancel(self):
-        self._on_execute(None, 0)
+    def on_wait_cancel(self):
+        if self._suspended:
+            self._suspended.resume()
+
+        if self._cancel_button:
+            self._cancel_button.destroy()
+
+        if self._info_window and self._info_window.empty():
+            self._info_window.destroy()
+            self._entry.grab_focus()
+            self._entry.set_sensitive(True)
 
     def _show_wait_cancel(self):
-        self._cancel_button = self._info_add_action('process-stop-symbolic', self._on_wait_cancel)
-        self.info_status('<i>Waiting to finish\u2026</i>')
+        self._cancel_button = self.info_add_action(Gtk.STOCK_STOP, self.on_wait_cancel)
+        self.info_status('<i>Waiting to finish...</i>')
 
         self._wait_timeout = 0
         return False
@@ -462,41 +357,50 @@ GtkEntry#gedit-commander-entry {
             if match.group(i) != None:
                 return [match.group(i), match.start(i), match.end(i)]
 
-    def _on_suspend_resume(self):
+    def on_suspend_resume(self):
         if self._wait_timeout:
             GLib.source_remove(self._wait_timeout)
             self._wait_timeout = 0
         else:
-            if not self._cancel_button is None:
-                self._cancel_button.destroy()
-                self._cancel_button = None
-
+            self._cancel_button.destroy()
+            self._cancel_button = None
             self.info_status(None)
 
         self._entry.set_sensitive(True)
-        self._command_history_done()
+        self.command_history_done()
 
-        if self._entry.props.has_focus or (not self._info is None and not self._info.is_empty):
+        if self._entry.props.has_focus or (self._info_window and not self._info_window.empty()):
             self._entry.grab_focus()
 
-    def _run_command(self, cb):
+        self.on_execute(None, 0)
+
+    def ellipsize(self, s, size):
+        if len(s) <= size:
+            return s
+
+        mid = (size - 4) / 2
+        return s[:mid] + '...' + s[-mid:]
+
+    def destroy(self):
+        self.hide()
+        Gtk.EventBox.destroy(self)
+
+    def run_command(self, cb):
         self._suspended = None
 
         try:
             ret = cb()
         except Exception as e:
-            sys.stderr.write(self._format_trace() + '\n')
-
-            self._command_history_done()
+            self.command_history_done()
             self._command_state.clear()
 
-            self._prompt()
+            self.prompt()
 
             # Show error in info
             self.info_show('<b><span color="#f66">Error:</span></b> ' + saxutils.escape(str(e)), True)
 
             if not isinstance(e, commands.exceptions.Execute):
-                self.info_show(self._format_trace(), False)
+                self.info_show(self.format_trace(), False)
 
             return None
 
@@ -505,26 +409,26 @@ GtkEntry#gedit-commander-entry {
         if ret == mod.Result.SUSPEND:
             # Wait for it...
             self._suspended = ret
-            ret.register(self._on_suspend_resume)
+            ret.register(self.on_suspend_resume)
 
             self._wait_timeout = GLib.timeout_add(500, self._show_wait_cancel)
             self._entry.set_sensitive(False)
         else:
-            self._command_history_done()
-            self._prompt('')
+            self.command_history_done()
+            self.prompt('')
 
             if ret == mod.Result.PROMPT:
-                self._prompt(ret.prompt)
-            elif (ret == None or ret == mod.HIDE) and not self._prompt_text and (self._info is None or self._info.is_empty):
+                self.prompt(ret.prompt)
+            elif (ret == None or ret == mod.HIDE) and not self._prompt and (not self._info_window or self._info_window.empty()):
                 self._command_state.clear()
                 self._view.grab_focus()
-                self._reveal.set_reveal_child(False)
+                self.destroy()
             else:
                 self._entry.grab_focus()
 
         return ret
 
-    def _format_trace(self):
+    def format_trace(self):
         tp, val, tb = sys.exc_info()
 
         origtb = tb
@@ -532,7 +436,7 @@ GtkEntry#gedit-commander-entry {
         thisdir = os.path.dirname(__file__)
 
         # Skip frames up until after the last entry.py...
-        while not tb is None:
+        while True:
             filename = tb.tb_frame.f_code.co_filename
 
             dname = os.path.dirname(filename)
@@ -551,9 +455,9 @@ GtkEntry#gedit-commander-entry {
 
         return r
 
-    def _on_execute(self, dummy, modifier):
-        if not self._info is None and not self._suspended:
-            self._info_revealer.set_reveal_child(False)
+    def on_execute(self, dummy, modifier):
+        if self._info_window and not self._suspended:
+            self._info_window.destroy()
 
         text = self._entry.get_text().strip()
         words = list(self._re_complete.finditer(text))
@@ -567,11 +471,11 @@ GtkEntry#gedit-commander-entry {
             self._entry.set_text('')
             return
 
-        self._run_command(lambda: commands.Commands().execute(self._command_state, text, words, wordsstr, self, modifier))
+        self.run_command(lambda: commands.Commands().execute(self._command_state, text, words, wordsstr, self, modifier))
 
         return True
 
-    def _on_complete(self, dummy, modifier):
+    def on_complete(self, dummy, modifier):
         # First split all the text in words
         text = self._entry.get_text()
         pos = self._entry.get_position()
@@ -727,12 +631,12 @@ GtkEntry#gedit-commander-entry {
                 self._entry.insert_text('.', lastpos)
                 self._entry.set_position(lastpos + 1)
 
-            if not self._info is None:
-                self._info_revealer.set_reveal_child(False)
+            if self._info_window:
+                self._info_window.destroy()
         else:
             # Show popup with completed items
-            if not self._info is None:
-                self._info.clear()
+            if self._info_window:
+                self._info_window.clear()
 
             ret = []
 
@@ -746,41 +650,32 @@ GtkEntry#gedit-commander-entry {
 
         return True
 
-    def do_draw(self, ctx):
-        ret = Gtk.Box.do_draw(self, ctx)
+    def on_draw(self, widget, ct):
+        win = widget.get_window(Gtk.TextWindowType.BOTTOM)
 
-        col = self._border_color
+        if not Gtk.cairo_should_draw_window(ct, win):
+            return False
 
-        ctx.set_line_width(1)
-        ctx.set_source_rgba(col.red, col.green, col.blue, col.alpha)
+        Gtk.cairo_transform_to_window(ct, widget, win)
 
-        w = self.get_allocated_width()
+        color = self.get_border_color()
+        width = win.get_width()
 
-        ctx.move_to(0, 0.5)
-        ctx.line_to(w, 0.5)
-        ctx.stroke()
+        ct.set_source_rgba(color.red, color.green, color.blue, color.alpha)
+        ct.move_to(0, 0)
+        ct.line_to(width, 0)
+        ct.stroke()
 
-        if not self._info is None:
-            alloc = self._info_revealer.get_allocation()
-            y = alloc.y + alloc.height + 0.5
+        return False
 
-            if y >= 3:
-                ctx.move_to(0, y)
-                ctx.line_to(w, y)
-                ctx.stroke()
+    def on_destroy(self, widget):
+        self._view.set_border_window_size(Gtk.TextWindowType.BOTTOM, 0)
+        self._view.disconnect(self.view_style_updated_id)
+        self._view.disconnect(self.view_draw_id)
 
-        return ret
-
-    def _on_destroy(self, widget):
-        # Note we do this not as an override because somehow something
-        # goes wrong when finalizing in that case, maybe self is NULL
-        # or something like that, and then gets some new empty instance?
-        if self._view_style_updated_id:
-            self._view.disconnect(self._view_style_updated_id)
+        if self._info_window:
+            self._info_window.destroy()
 
         self._history.save()
 
-        self._view = None
-        self._view_style_updated_id = None
-
-# ex:ts=4:et
+# vi:ex:ts=4:et

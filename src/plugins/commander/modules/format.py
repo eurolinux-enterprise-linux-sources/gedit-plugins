@@ -130,4 +130,4 @@ Transform text in selection to title case. If the optional argument &lt;all&gt;
 is specified, text in all the open documents will be transformed."""
     return _transform(view, lambda x: x.title().replace('_', ''), all)
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

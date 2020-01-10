@@ -1,17 +1,20 @@
-if ENABLE_GIT
-plugins_gitdir = $(plugindir)/git
-plugins_git_PYTHON =				\
-	plugins/git/git/__init__.py		\
-	plugins/git/git/appactivatable.py	\
-	plugins/git/git/debug.py		\
-	plugins/git/git/diffrenderer.py		\
-	plugins/git/git/viewactivatable.py	\
-	plugins/git/git/windowactivatable.py	\
-	plugins/git/git/workerthread.py
+# Git
 
-plugin_in_files += plugins/git/git.plugin.desktop.in
-appstream_in_files += plugins/git/gedit-git.metainfo.xml.in
-else
-dist_plugin_in_files += plugins/git/git.plugin.desktop.in
-dist_appstream_in_files += plugins/git/gedit-git.metainfo.xml.in
-endif
+SUBDIRS = git
+
+plugindir = $(GEDIT_PLUGINS_LIBS_DIR)
+
+plugin_in_files = git.plugin.desktop.in
+
+%.plugin: %.plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po)
+	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+plugin_DATA = $(plugin_in_files:.plugin.desktop.in=.plugin)
+
+EXTRA_DIST = $(plugin_in_files)
+
+CLEANFILES = $(plugin_DATA)
+
+DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk

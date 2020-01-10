@@ -1,42 +1,32 @@
-plugin_LTLIBRARIES += plugins/wordcompletion/libwordcompletion.la
+# Word Completion plugin
+plugindir = $(GEDIT_PLUGINS_LIBS_DIR)
 
-plugins_wordcompletion_libwordcompletion_la_CPPFLAGS =		\
-	-I$(top_srcdir)						\
-	-I$(top_srcdir)/plugins/wordcompletion
-
-plugins_wordcompletion_libwordcompletion_la_CFLAGS =		\
-	$(GEDIT_CFLAGS) 					\
-	$(WARN_CFLAGS)						\
+INCLUDES = \
+	-I$(top_srcdir) 				\
+	$(GEDIT_CFLAGS) 				\
+	$(WARN_CFLAGS)					\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
-plugins_wordcompletion_libwordcompletion_la_LDFLAGS = $(PLUGIN_LIBTOOL_FLAGS)
-plugins_wordcompletion_libwordcompletion_la_LIBADD = $(GEDIT_LIBS)
+plugin_LTLIBRARIES = libwordcompletion.la
 
-plugin_in_files += plugins/wordcompletion/wordcompletion.plugin.desktop.in
+libwordcompletion_la_SOURCES = \
+	gedit-word-completion-plugin.h				\
+	gedit-word-completion-plugin.c				
 
-appstream_in_files += plugins/wordcompletion/gedit-wordcompletion.metainfo.xml.in
+libwordcompletion_la_LDFLAGS = $(PLUGIN_LIBTOOL_FLAGS)
+libwordcompletion_la_LIBADD = $(GEDIT_LIBS)
 
-plugins_wordcompletion_resourcedeps =						\
-	plugins/wordcompletion/gedit-word-completion.gresource.xml		\
-	$(shell $(GLIB_COMPILE_RESOURCES) 					\
-		--sourcedir=$(srcdir)/plugins/wordcompletion			\
-		--generate-dependencies						\
-		$(srcdir)/plugins/wordcompletion/gedit-word-completion.gresource.xml)
+# Plugin Info
 
-plugins/wordcompletion/gedit-word-completion-resources.c: $(plugins_wordcompletion_resourcedeps)
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES)			\
-		--target=$@					\
-		--sourcedir=$(srcdir)/plugins/wordcompletion	\
-		--generate-source $<
+plugin_in_files = wordcompletion.plugin.desktop.in
 
-BUILT_SOURCES +=						\
-	plugins/wordcompletion/gedit-word-completion-resources.c
+%.plugin: %.plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-plugins_wordcompletion_libwordcompletion_la_SOURCES =		\
-	plugins/wordcompletion/gedit-word-completion-plugin.h	\
-	plugins/wordcompletion/gedit-word-completion-plugin.c	\
-	$(BUILT_SOURCES)
+plugin_DATA = $(plugin_in_files:.plugin.desktop.in=.plugin)
 
-gsettings_SCHEMAS += plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml
+EXTRA_DIST = $(plugin_in_files)
 
-EXTRA_DIST += $(plugins_wordcompletion_resourcedeps)
+CLEANFILES = $(plugin_DATA)
+DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk

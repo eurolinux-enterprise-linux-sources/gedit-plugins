@@ -27,11 +27,33 @@ path = os.path.dirname(__file__)
 if not path in sys.path:
     sys.path.insert(0, path)
 
-import gi
-gi.require_version('Gedit', '3.0')
-gi.require_version('Gtk', '3.0')
+from windowactivatable import WindowActivatable
+import commander.commands as commands
+from gi.repository import GObject, GLib, Gedit
 
-from appactivatable import CommanderAppActivatable
-from windowactivatable import CommanderWindowActivatable
+class CommanderPlugin(GObject.Object, Gedit.AppActivatable):
+    __gtype_name__ = "CommanderPlugin"
 
-# ex:ts=4:et
+    app = GObject.property(type=Gedit.App)
+
+    def __init__(self):
+        GObject.Object.__init__(self)
+
+    def do_activate(self):
+        self._path = os.path.dirname(__file__)
+
+        if not self._path in sys.path:
+            sys.path.insert(0, self._path)
+
+        commands.Commands().set_dirs([
+            os.path.join(GLib.get_user_config_dir(), 'gedit/commander/modules'),
+            os.path.join(self.plugin_info.get_data_dir(), 'modules')
+        ])
+
+    def deactivate(self):
+        commands.Commands().stop()
+
+        if self._path in sys.path:
+            sys.path.remove(self._path)
+
+# vi:ex:ts=4:et

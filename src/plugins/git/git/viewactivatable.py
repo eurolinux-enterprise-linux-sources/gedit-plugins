@@ -14,17 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc.  51 Franklin Street, Fifth Floor, Boston, MA
-#  02110-1301 USA.
+#  Foundation, Inc., 59 Temple Place, Suite 330,
+#  Boston, MA 02111-1307, USA.
 
 from gi.repository import GLib, GObject, Gtk, Gedit, Ggit
-
-from .appactivatable import GitAppActivatable
 from .diffrenderer import DiffType, DiffRenderer
-from .windowactivatable import GitWindowActivatable
 
-import sys
-import os.path
 import difflib
 
 
@@ -36,31 +31,25 @@ class LineContext:
         self.line_type = DiffType.NONE
 
 
-class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
-    view = GObject.Property(type=Gedit.View)
-
-    status = GObject.Property(type=Ggit.StatusFlags,
-                              default=Ggit.StatusFlags.CURRENT)
+class GitPlugin(GObject.Object, Gedit.ViewActivatable):
+    view = GObject.property(type=Gedit.View)
 
     def __init__(self):
-        super().__init__()
+        GObject.Object.__init__(self)
+
+        Ggit.init()
 
         self.diff_timeout = 0
         self.file_contents_list = None
         self.file_context = None
 
     def do_activate(self):
-        GitWindowActivatable.register_view_activatable(self)
-
-        self.app_activatable = GitAppActivatable.get_instance()
-
         self.diff_renderer = DiffRenderer()
         self.gutter = self.view.get_gutter(Gtk.TextWindowType.LEFT)
 
-        # Note: GitWindowActivatable will call
-        #       update_location() for us when needed
         self.view_signals = [
-            self.view.connect('notify::buffer', self.on_notify_buffer)
+            self.view.connect('notify::buffer', self.on_notify_buffer),
+            self.view.connect('focus-in-event', self.update_location)
         ]
 
         self.buffer = None
@@ -97,25 +86,29 @@ class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
         self.buffer = view.get_buffer()
 
-        # The changed signal is connected to in update_location().
-        # The saved signal is pointless as the window activatable
-        # will see the change and call update_location().
+        # The changed signal is connected to in update_location()
         self.buffer_signals = [
-            self.buffer.connect('loaded', self.update_location)
+            self.buffer.connect('loaded', self.update_location),
+            self.buffer.connect('saved', self.update_location)
         ]
 
         # We wait and let the loaded signal call
         # update_location() as the buffer is currently empty
 
-    # TODO: This can be called many times and by idles,
-    #       should instead do the work in another thread
     def update_location(self, *args):
-        self.location = self.buffer.get_file().get_location()
+        self.location = self.buffer.get_location()
+        if self.location is None:
+            return
 
-        if self.location is not None:
-            repo = self.app_activatable.get_repository(self.location, False)
+        try:
+            repo_file = Ggit.Repository.discover(self.location)
+            repo = Ggit.Repository.open(repo_file)
+            head = repo.get_head()
+            commit = repo.lookup(head.get_target(), Ggit.Commit.__gtype__)
+            tree = commit.get_tree()
 
-        if self.location is None or repo is None:
+        except Exception:
+            # Not a git repository
             if self.file_contents_list is not None:
                 self.file_contents_list = None
                 self.gutter.remove(self.diff_renderer)
@@ -130,31 +123,19 @@ class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
                                                            self.update))
 
         try:
-            head = repo.get_head()
-            commit = repo.lookup(head.get_target(), Ggit.Commit)
-            tree = commit.get_tree()
-            relative_path = os.path.relpath(
-                os.path.realpath(self.location.get_path()),
-                repo.get_workdir().get_path()
-            )
+            relative_path = repo.get_workdir().get_relative_path(self.location)
 
             entry = tree.get_by_path(relative_path)
-            file_blob = repo.lookup(entry.get_id(), Ggit.Blob)
-            try:
-                gitconfig = repo.get_config()
-                encoding = gitconfig.get_string('gui.encoding')
-            except GLib.Error:
-                encoding = 'utf8'
-            file_contents = file_blob.get_raw_content().decode(encoding)
-            self.file_contents_list = file_contents.splitlines()
+            file_blob = repo.lookup(entry.get_id(), Ggit.Blob.__gtype__)
+            file_contents = file_blob.get_raw_content()
+            self.file_contents_list = file_contents.decode('utf-8').splitlines()
 
             # Remove the last empty line added by gedit automatically
-            if self.file_contents_list:
-                last_item = self.file_contents_list[-1]
-                if last_item[-1:] == '\n':
-                    self.file_contents_list[-1] = last_item[:-1]
+            last_item = self.file_contents_list[-1]
+            if last_item[-1:] == '\n':
+                self.file_contents_list[-1] = last_item[:-1]
 
-        except GLib.Error:
+        except Exception:
             # New file in a git repository
             self.file_contents_list = []
 
@@ -181,8 +162,6 @@ class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
         # Must be a new file
         if not self.file_contents_list:
-            self.status = Ggit.StatusFlags.WORKING_TREE_NEW
-
             n_lines = self.buffer.get_line_count()
             if len(self.diff_renderer.file_context) == n_lines:
                 return False
@@ -213,10 +192,7 @@ class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
         except StopIteration:
             # Nothing has changed
-            self.status = Ggit.StatusFlags.CURRENT
-
-        else:
-            self.status = Ggit.StatusFlags.WORKING_TREE_MODIFIED
+            pass
 
         file_context = {}
         for line_data in diff:

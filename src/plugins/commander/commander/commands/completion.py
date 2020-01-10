@@ -176,7 +176,7 @@ def filename(words, idx, view):
     doc = view.get_buffer()
 
     if not doc.is_untitled():
-        root = os.path.dirname(doc.get_file().get_location().get_path())
+        root = os.path.dirname(doc.get_location().get_path())
     else:
         root = os.path.expanduser('~/')
 
@@ -218,4 +218,4 @@ def words(ret):
 
     return decorator
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

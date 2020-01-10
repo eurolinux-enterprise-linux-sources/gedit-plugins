@@ -19,7 +19,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
-class Signals(object):
+class Signals:
     def __init__(self):
         self._signals = {}
 
@@ -33,10 +33,6 @@ class Signals(object):
 
     def connect_signal(self, obj, name, handler):
         return self._connect(obj, name, handler, obj.connect)
-
-    def connect_signals(self, obj, handlers):
-        for name in handlers:
-            self.connect_signal(obj, name, handlers[name])
 
     def connect_signal_after(self, obj, name, handler):
         return self._connect(obj, name, handler, obj.connect_after)

@@ -19,69 +19,88 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
-from gi.repository import GLib, GObject, Gio, Gtk, Gedit
+from gi.repository import GObject, Gtk, Gedit
 from entry import Entry
 from info import Info
 from gpdefs import *
 
-class CommanderWindowActivatable(GObject.Object, Gedit.WindowActivatable):
+try:
+    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
+    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s);
+except:
+    _ = lambda s: s
 
-    window = GObject.Property(type=Gedit.Window)
+ui_str = """
+<ui>
+  <menubar name="MenuBar">
+    <menu name="EditMenu" action="Edit">
+      <placeholder name="EditOps_5">
+        <menuitem name="CommanderEditMode" action="CommanderModeAction"/>
+      </placeholder>
+    </menu>
+  </menubar>
+</ui>
+"""
+
+class WindowActivatable(GObject.Object, Gedit.WindowActivatable):
+    __gtype_name__ = "CommanderWindowActivatable"
+
+    window = GObject.property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
 
     def do_activate(self):
-        action = Gio.SimpleAction.new_stateful("commander", None, GLib.Variant.new_boolean(False))
-        action.connect('activate', self.activate_toggle)
-        action.connect('change-state', self.commander_mode)
-        self.window.add_action(action)
+        self._entry = None
+        self._view = None
+
+        self.install_ui()
 
     def do_deactivate(self):
-        self.window.remove_action("commander")
+        self.uninstall_ui()
 
     def do_update_state(self):
-        action = self.window.lookup_action("commander")
-        state = action.get_state()
+        pass
 
-        action.change_state(GLib.Variant.new_boolean(state.get_boolean()))
+    def install_ui(self):
+        manager = self.window.get_ui_manager()
 
-    def activate_toggle(self, action, parameter):
-        view = self.window.get_active_view()
-        state = action.get_state()
+        self._action_group = Gtk.ActionGroup("GeditCommanderPluginActions")
+        self._action_group.add_toggle_actions([('CommanderModeAction', None,
+                                               _('Commander Mode'), '<Ctrl>period',
+                                               _('Start commander mode'), self.on_commander_mode)])
 
-        action.change_state(GLib.Variant.new_boolean(not state.get_boolean()))
+        manager.insert_action_group(self._action_group, -1)
+        self._merge_id = manager.add_ui_from_string(ui_str)
 
-        if state.get_boolean() and view._entry:
-            view._entry.grab_focus()
-            return
+    def uninstall_ui(self):
+        manager = self.window.get_ui_manager()
+        manager.remove_ui(self._merge_id)
+        manager.remove_action_group(self._action_group)
 
-    def commander_mode(self, action, state):
+        manager.ensure_update()
+
+    def on_commander_mode(self, action, user_data=None):
         view = self.window.get_active_view()
 
         if not view:
             return False
 
-        if not hasattr(view, '_entry'):
-            view._entry = None
+        if action.get_active():
+            if not self._entry or view != self._view:
+                self._entry = Entry(view)
+                self._entry.connect('destroy', self.on_entry_destroy)
 
-        active = state.get_boolean()
-        if active:
-            if not view._entry:
-                view._entry = Entry(view)
-                view._entry.connect('destroy', self.on_entry_destroy, view)
-
-            view._entry._show()
-            view._entry.grab_focus()
-
-        elif view._entry:
-            view._entry._hide()
-
-        action.set_state(GLib.Variant.new_boolean(active))
+            self._entry.grab_focus()
+            self._view = view
+        elif self._entry:
+            self._entry.destroy()
+            self._view = None
 
         return True
 
-    def on_entry_destroy(self, widget, view):
-        view._entry = None
+    def on_entry_destroy(self, widget, user_data=None):
+        self._entry = None
+        self._action_group.get_action('CommanderModeAction').set_active(False)
 
-# ex:ts=4:et
+# vi:ex:ts=4:et

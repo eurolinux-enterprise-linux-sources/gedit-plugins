@@ -3,7 +3,6 @@
 #  synctex.py - Synctex support with Gedit and Evince.
 #  
 #  Copyright (C) 2010 - José Aliste <jose.aliste@gmail.com>
-#  Copyright (C) 2015 - Germán Poo-Caamaño <gpoo@gnome.org>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,19 +23,29 @@ from gi.repository import GObject, Pango, Gtk, Gedit, Peas, PeasGtk, Gio, Gdk
 from .evince_dbus import EvinceWindowProxy
 import dbus.mainloop.glib
 import logging
+import gettext
 import os
-import re
 from gpdefs import *
 
 try:
-    import gettext
-    gettext.bindtextdomain('gedit-plugins')
-    gettext.textdomain('gedit-plugins')
-    _ = gettext.gettext
+    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
+    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s);
 except:
     _ = lambda s: s
 
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+ui_str = """<ui>
+  <menubar name="MenuBar">
+    <menu name="ToolsMenu" action="Tools">
+      <placeholder name="ToolsOps_2">
+        <separator/>
+        <menuitem name="Synctex" action="SynctexForwardSearch"/>
+      </placeholder>
+    </menu>
+  </menubar>
+</ui>
+"""
 
 _logger = logging.getLogger("SynctexPlugin")
 
@@ -61,18 +70,14 @@ def apply_style (style, tag):
                           Pango.Underline.NONE)
     apply_style_prop(tag, style, "strikethrough")
 
-def parse_modeline(text):
-    gedit_r = re.search(r'%+\s*mainfile:\s*(.*)$', text,
-                        re.IGNORECASE)
-    auctex_r = re.search(r'%+\s*TeX-master:\s*"(.*)"$', text,
-                         re.IGNORECASE)
-    if gedit_r:
-        return gedit_r.group(1)
-    elif auctex_r:
-        return auctex_r.group(1)
-    else:
-        return None
+def parse_modeline(line):
+    index = line.find("mainfile:")
 
+    if line.startswith("%") and index > 0:
+        # Parse the modeline.
+        return line[index + len("mainfile:"):].strip()
+
+    return None
 
 class SynctexViewHelper:
     def __init__(self, view, window, plugin):
@@ -103,7 +108,7 @@ class SynctexViewHelper:
         if event.button == 1 and event_state == Gdk.ModifierType.CONTROL_MASK:
             self.sync_view(event.time)
 
-    def on_saved_or_loaded(self, doc):
+    def on_saved_or_loaded(self, doc, data):
         self.update_location()
 
     def get_output_file(self):
@@ -135,7 +140,7 @@ class SynctexViewHelper:
         del self._highlight_tag
 
     def update_location(self):
-        gfile = self._doc.get_file().get_location()
+        gfile = self._doc.get_location()
 
         if gfile is None:
             return
@@ -183,7 +188,7 @@ class SynctexViewHelper:
         self._highlight()
         self._window.present_with_time (time)
 
-    def goto_line_after_load(self, line, time):
+    def goto_line_after_load(self, a, line, time):
         GObject.idle_add (lambda : self.goto_line(line, time))
         self._doc.disconnect(self._goto_handler)
 
@@ -211,7 +216,7 @@ class SynctexViewHelper:
 
             style = self._doc.get_style_scheme().get_style('search-match')
             apply_style(style, self._highlight_tag)
-            self._window.lookup_action("synctex").set_enabled(True)
+            self._plugin._action_group.set_sensitive(True)
             self.window_proxy = self._plugin.ref_evince_proxy(self.out_gfile, self._window)
 
         elif not self.active and self.window_proxy is not None:
@@ -221,7 +226,7 @@ class SynctexViewHelper:
             for handler in self._view_active_handlers:
                 self._view.disconnect(handler)
 
-            self._window.lookup_action("synctex").set_enabled(False)
+            self._plugin._action_group.set_sensitive(False)
             self._plugin.unref_evince_proxy(self.out_gfile)
             self.window_proxy = None
 
@@ -229,7 +234,7 @@ class SynctexViewHelper:
 class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
     __gtype_name__ = "SynctexWindowActivatable"
 
-    window = GObject.Property(type=Gedit.Window)
+    window = GObject.property(type=Gedit.Window)
     view_dict = {}
     _proxy_dict = {}
 
@@ -237,9 +242,7 @@ class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
         GObject.Object.__init__(self)
 
     def do_activate(self):
-        action = Gio.SimpleAction(name="synctex")
-        action.connect('activate', self.forward_search_cb)
-        self.window.add_action(action)
+        self._insert_menu()
 
         for view in self.window.get_views():
             self.add_helper(view, self.window)
@@ -247,6 +250,7 @@ class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
         self.handlers = [
             self.window.connect("tab-added", lambda window, tab: self.add_helper(tab.get_view(), window)),
             self.window.connect("tab-removed", lambda window, tab: self.remove_helper(tab.get_view())),
+            self.window.connect("active-tab-changed", self.on_active_tab_changed)
         ]
 
     def do_deactivate(self):
@@ -256,20 +260,21 @@ class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
         for view in self.window.get_views():
             self.remove_helper(view)
 
-        self.window.remove_action("synctex")
+        self._remove_menu()
 
-    def do_update_state(self):
-        view_helper = self.get_helper(self.window.get_active_view())
+    def on_active_tab_changed(self, window,  tab):
+        view_helper = self.get_helper(tab.get_view())
 
-        active = False
-        if view_helper is not None:
+        if view_helper is None:
+            active = False
+        else:
             active = view_helper.active
 
-        self.window.lookup_action("synctex").set_enabled(active)
+        self._action_group.set_sensitive(active)
 
     def add_helper(self, view, window):
         helper = SynctexViewHelper(view, window, self)
-        location = view.get_buffer().get_file().get_location()
+        location = view.get_buffer().get_location()
 
         if location is not None:
             self.view_dict[location.get_uri()] = helper
@@ -289,7 +294,29 @@ class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
             return None
         return view.synctex_view_helper
 
-    def forward_search_cb(self, action, parameter, user_data=None):
+    def _remove_menu(self):
+        manager = self.window.get_ui_manager()
+        manager.remove_ui(self._ui_id)
+        manager.remove_action_group(self._action_group)
+        manager.ensure_update()
+
+    def _insert_menu(self):
+        # Get the GtkUIManager
+        manager = self.window.get_ui_manager()
+
+        # Create a new action group
+        self._action_group = Gtk.ActionGroup(name="SynctexWindowActivatableActions")
+        self._action_group.add_actions([("SynctexForwardSearch", None,
+                                        _("Forward Search"), "<Ctrl><Alt>F",
+                                        _("Forward Search"), self.forward_search_cb)])
+
+        # Insert the action group
+        manager.insert_action_group(self._action_group, -1)
+
+        # Merge the UI
+        self._ui_id = manager.add_ui_from_string(ui_str)
+
+    def forward_search_cb(self, action, what=None):
         self.get_helper(self.window.get_active_view()).sync_view(Gtk.get_current_event_time())
 
     def source_view_handler(self, out_gfile, uri_input, source_link, time):
@@ -328,23 +355,5 @@ class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
             self._proxy_dict[uri][0] -= 1
             if self._proxy_dict[uri][0] == 0:
                 del self._proxy_dict[uri]
-
-class SynctexAppActivatable(GObject.Object, Gedit.AppActivatable):
-
-    app = GObject.Property(type=Gedit.App)
-
-    def __init__(self):
-        GObject.Object.__init__(self)
-
-    def do_activate(self):
-        self.app.add_accelerator("<Primary><Alt>F", "win.synctex", None)
-
-        self.menu_ext = self.extend_menu("tools-section")
-        item = Gio.MenuItem.new(_("Forward Search"), "win.synctex")
-        self.menu_ext.append_menu_item(item)
-
-    def do_deactivate(self):
-        self.app.remove_accelerator("win.synctex", None)
-        self.menu_ext = None
 
 # ex:ts=4:et:

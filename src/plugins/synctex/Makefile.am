@@ -1,13 +1,15 @@
-if ENABLE_SYNCTEX
-plugins_synctexdir = $(plugindir)/synctex
-plugins_synctex_PYTHON =			\
-	plugins/synctex/synctex/__init__.py	\
-	plugins/synctex/synctex/synctex.py	\
-	plugins/synctex/synctex/evince_dbus.py
+# SyncTeX Plugin
+SUBDIRS = synctex
+plugindir = $(GEDIT_PLUGINS_LIBS_DIR)
 
-plugin_in_files += plugins/synctex/synctex.plugin.desktop.in
-appstream_in_files += plugins/synctex/gedit-synctex.metainfo.xml.in
-else
-dist_plugin_in_files += plugins/synctex/synctex.plugin.desktop.in
-dist_appstream_in_files += plugins/synctex/gedit-synctex.metainfo.xml.in
-endif
+plugin_in_files = synctex.plugin.desktop.in
+%.plugin: %.plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+plugin_DATA = $(plugin_in_files:.plugin.desktop.in=.plugin)
+
+EXTRA_DIST = $(plugin_in_files)
+
+CLEANFILES = $(plugin_DATA)
+DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk
