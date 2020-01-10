@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-bookmarks" xml:lang="pl">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+    <revision version="3.4" date="2013-02-24" status="review"/>
+    <revision version="3.14" date="2014-09-10" status="review"/>
+
+    <credit type="author">
+      <name>Jim Campbell</name>
+      <email its:translate="no">jwcampbell@gmail.com</email>
+    </credit>
+    <credit type="copyright editor">
+      <name>Ekaterina Gerasimova</name>
+      <email its:translate="no">kittykat3756@gmail.com</email>
+      <years>2014</years>
+    </credit>
+
+    <desc>Zapisywanie często używanych miejsc za pomocą zakładek.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Zakładki</title>
+
+  <p>Zakładki programu <app>gedit</app> umożliwiają wyróżnianie ważnych wierszy tekstu w dokumencie lub programie, ułatwiając ich odnajdywanie. Można także przechodzić między zakładkami, nieco przyspieszając nawigację po dokumencie.</p>
+
+  <p>Aby włączyć wtyczkę zakładek, wybierz <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Preferencje</gui><gui>Wtyczki</gui> <gui>Zakładki</gui></guiseq>.</p>
+
+  <steps>
+    <title>Zakładki są wstawiane i usuwane za pomocą tego samego działania. Aby wstawić lub usunąć zakładkę:</title>
+    <item>
+      <p>Przejdź do wiersza, w którym wstawić lub z którego usunąć zakładkę.</p>
+    </item>
+    <item>
+      <p>Naciśnij klawisze <keyseq><key>Ctrl</key><key>Alt</key><key>B</key></keyseq> lub otwórz menu w górnym prawym rogu i wybierz <gui style="menuitem">Przełącz zakładkę</gui>.</p>
+    </item>
+  </steps>
+  
+  <list>
+    <title>Aby przechodzić między zakładkami:</title>
+    <item>
+      <p>Naciśnij klawisze <keyseq><key>Ctrl</key><key>B</key></keyseq>, aby przejść do następnej zakładki.</p>
+    </item>
+    <item>
+      <p>Naciśnij klawisze <keyseq><key>Ctrl</key><key>Shift</key><key>B</key></keyseq>, aby przejść do poprzedniej zakładki.</p>
+    </item>
+  </list>
+
+  <note>
+    <p>Jeśli wygodniej jest używać myszy, to można otworzyć menu w górnym prawym rogu i wybrać <gui style="menuitem">Przejdź do następnej zakładki</gui> lub <gui style="menuitem">Przejdź do poprzedniej zakładki</gui>.</p>
+  </note>
+
+</page>

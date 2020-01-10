@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-character-map" xml:lang="pl">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+    <revision version="0.2" date="2013-02-24" status="review"/>
+
+    <credit type="author">
+      <name>Jim Campbell</name>
+      <email its:translate="no">jwcampbell@gmail.com</email>
+    </credit>
+    <credit type="author">
+      <name>Paul Weaver</name>
+      <email its:translate="no">ch3pjw@bath.ac.uk</email>
+    </credit>
+
+    <desc>Wstawianie znaków specjalnych przez klikanie ich.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Tablica znaków</title>
+
+  <p>Wtyczka <app>Tablica znaków</app> umożliwia wstawianie do dokumentu znaków, których nie da się łatwo wpisać za pomocą klawiatury. Aby ją włączyć, wybierz <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Preferencje</gui><gui>Wtyczki</gui> <gui>Tablica znaków</gui></guiseq>.</p>
+  
+<section id="using-character-map">
+  <title>Używanie tablicy znaków</title>
+
+  <p>Po włączeniu wtyczki można dodawać znaki z karty <gui style="tab">Tablica znaków</gui> panelu bocznego (<guiseq><gui>Widok</gui><gui>Panel boczny</gui></guiseq>).</p>
+  
+  <steps>
+    <item>
+      <p>Umieść kursor w miejscu, w którym wstawić znak specjalny.</p>
+    </item>
+    <item>
+      <p>Otwórz panel boczny wybierając <guiseq><gui>Widok</gui> <gui>Panel boczny</gui></guiseq> lub naciskając klawisz <key>F9</key>.</p>
+    </item>
+    <item>
+      <p>Wybierz kartę <gui>Tablica znaków</gui> w panelu bocznym.</p>
+    </item>
+    <item>
+      <p>Jeśli to potrzebne, wybierz zestaw znaków, do którego należy znak z listy na górze karty <gui style="tab">Tablica znaków</gui> (na przykład „Arabskie”).</p>
+    </item>
+    <item>
+      <p>Podwójnie kliknij znak, aby go wstawić.</p>
+    </item>
+  </steps>
+  
+  <note style="tip">
+    <p>Należy kliknąć dokument, aby kontynuować pisanie.</p>
+  </note>
+
+</section>
+
+</page>

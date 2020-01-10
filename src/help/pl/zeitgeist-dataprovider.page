@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" style="task" id="plugin-zeitgeist-dataprovider" xml:lang="pl">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+    <revision pkgversion="3.8" date="2011-08-17" status="review"/>
+
+    <credit type="author">
+      <name>Shobha Tyagi</name>
+      <email>tyagishobha@gmail.com</email>
+    </credit>
+
+    <desc>Zapisywanie aktywności użytkownika dla dokumentów otwartych w programie gedit</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Dostawca danych usługi Zeitgeist</title>
+
+  <p>Zeitgeist to usługa zapisująca aktywność i wydarzenia użytkownika. Zeitgeist umożliwia innym programom używanie tych informacji w formie statystyk i osi czasu. Wtyczka dostawcy danych usługi Zeitgeist dla programu <app>gedit</app> zapisuje aktywność użytkownika dla otwieranych dokumentów, zapewniając łatwy dostęp do ostatnio i często używanych plików.</p>
+
+  <steps>
+    <title>Włączanie dostawcy danych usługi Zeitgeist</title>
+    <item>
+      <p>Wybierz <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Preferencje</gui> <gui style="tab">Wtyczki</gui></guiseq>.</p>
+    </item>
+    <item>
+	<p>Zaznacz <gui style="menuitem">Dostawca danych usługi Zeitgeist</gui>.</p>
+    </item>
+  </steps>
+
+</page>

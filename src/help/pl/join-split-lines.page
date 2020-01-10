@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-join-split-lines" xml:lang="pl">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+    <revision version="3.8" date="2013-02-24" status="review"/>
+
+    <credit type="author">
+      <name>Jim Campbell</name>
+      <email its:translate="no">jwcampbell@gmail.com</email>
+    </credit>
+
+    <desc>Łączenie wielu wierszy tekstu i rozdzielanie długich wierszy.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Łączenie/dzielenie wierszy</title>
+
+  <p>Wtyczka <app>Łączenie/dzielenie wierszy</app> może łączyć krótsze wiersze w jeden dłuższy, albo rozdzielać długi wiersz na wiele krótszych.</p>
+  
+  <p>Aby włączyć tę wtyczkę, wybierz <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Preferencje</gui><gui>Wtyczki</gui> <gui>Łączenie/dzielenie wierszy</gui></guiseq>.</p>
+
+  <steps>
+    <title>Aby połączyć wiele wierszy w jeden dłuższy:</title>
+    <item>
+      <p>Zaznacz wiersze do połączenia. Można to zrobić za pomocą myszy albo nacisnąć klawisze <keyseq><key>Shift</key><key>Strzałka w górę</key> </keyseq> lub <keyseq><key>Shift</key><key>Strzałka w dół</key></keyseq>.</p>
+    </item>
+    <item>
+      <p>Naciśnij klawisze <keyseq><key>Ctrl</key><key>J</key></keyseq>.</p>
+      <p>Zaznaczone wiersze zostaną połączone w jeden dłuższy.</p>
+    </item>
+  </steps>
+
+  <steps>
+    <title>Aby rozdzielić jeden wiersz na wiele wierszy:</title>
+    <item>
+      <p>Zaznacz wiersz do rozdzielenia umieszczając kursor w tym wierszu.</p>
+    </item>
+    <item>
+      <p>Naciśnij klawisze <keyseq><key>Ctrl</key><key>Shift</key> <key>J</key></keyseq>.</p>
+      <p>Wiersz zostanie podzielony na wiele wierszy. Spacje są używane do ustalania bezpiecznego miejsca podziału wiersza, a długość każdego wiersza nie przekroczy 80 znaków.</p>
+    </item>
+  </steps>
+
+</page>

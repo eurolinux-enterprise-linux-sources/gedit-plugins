@@ -10,37 +10,31 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Pick a color from a dialog and insert its hexadecimal representation.</desc>
+    <desc>Izvēlēties krāsu no dialoga un ievietot tās heksadecimālo apzīmējumu.</desc>
   </info>
 
-  <title>Color Picker</title>
+  <title>Krāsu pipete</title>
 
-  <p>The <app>Color Picker</app> plugin helps you to insert the character codes
-  that represent a certain color. This can make it easier to choose and use the
-  correct color in your programs.</p>
+  <p>Spraudnis <app>Krāsas pipete</app> palīdzēs jums ievietot rakstzīmju kodus, kas apzīmē attiecīgo krāsu. Tas atvieglo pareizās krāsas izvēli un izmantošanu jūsu programmās.</p>
   
-  <p>To enable the color picker plugin, select
-  <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Preferences</gui>
-  <gui>Plugins</gui><gui>Color Picker</gui></guiseq>.</p>
+  <p>Lai ieslēgtu krāsas izvēles spraudni, izvēlieties <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Iestatījumi</gui><gui>Spraudņi</gui><gui>Krāsas izvēle</gui></guiseq>.</p>
   
   <steps>
-    <title>Lai atvērtu un izmantotu krāsas izvēles dialogu:</title>
+    <title>Lai atvērtu un izmantotu krāsu pipetes dialoglodziņu:</title>
     <item>
       <p>Novietojiet kursoru tajā dokumenta vietā, kur vēlaties ievietot krāsas kodu.</p>
     </item>
     <item>
-      <p>Select <guiseq><gui>Tools</gui><gui>Pick Color…</gui></guiseq>.  The
-      color picker dialog will appear.</p>
+      <p>Izvēlieties <guiseq><gui>Rīki</gui><gui>Izvēlēties krāsu…</gui></guiseq>. Parādīsies krāsas izvēles dialogs.</p>
     </item>
     <item>
-      <p>Click on the desired color in the color picker window.</p>
+      <p>Spiediet uz vajadzīgās krāsas krāsu pipetes logā.</p>
     </item>
     <item>
-      <p>The appropriate color code will be inserted where you had placed your
-      cursor.</p>
+      <p>Atbilstošais krāsu kods tiks ievietots kursora pozīcijā.</p>
     </item>
     <item>
-      <p>Lai aizvērtu <app>krāsu izvēles</app> dialoglodziņu, spiediet pogu <gui>Aizvērt</gui>.</p>
+      <p>Lai aizvērtu <app>krāsu pipetes</app> dialoglodziņu, spiediet pogu <gui>Aizvērt</gui>.</p>
     </item>
   </steps>
 

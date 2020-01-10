@@ -39,7 +39,7 @@
       <p>Zvolte <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Předvolby</gui> <gui style="tab">Zásuvné moduly</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Zásuvný modul povolíte vybráním <gui style="menuitem">Velikost textu</gui>.</p>
+      <p>Zásuvný modul povolíte zaškrtnutím políčka u <gui style="menuitem">Velikost textu</gui>.</p>
     </item>
   </steps>
 

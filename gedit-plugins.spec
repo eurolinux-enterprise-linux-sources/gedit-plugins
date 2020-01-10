@@ -11,14 +11,14 @@
 %endif
 
 Name:           gedit-plugins
-Version:        3.22.0
+Version:        3.28.1
 Release:        1%{?dist}
 Summary:        Plugins for gedit
 
 Group:          Applications/Editors
 License:        GPLv2+
 URL:            http://live.gnome.org/Gedit
-Source0:        http://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
+Source0:        https://download.gnome.org/sources/%{name}/3.28/%{name}-%{version}.tar.xz
 Patch0:         gedit-plugins-disable-python3.patch
 
 BuildRequires:  gedit-devel
@@ -195,6 +195,13 @@ Requires:       pygobject3 >= 3.14.0
 %description -n gedit-plugin-textsize
 The gedit textsize plugin.
 
+%package -n     gedit-plugin-translate
+Summary:        gedit textsize plugin
+Requires:       %{name}-data = %{version}-%{release}
+Requires:       pygobject3 >= 3.14.0
+%description -n gedit-plugin-translate
+The gedit translate plugin.
+
 %package -n     gedit-plugin-wordcompletion
 Summary:        gedit wordcompletion plugin
 Requires:       %{name}-data = %{version}-%{release}
@@ -256,6 +263,13 @@ fi
 %posttrans -n gedit-plugin-terminal
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
+%postun -n gedit-plugin-translate
+if [ $1 -eq 0 ]; then
+  glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
+fi
+
+%posttrans -n gedit-plugin-translate
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 %postun -n gedit-plugin-wordcompletion
 if [ $1 -eq 0 ]; then
@@ -355,6 +369,13 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_libdir}/gedit/plugins/textsize.plugin
 %{_datadir}/appdata/gedit-textsize.metainfo.xml
 
+%files -n gedit-plugin-translate
+%{_datadir}/gedit/plugins/translate/ui/preferences.ui
+%{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.translate.gschema.xml
+%{_libdir}/gedit/plugins/translate
+%{_libdir}/gedit/plugins/translate.plugin
+%{_datadir}/appdata/gedit-translate.metainfo.xml
+
 %files -n gedit-plugin-wordcompletion
 %{_datadir}/glib-2.0/schemas/org.gnome.gedit.plugins.wordcompletion.gschema.xml
 %{_libdir}/gedit/plugins/libwordcompletion.so
@@ -369,6 +390,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %endif
 
 %changelog
+* Wed Jun 06 2018 Ray Strode <rstrode@redhat.com> - 3.28.1-1
+- Rebase to 3.28.1
+  Resolves: #1569721
+
 * Wed Mar 15 2017 Ray Strode <rstrode@redhat.com> - 3.22.0-1
 - Rebase to 3.22.0
   Resolves: #1386865

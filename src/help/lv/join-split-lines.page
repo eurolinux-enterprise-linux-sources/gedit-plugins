@@ -10,16 +10,14 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Join several lines of text or split long lines.</desc>
+    <desc>Apvienot vairākas teksta rindas vai sadalīt garas rindas.</desc>
   </info>
 
-  <title>Join/Split Lines</title>
+  <title>Sadalīt / apvienot rindas</title>
 
   <p>Spraudnis <app>Sadalīt / apvienot rindas</app> var apvienot īsākas rindas vienā garā rindā, vai arī sadalīt garu rindu vairākās īsās rindās.</p>
   
-  <p>To enable this plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui style="menuitem">Preferences</gui><gui>Plugins</gui>
-  <gui>Join/Split Lines</gui></guiseq>.</p>
+  <p>Lai ieslēgtu šo spraudni, izvēlieties <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Iestatījumi</gui><gui>Spraudņi</gui><gui>Sadalīt / apvienot rindas</gui></guiseq>.</p>
 
   <steps>
     <title>Lai apvienotu vairākas rindas vienā garākā rindā:</title>
@@ -38,8 +36,7 @@
       <p>Izvēlieties sadalāmo rindu, ievietojot kursoru jebkurā tās vietā.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>Shift</key>
-      <key>J</key></keyseq>.</p>
+      <p>Nospiediet <keyseq><key>Ctrl</key><key>Shift</key><key>J</key></keyseq>.</p>
       <p>Rinda būs sadalīta vairākās. Sadalīšana var notikt tikai pie atstarpēm, un katras rindas garums nepārsniegs 80 rakstzīmes.</p>
     </item>
   </steps>

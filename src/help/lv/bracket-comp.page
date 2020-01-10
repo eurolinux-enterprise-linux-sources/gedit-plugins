@@ -10,13 +10,12 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Auto-complete closing brackets.</desc>
+    <desc>Automātiski veikt iekavu aizvēršanu.</desc>
   </info>
 
-  <title>Bracket Completion</title>
+  <title>Iekavu noslēgšana</title>
 
-  <p>The <app>Bracket Completion</app> plugin will auto-complete closing
-  brackets for curly braces, parentheses and square brackets.</p>
+  <p>Spraudnis <app>Iekavu noslēgšana</app> automātiski ievietos aizverošās figūriekavas {}, apaļās iekavas () un kvadrātiekavas [ ].</p>
 
   <p>To enable the plugin, select <guiseq><gui style="menu">gedit</gui>
   <gui style="menuitem">Preferences</gui><gui>Plugins</gui>

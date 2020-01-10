@@ -16,19 +16,14 @@
       <years>2014</years>
     </credit>
 
-    <desc>Record commonly-referenced locations with bookmarks.</desc>
+    <desc>Saglabāt bieži vajadzīgās vietas grāmatzīmēs.</desc>
   </info>
 
   <title>Grāmatzīmes</title>
 
-  <p><app>gedit</app> bookmarks allow you to highlight important lines of text
-  within your document or program, making them easier to find. You can also
-  move up or down between bookmarks, making document navigation a bit
-  faster.</p>
+  <p>Lietotnes <app>gedit</app> grāmatzīmes dod iespēju atzīmēt svarīgas teksta rindas dokumentā vai programmā, lai tās būtu vieglāk atrast. Iespējams arī pāriet uz nākamo vai iepriekšējo grāmatzīmi ātrākai navigācijai pa dokumentu.</p>
 
-  <p>To enable the bookmark plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui style="menuitem">Preferences</gui><gui>Plugins</gui>
-  <gui>Bookmarks</gui></guiseq>.</p>
+  <p>Lai ieslēgtu grāmatzīmju spraudni, izvēlieties <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Iestatījumi</gui> <gui>Spraudņi</gui> <gui>Grāmatzīmes</gui></guiseq>.</p>
 
   <steps>
     <title>Grāmatzīmes ievieto un izņem ar vienu un to pašu darbību. Lai ievietotu vai izņemtu grāmatzīmi:</title>
@@ -36,9 +31,7 @@
       <p>Ievietojiet kursoru rindā, kur jāievieto vai jāizņem grāmatzīme.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>Alt</key><key>B</key></keyseq>, or
-      open the menu in the top-right corner and select
-      <gui style="menuitem">Toggle Bookmark</gui>.</p>
+      <p>Nospiediet <keyseq><key>Ctrl</key><key>Alt</key><key>B</key></keyseq> vai atveriet izvēlni augšējā labajā stūrī un izvēlieties <gui style="menuitem">Pārslēgt grāmatzīmi</gui>.</p>
     </item>
   </steps>
   
@@ -53,9 +46,7 @@
   </list>
 
   <note>
-    <p>If you prefer to use the mouse, you can open the menu in the top-right
-    corner and select <gui style="menuitem">Go to Next Bookmark</gui> or
-    <gui style="menuitem">Go to Previous Bookmark</gui>.</p>
+    <p>Ja labprātāk izmantojat peli, varat atvērt izvēlni augšējā labajā stūrī un izvēlēties <gui style="menuitem">Pāriet uz nākamo grāmatzīmi</gui> vai <gui style="menuitem">Pāriet uz iepriekšējo grāmatzīmi</gui>.</p>
   </note>
 
 </page>

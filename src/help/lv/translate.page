@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-translate" xml:lang="lv">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+    <revision version="1.0" date="2018-03-04" status="review"/>
+
+    <credit type="author">
+      <name>Jordi Mas i Hernàndez</name>
+      <email its:translate="no">jmas@softcatala.org</email>
+    </credit>
+
+    <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
+
+    <desc>Tulkot tekstu uz dažādām valodām</desc>
+  </info>
+
+  <title>Tulkot</title>
+
+  <p>Spraudnis <app>Tulkot</app> jums ļauj tulkot tekstu lietotnē <app>gedit</app>, izmantojot Apertium un Yandex dziņus.</p>
+
+<section id="enable-translate">
+  <title>Tulkošanas spraudņa ieslēgšana un konfigurēšana</title>
+
+  <steps>
+    <title>Lai ieslēgtu spraudni <app>Tulkot</app>:</title>
+    <item>
+      <p>Izvēlieties <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Iestatījumi</gui><gui>Spraudņi</gui></guiseq>.</p>
+    </item>
+    <item>
+      <p>Izvēlieties <gui style="menuitem">Tulkot</gui>, lai ieslēgtu spraudni.</p>
+    </item>
+
+    <item>
+      <p>Izvēlieties <gui style="button">Iestatījumi</gui>, lai konfigurētu tulkošanas dzini, lai izmantotu valodu pāri.</p>
+    </item>
+  </steps>
+
+</section>
+
+<section id="use-translate">
+  <title>Tulkošanas spraudņa izmantošana</title>
+
+ <steps>
+    <title>Lai tulkotu tekstu:</title>
+    <item>
+      <p>Atlasiet teksta daļu, kuru vēlaties tulkot.</p>
+    </item>
+    <item>
+      <p>Spiediet <keyseq><key>Ctrl</key><key>K</key></keyseq> vai izmantojiet konteksta izvēlni, lai to tulkotu.</p>
+      <p>Tulkojums parādās dokumentā vai apakšējā panelī, atkarībā no konfigurācijas.</p>
+    </item>
+  </steps>
+
+</section>
+
+</page>

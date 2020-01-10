@@ -3,8 +3,8 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.63])
 
 m4_define(gedit_plugins_major_version, 3)
-m4_define(gedit_plugins_minor_version, 22)
-m4_define(gedit_plugins_micro_version, 0)
+m4_define(gedit_plugins_minor_version, 28)
+m4_define(gedit_plugins_micro_version, 1)
 m4_define(gedit_plugins_version, gedit_plugins_major_version.gedit_plugins_minor_version.gedit_plugins_micro_version)
 
 AC_INIT([gedit-plugins],
@@ -44,7 +44,7 @@ esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 
-IT_PROG_INTLTOOL([0.40.0])
+IT_PROG_INTLTOOL([0.50.2])
 
 AM_GNU_GETTEXT_VERSION([0.17])
 AM_GNU_GETTEXT([external])
@@ -69,7 +69,7 @@ GLIB_GSETTINGS
 C_PLUGINS="bookmarks drawspaces wordcompletion"
 
 # Python plugins that don't need special dependencies, besides Python
-PY_PLUGINS="bracketcompletion codecomment colorpicker colorschemer commander joinlines multiedit smartspaces textsize"
+PY_PLUGINS="bracketcompletion codecomment colorpicker colorschemer commander joinlines multiedit smartspaces textsize translate"
 
 # Vala plugins that don't need special dependencies, besides Vala
 VALA_PLUGINS="findinfiles"
@@ -317,17 +317,15 @@ plugins/colorschemer/colorschemer.plugin.desktop.in
 plugins/commander/commander.plugin.desktop.in
 plugins/dashboard/dashboard.plugin.desktop.in
 plugins/drawspaces/drawspaces.plugin.desktop.in
-plugins/drawspaces/org.gnome.gedit.plugins.drawspaces.gschema.xml.in
 plugins/findinfiles/findinfiles.plugin.desktop.in
 plugins/git/git.plugin.desktop.in
 plugins/joinlines/joinlines.plugin.desktop.in
 plugins/multiedit/multiedit.plugin.desktop.in
 plugins/smartspaces/smartspaces.plugin.desktop.in
 plugins/synctex/synctex.plugin.desktop.in
-plugins/terminal/org.gnome.gedit.plugins.terminal.gschema.xml.in
 plugins/terminal/terminal.plugin.desktop.in
 plugins/textsize/textsize.plugin.desktop.in
-plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in
+plugins/translate/translate.plugin.desktop.in
 plugins/wordcompletion/wordcompletion.plugin.desktop.in
 po/Makefile.in])
 

@@ -1,4 +1,31 @@
 ====================
+gedit-plugins 3.28.1
+====================
+
+- Updated translations
+
+====================
+gedit-plugins 3.28.0
+====================
+- More fixes for the Translate plugin
+- Updated translations
+
+=====================
+gedit-plugins 3.27.92
+=====================
+
+- Fix the new Translate plugin
+- Updated translations
+
+====================
+gedit-plugins 3.27.1
+====================
+
+- Development release
+- Introduce new Translate plugin. Thanks Jordi Mas!
+- Several translation fixes
+
+====================
 gedit-plugins 3.22.0
 ====================
 

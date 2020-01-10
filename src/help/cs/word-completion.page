@@ -20,7 +20,7 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Během psaní automaticky dokončovat slova nebo části kódu.</desc>
+    <desc>Během psaní automaticky dokončuje slova nebo části kódu.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Marek Černocký</mal:name>
@@ -38,7 +38,7 @@
       <p>Zvolte <guiseq><gui style="menu">Upravit</gui><gui style="menuitem">Předvolby</gui><gui style="tab">Zásuvné moduly</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Zásuvný modul povolíte vybráním <gui style="menuitem">Dokončování slov</gui>.</p>
+      <p>Zásuvný modul povolíte zaškrtnutím políčka u <gui style="menuitem">Dokončování slov</gui>.</p>
     </item>
   </steps>
 

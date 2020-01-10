@@ -10,26 +10,20 @@
       <email>tyagishobha@gmail.com</email>
     </credit>
 
-    <desc>Log user activity for documents which are opened in gedit</desc>
+    <desc>Reģistrēt lietotāja aktivitāti dokumentiem, kas ir atvērti ar gedit</desc>
   </info>
 
-  <title>Zeitgeist dataprovider</title>
+  <title>Zeitgeist datu piegādātājs</title>
 
-  <p>Zeitgeist is a service that logs user activities and events.  Zeitgeist
-  lets other applications access this information in the form of statistics and
-  timelines.The Zeitgeist dataprovider plugin for <app>gedit</app> records user
-  activity for documents used with gedit giving easy access to recently-used
-  and frequently-used files.</p>
+  <p>Zeitgeist ir pakalpojums, kas reģistrē lietotāja aktivitātes un notikumus. Zeitgeist ļauj citām lietotnēm piekļūt šai informācijai statistikas un laika skalas formās. Zeitgeist datu sniedzēja spraudnis <app>gedit</app> lietotnei ieraksta lietotāja aktivitāti — kurus dokumentus lietotājs ir izmantojis ar gedit — sniedzot vieglu pieeju nesen izmantotajām un biežāk izmantotajām datnēm.</p>
 
   <steps>
-    <title>Enable Zeitgeist dataprovider</title>
+    <title>Ieslēgt Zeitgeist datu piegādātāju</title>
     <item>
-      <p>Select <guiseq><gui style="menu">gedit</gui>
-      <gui style="menuitem">Preferences</gui>
-      <gui style="tab">Plugins</gui></guiseq>.</p>
+      <p>Izvēlieties <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Iestatījumi</gui><gui>Spraudņi</gui></guiseq>.</p>
     </item>
     <item>
-	<p>Select <gui style="menuitem">Zeitgeist Dataprovider</gui>.</p>
+	<p>Izvēlieties <gui style="menuitem">Zeitgeist datu piegādātājs</gui>.</p>
     </item>
   </steps>
 

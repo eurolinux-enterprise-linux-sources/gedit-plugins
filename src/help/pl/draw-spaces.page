@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-draw-spaces" xml:lang="pl">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+    <revision version="3.8" date="2013-02-24" status="review"/>
+
+    <credit type="author">
+      <name>Jim Campbell</name>
+      <email its:translate="no">jwcampbell@gmail.com</email>
+    </credit>
+
+    <desc>Wyświetlanie białych znaków między słowami i częściami kodu.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Wyświetlanie spacji</title>
+
+  <p>Wtyczka <app>Wyświetlanie spacji</app> może oznaczać spacje, tabulacje i inne rodzaje białych znaków małymi, widocznymi znacznikami. Dzięki temu można łatwiej stosować konsekwentne zasady wstawiania białych znaków.</p>
+   
+  <p>Aby włączyć tę wtyczkę, wybierz <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Preferencje</gui><gui>Wtyczki</gui> <gui>Wyświetlanie spacji</gui></guiseq>. Po włączeniu można ustawić jej opcje zaznaczając wtyczkę i klikając przycisk <gui style="menuitem">Preferencje</gui>.</p>
+  
+  <list>
+    <title>Domyślnie wtyczka <app>Wyświetlanie spacji</app> oznacza te rodzaje białych znaków:</title>
+    <item><p>Spacje</p></item>
+    <item><p>Tabulacje</p></item>
+    <item><p>Spacje na początku wiersza</p></item>
+    <item><p>Spacje w tekście</p></item>
+    <item><p>Spacje na końcu wiersza</p></item>
+  </list>
+  
+  <list>
+    <title>Można także włączyć oznaczanie:</title>
+    <item><p>Nowe wiersze</p></item>
+    <item><p>Niełamliwe spacje</p></item>
+  </list>
+   
+  <note style="tip">
+    <p>Kropki będą widoczne podczas redagowania pliku, ale nie będą drukowane.</p>
+  </note>
+
+</page>

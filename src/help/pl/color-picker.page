@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-color-picker" xml:lang="pl">
+
+  <info>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/> 
+    <revision version="3.4" date="2013-02-24" status="review"/>
+
+    <credit type="author">
+      <name>Jim Campbell</name>
+      <email its:translate="no">jwcampbell@gmail.com</email>
+    </credit>
+
+    <desc>Wybieranie koloru z okna dialogowego i wstawianie jego szesnastkowego odpowiednika.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Wybór koloru</title>
+
+  <p>Wtyczka <app>Wybór koloru</app> pomaga wstawiać kod odpowiadający danemu kolorowi. Ułatwia to wybieranie i używanie właściwych kolorów w programie.</p>
+  
+  <p>Aby włączyć tę wtyczkę, wybierz <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Preferencje</gui> <gui>Wtyczki</gui><gui>Wybór koloru</gui></guiseq>.</p>
+  
+  <steps>
+    <title>Aby otworzyć i użyć okna wyboru koloru:</title>
+    <item>
+      <p>Umieść kursor w miejscu, w którym wstawić kod koloru.</p>
+    </item>
+    <item>
+      <p>Wybierz <guiseq><gui>Narzędzia</gui><gui>Wybierz kolor…</gui></guiseq>. Pojawi się okno wyboru koloru.</p>
+    </item>
+    <item>
+      <p>Kliknij dany kolor w oknie wyboru koloru.</p>
+    </item>
+    <item>
+      <p>Odpowiedni kod koloru zostanie wstawiany w miejscu kursora.</p>
+    </item>
+    <item>
+      <p>Aby zamknąć okno wyboru koloru, kliknij przycisk <gui>Zamknij</gui>.</p>
+    </item>
+  </steps>
+
+  <!--TODO: Update this section for the "Custom" values -->
+  <note style="tip">
+    <p>Można dostosować barwę, nasycenie, wartości, poziom czerwieni, zieleni i niebieskiego.</p>
+    <p>Oprócz tego można zapisywać kolory klikając kolorowe pole w oknie wyboru koloru prawym przyciskiem myszy i klikając <gui>Zapisz kolor</gui>. Ułatwi to wstawianie często używanych kolorów.</p>
+  </note>     
+
+</page>

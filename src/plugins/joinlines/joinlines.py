@@ -20,12 +20,13 @@
 #  Boston, MA 02110-1301, USA.
 
 from gi.repository import GObject, Gio, Gtk, Gedit
-import gettext
 from gpdefs import *
 
 try:
-    gettext.bindtextdomain(GETTEXT_PACKAGE, GP_LOCALEDIR)
-    _ = lambda s: gettext.dgettext(GETTEXT_PACKAGE, s)
+    import gettext
+    gettext.bindtextdomain('gedit-plugins')
+    gettext.textdomain('gedit-plugins')
+    _ = gettext.gettext
 except:
     _ = lambda s: s
 
@@ -87,13 +88,17 @@ class JoinLinesViewActivatable(GObject.Object, Gedit.ViewActivatable):
     view = GObject.Property(type=Gedit.View)
 
     def __init__(self):
+        self.popup_handler_id = 0
         GObject.Object.__init__(self)
 
     def do_activate(self):
         self.view.join_lines_view_activatable = self
-        self.view.connect('populate-popup', self.populate_popup)
+        self.popup_handler_id = self.view.connect('populate-popup', self.populate_popup)
 
     def do_deactivate(self):
+        if self.popup_handler_id != 0:
+            self.view.disconnect(self.popup_handler_id)
+            self.popup_handler_id = 0
         delattr(self.view, "join_lines_view_activatable")
 
     def populate_popup(self, view, popup):

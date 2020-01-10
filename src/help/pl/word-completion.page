@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" style="task" id="plugin-word-completion" xml:lang="pl">
+
+  <info>
+    <revision pkgversion="3.8" date="2013-02-24" status="review"/>
+    <link type="guide" xref="gedit-plugin-guide#gedit-additional-plugins"/>
+
+    <credit type="author">
+      <name>Jim Campbell</name>
+      <email its:translate="no">jwcampbell@gmail.com</email>
+    </credit>
+    <credit type="author">
+      <name>Paul Weaver</name>
+      <email its:translate="no">ch3pjw@bath.ac.uk</email>
+    </credit>
+    <credit type="author">
+      <name>Sindhu S</name>
+      <email its:translate="no">sindhus@live.in</email>
+    </credit>
+
+    <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
+
+    <desc>Automatyczne uzupełnianie słów lub części tekstu podczas pisania.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Piotr Drąg</mal:name>
+      <mal:email>piotrdrag@gmail.com</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Aviary.pl</mal:name>
+      <mal:email>community-poland@mozilla.org</mal:email>
+      <mal:years>2017-2018</mal:years>
+    </mal:credit>
+  </info>
+
+  <title>Uzupełnianie wyrazów</title>
+
+  <p>Wtyczka <app>Uzupełnianie wyrazów</app> może przyspieszyć pisanie przez podpowiadanie końcówek słów podczas pisania. Aby ją włączyć:</p>
+
+  <steps>
+    <item>
+      <p>Wybierz <guiseq><gui style="menu">Edycja</gui> <gui style="menuitem">Preferencje</gui> <gui style="tab">Wtyczki</gui></guiseq>.</p>
+    </item>
+    <item>
+      <p>Zaznacz <gui style="menuitem">Uzupełnianie wyrazów</gui>, aby włączyć wtyczkę.</p>
+    </item>
+  </steps>
+
+  <p>Podczas pisania wtyczka <app>Uzupełnianie wyrazów</app> będzie automatycznie wyświetlała listę słów zaczynających się od już wpisanych liter. Podpowiedzi są tworzone na podstawie słów pojawiających się w innych miejscach dokumentu i wcześniej określonych słów, jeśli dokument jest w znanym formacie.</p>
+
+  <p>Aby wstawić podpowiadane słowo, kliknij je podwójnie na liście lub naciśnij klawisze <keyseq><key>Alt</key><key>liczba</key></keyseq>, gdzie <key>liczba</key> to liczba wyświetlana obok danego słowa.</p>
+
+</page>

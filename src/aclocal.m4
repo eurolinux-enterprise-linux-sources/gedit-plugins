@@ -1,6 +1,6 @@
-# generated automatically by aclocal 1.15 -*- Autoconf -*-
+# generated automatically by aclocal 1.15.1 -*- Autoconf -*-
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -20,8 +20,95 @@ You have another version of autoconf.  It may work, but is not guaranteed to.
 If you have problems, you may need to regenerate the build system entirely.
 To do so, use the procedure documented by the package, typically 'autoreconf'.])])
 
+# Increment this whenever this file is changed.
+#serial 1
+
+dnl GLIB_GSETTINGS
+dnl Defines GSETTINGS_SCHEMAS_INSTALL which controls whether
+dnl the schema should be compiled
+dnl
+
+AC_DEFUN([GLIB_GSETTINGS],
+[
+  m4_pattern_allow([AM_V_GEN])
+  AC_ARG_ENABLE(schemas-compile,
+                AS_HELP_STRING([--disable-schemas-compile],
+                               [Disable regeneration of gschemas.compiled on install]),
+                [case ${enableval} in
+                  yes) GSETTINGS_DISABLE_SCHEMAS_COMPILE=""  ;;
+                  no)  GSETTINGS_DISABLE_SCHEMAS_COMPILE="1" ;;
+                  *) AC_MSG_ERROR([bad value ${enableval} for --enable-schemas-compile]) ;;
+                 esac])
+  AC_SUBST([GSETTINGS_DISABLE_SCHEMAS_COMPILE])
+  PKG_PROG_PKG_CONFIG([0.16])
+  AC_SUBST(gsettingsschemadir, [${datadir}/glib-2.0/schemas])
+  if test x$cross_compiling != xyes; then
+    GLIB_COMPILE_SCHEMAS=`$PKG_CONFIG --variable glib_compile_schemas gio-2.0`
+  else
+    AC_PATH_PROG(GLIB_COMPILE_SCHEMAS, glib-compile-schemas)
+  fi
+  AC_SUBST(GLIB_COMPILE_SCHEMAS)
+  if test "x$GLIB_COMPILE_SCHEMAS" = "x"; then
+    ifelse([$2],,[AC_MSG_ERROR([glib-compile-schemas not found.])],[$2])
+  else
+    ifelse([$1],,[:],[$1])
+  fi
+
+  GSETTINGS_RULES='
+.PHONY : uninstall-gsettings-schemas install-gsettings-schemas clean-gsettings-schemas
+
+mostlyclean-am: clean-gsettings-schemas
+
+gsettings__enum_file = $(addsuffix .enums.xml,$(gsettings_ENUM_NAMESPACE))
+
+%.gschema.valid: %.gschema.xml $(gsettings__enum_file)
+	$(AM_V_GEN) $(GLIB_COMPILE_SCHEMAS) --strict --dry-run $(addprefix --schema-file=,$(gsettings__enum_file)) --schema-file=$< && mkdir -p [$](@D) && touch [$]@
+
+all-am: $(gsettings_SCHEMAS:.xml=.valid)
+uninstall-am: uninstall-gsettings-schemas
+install-data-am: install-gsettings-schemas
+
+.SECONDARY: $(gsettings_SCHEMAS)
+
+install-gsettings-schemas: $(gsettings_SCHEMAS) $(gsettings__enum_file)
+	@$(NORMAL_INSTALL)
+	if test -n "$^"; then \
+		test -z "$(gsettingsschemadir)" || $(MKDIR_P) "$(DESTDIR)$(gsettingsschemadir)"; \
+		$(INSTALL_DATA) $^ "$(DESTDIR)$(gsettingsschemadir)"; \
+		test -n "$(GSETTINGS_DISABLE_SCHEMAS_COMPILE)$(DESTDIR)" || $(GLIB_COMPILE_SCHEMAS) $(gsettingsschemadir); \
+	fi
+
+uninstall-gsettings-schemas:
+	@$(NORMAL_UNINSTALL)
+	@list='\''$(gsettings_SCHEMAS) $(gsettings__enum_file)'\''; test -n "$(gsettingsschemadir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e '\''s|^.*/||'\''`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '\''$(DESTDIR)$(gsettingsschemadir)'\'' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(gsettingsschemadir)" && rm -f $$files
+	test -n "$(GSETTINGS_DISABLE_SCHEMAS_COMPILE)$(DESTDIR)" || $(GLIB_COMPILE_SCHEMAS) $(gsettingsschemadir)
+
+clean-gsettings-schemas:
+	rm -f $(gsettings_SCHEMAS:.xml=.valid) $(gsettings__enum_file)
+
+ifdef gsettings_ENUM_NAMESPACE
+$(gsettings__enum_file): $(gsettings_ENUM_FILES)
+	$(AM_V_GEN) glib-mkenums --comments '\''<!-- @comment@ -->'\'' --fhead "<schemalist>" --vhead "  <@type@ id='\''$(gsettings_ENUM_NAMESPACE).@EnumName@'\''>" --vprod "    <value nick='\''@valuenick@'\'' value='\''@valuenum@'\''/>" --vtail "  </@type@>" --ftail "</schemalist>" [$]^ > [$]@.tmp && mv [$]@.tmp [$]@
+endif
+'
+  _GSETTINGS_SUBST(GSETTINGS_RULES)
+])
+
+dnl _GSETTINGS_SUBST(VARIABLE)
+dnl Abstract macro to do either _AM_SUBST_NOTMAKE or AC_SUBST
+AC_DEFUN([_GSETTINGS_SUBST],
+[
+AC_SUBST([$1])
+m4_ifdef([_AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE([$1])])
+]
+)
+
 dnl pkg.m4 - Macros to locate and utilise pkg-config.   -*- Autoconf -*-
-dnl serial 11 (pkg-config-0.29)
+dnl serial 11 (pkg-config-0.29.1)
 dnl
 dnl Copyright © 2004 Scott James Remnant <scott@netsplit.com>.
 dnl Copyright © 2012-2015 Dan Nicholson <dbn.lists@gmail.com>
@@ -63,7 +150,7 @@ dnl
 dnl See the "Since" comment for each macro you use to see what version
 dnl of the macros you require.
 m4_defun([PKG_PREREQ],
-[m4_define([PKG_MACROS_VERSION], [0.29])
+[m4_define([PKG_MACROS_VERSION], [0.29.1])
 m4_if(m4_version_compare(PKG_MACROS_VERSION, [$1]), -1,
     [m4_fatal([pkg.m4 version $1 or higher is required but ]PKG_MACROS_VERSION[ found])])
 ])dnl PKG_PREREQ
@@ -296,90 +383,6 @@ AS_VAR_COPY([$1], [pkg_cv_][$1])
 AS_VAR_IF([$1], [""], [$5], [$4])dnl
 ])dnl PKG_CHECK_VAR
 
-dnl GLIB_GSETTINGS
-dnl Defines GSETTINGS_SCHEMAS_INSTALL which controls whether
-dnl the schema should be compiled
-dnl
-
-AC_DEFUN([GLIB_GSETTINGS],
-[
-  m4_pattern_allow([AM_V_GEN])
-  AC_ARG_ENABLE(schemas-compile,
-                AS_HELP_STRING([--disable-schemas-compile],
-                               [Disable regeneration of gschemas.compiled on install]),
-                [case ${enableval} in
-                  yes) GSETTINGS_DISABLE_SCHEMAS_COMPILE=""  ;;
-                  no)  GSETTINGS_DISABLE_SCHEMAS_COMPILE="1" ;;
-                  *) AC_MSG_ERROR([bad value ${enableval} for --enable-schemas-compile]) ;;
-                 esac])
-  AC_SUBST([GSETTINGS_DISABLE_SCHEMAS_COMPILE])
-  PKG_PROG_PKG_CONFIG([0.16])
-  AC_SUBST(gsettingsschemadir, [${datadir}/glib-2.0/schemas])
-  if test x$cross_compiling != xyes; then
-    GLIB_COMPILE_SCHEMAS=`$PKG_CONFIG --variable glib_compile_schemas gio-2.0`
-  else
-    AC_PATH_PROG(GLIB_COMPILE_SCHEMAS, glib-compile-schemas)
-  fi
-  AC_SUBST(GLIB_COMPILE_SCHEMAS)
-  if test "x$GLIB_COMPILE_SCHEMAS" = "x"; then
-    ifelse([$2],,[AC_MSG_ERROR([glib-compile-schemas not found.])],[$2])
-  else
-    ifelse([$1],,[:],[$1])
-  fi
-
-  GSETTINGS_RULES='
-.PHONY : uninstall-gsettings-schemas install-gsettings-schemas clean-gsettings-schemas
-
-mostlyclean-am: clean-gsettings-schemas
-
-gsettings__enum_file = $(addsuffix .enums.xml,$(gsettings_ENUM_NAMESPACE))
-
-%.gschema.valid: %.gschema.xml $(gsettings__enum_file)
-	$(AM_V_GEN) $(GLIB_COMPILE_SCHEMAS) --strict --dry-run $(addprefix --schema-file=,$(gsettings__enum_file)) --schema-file=$< && mkdir -p [$](@D) && touch [$]@
-
-all-am: $(gsettings_SCHEMAS:.xml=.valid)
-uninstall-am: uninstall-gsettings-schemas
-install-data-am: install-gsettings-schemas
-
-.SECONDARY: $(gsettings_SCHEMAS)
-
-install-gsettings-schemas: $(gsettings_SCHEMAS) $(gsettings__enum_file)
-	@$(NORMAL_INSTALL)
-	if test -n "$^"; then \
-		test -z "$(gsettingsschemadir)" || $(MKDIR_P) "$(DESTDIR)$(gsettingsschemadir)"; \
-		$(INSTALL_DATA) $^ "$(DESTDIR)$(gsettingsschemadir)"; \
-		test -n "$(GSETTINGS_DISABLE_SCHEMAS_COMPILE)$(DESTDIR)" || $(GLIB_COMPILE_SCHEMAS) $(gsettingsschemadir); \
-	fi
-
-uninstall-gsettings-schemas:
-	@$(NORMAL_UNINSTALL)
-	@list='\''$(gsettings_SCHEMAS) $(gsettings__enum_file)'\''; test -n "$(gsettingsschemadir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e '\''s|^.*/||'\''`; \
-	test -n "$$files" || exit 0; \
-	echo " ( cd '\''$(DESTDIR)$(gsettingsschemadir)'\'' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(gsettingsschemadir)" && rm -f $$files
-	test -n "$(GSETTINGS_DISABLE_SCHEMAS_COMPILE)$(DESTDIR)" || $(GLIB_COMPILE_SCHEMAS) $(gsettingsschemadir)
-
-clean-gsettings-schemas:
-	rm -f $(gsettings_SCHEMAS:.xml=.valid) $(gsettings__enum_file)
-
-ifdef gsettings_ENUM_NAMESPACE
-$(gsettings__enum_file): $(gsettings_ENUM_FILES)
-	$(AM_V_GEN) glib-mkenums --comments '\''<!-- @comment@ -->'\'' --fhead "<schemalist>" --vhead "  <@type@ id='\''$(gsettings_ENUM_NAMESPACE).@EnumName@'\''>" --vprod "    <value nick='\''@valuenick@'\'' value='\''@valuenum@'\''/>" --vtail "  </@type@>" --ftail "</schemalist>" [$]^ > [$]@.tmp && mv [$]@.tmp [$]@
-endif
-'
-  _GSETTINGS_SUBST(GSETTINGS_RULES)
-])
-
-dnl _GSETTINGS_SUBST(VARIABLE)
-dnl Abstract macro to do either _AM_SUBST_NOTMAKE or AC_SUBST
-AC_DEFUN([_GSETTINGS_SUBST],
-[
-AC_SUBST([$1])
-m4_ifdef([_AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE([$1])])
-]
-)
-
 AC_DEFUN([YELP_HELP_INIT],
 [
 AC_REQUIRE([AC_PROG_LN_S])
@@ -522,8 +525,8 @@ check-help:
 	    xmlpath="$$lc:$(srcdir)/$$lc"; \
 	  fi; \
 	  for page in $(HELP_FILES); do \
-	    echo "$(XMLLINT) --noout --noent --path $$xmlpath --xinclude $$d$$lc/$$page"; \
-	    $(XMLLINT) --noout --noent --path "$$xmlpath" --xinclude "$$d$$lc/$$page"; \
+	    echo "$(XMLLINT) --nonet --noout --noent --path $$xmlpath --xinclude $$d$$lc/$$page"; \
+	    $(XMLLINT) --nonet --noout --noent --path "$$xmlpath" --xinclude "$$d$$lc/$$page"; \
 	  done; \
 	done
 
@@ -562,7 +565,13 @@ install-help: $(_HELP_LC_FILES)
 	    elif test "x$$lc" != "xC"; then \
 	      if test "x$(YELP_LC_MEDIA_LINKS)" != "x"; then \
 	        echo "$(LN_S) -f $(HELP_DIR)/C/$(HELP_ID)/$$f $$helpdir$$f"; \
-	        $(LN_S) -f "$(HELP_DIR)/C/$(HELP_ID)/$$f" "$$helpdir$$f" || exit 1; \
+	        dname="$$f"; \
+	        pars="../"; \
+	        while test "$$dname" != "." -a "$$dname" != "/"; do \
+	          pars="../$$pars"; \
+	          dname=$$(dirname "$$dname"); \
+	        done; \
+	        $(LN_S) -f $$pars"C/$(HELP_ID)/$$f" "$$helpdir$$f" || exit 1; \
 	      fi; \
 	    fi; \
 	  done; \
@@ -594,7 +603,7 @@ AC_SUBST([YELP_HELP_RULES])
 m4_ifdef([_AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE([YELP_HELP_RULES])])
 ])
 
-# Copyright (C) 2002-2014 Free Software Foundation, Inc.
+# Copyright (C) 2002-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -609,7 +618,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
 [am__api_version='1.15'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
-m4_if([$1], [1.15], [],
+m4_if([$1], [1.15.1], [],
       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
@@ -625,14 +634,14 @@ m4_define([_AM_AUTOCONF_VERSION], [])
 # Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
 # This function is AC_REQUIREd by AM_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-[AM_AUTOMAKE_VERSION([1.15])dnl
+[AM_AUTOMAKE_VERSION([1.15.1])dnl
 m4_ifndef([AC_AUTOCONF_VERSION],
   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
 _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
 
 # AM_AUX_DIR_EXPAND                                         -*- Autoconf -*-
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -684,7 +693,7 @@ am_aux_dir=`cd "$ac_aux_dir" && pwd`
 
 # AM_CONDITIONAL                                            -*- Autoconf -*-
 
-# Copyright (C) 1997-2014 Free Software Foundation, Inc.
+# Copyright (C) 1997-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -715,7 +724,7 @@ AC_CONFIG_COMMANDS_PRE(
 Usually this means the macro was only invoked conditionally.]])
 fi])])
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -906,7 +915,7 @@ _AM_SUBST_NOTMAKE([am__nodep])dnl
 
 # Generate code to set up dependency tracking.              -*- Autoconf -*-
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -982,7 +991,7 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 
 # Do all the work for Automake.                             -*- Autoconf -*-
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1179,7 +1188,7 @@ for _am_header in $config_headers :; do
 done
 echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1200,7 +1209,7 @@ if test x"${install_sh+set}" != xset; then
 fi
 AC_SUBST([install_sh])])
 
-# Copyright (C) 2003-2014 Free Software Foundation, Inc.
+# Copyright (C) 2003-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1222,7 +1231,7 @@ AC_SUBST([am__leading_dot])])
 # Add --enable-maintainer-mode option to configure.         -*- Autoconf -*-
 # From Jim Meyering
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1257,7 +1266,7 @@ AC_MSG_CHECKING([whether to enable maintainer-specific portions of Makefiles])
 
 # Check to see how 'make' treats includes.	            -*- Autoconf -*-
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1307,7 +1316,7 @@ rm -f confinc confmf
 
 # Fake the existence of programs that GNU maintainers use.  -*- Autoconf -*-
 
-# Copyright (C) 1997-2014 Free Software Foundation, Inc.
+# Copyright (C) 1997-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1344,7 +1353,7 @@ else
 fi
 ])
 
-# Copyright (C) 2003-2014 Free Software Foundation, Inc.
+# Copyright (C) 2003-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1378,7 +1387,7 @@ esac
 
 # Helper functions for option handling.                     -*- Autoconf -*-
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1407,7 +1416,7 @@ AC_DEFUN([_AM_SET_OPTIONS],
 AC_DEFUN([_AM_IF_OPTION],
 [m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1454,7 +1463,7 @@ AC_LANG_POP([C])])
 # For backward compatibility.
 AC_DEFUN_ONCE([AM_PROG_CC_C_O], [AC_REQUIRE([AC_PROG_CC])])
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1487,8 +1496,9 @@ AC_DEFUN([AM_PATH_PYTHON],
  [
   dnl Find a Python interpreter.  Python versions prior to 2.0 are not
   dnl supported. (2.0 was released on October 16, 2000).
+  dnl FIXME: Remove the need to hard-code Python versions here.
   m4_define_default([_AM_PYTHON_INTERPRETER_LIST],
-[python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7 dnl
+[python python2 python3 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python2.7 dnl
  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0])
 
   AC_ARG_VAR([PYTHON], [the Python interpreter])
@@ -1689,7 +1699,7 @@ for i in list(range(0, 4)): minverhex = (minverhex << 8) + minver[[i]]
 sys.exit(sys.hexversion < minverhex)"
   AS_IF([AM_RUN_LOG([$1 -c "$prog"])], [$3], [$4])])
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1708,7 +1718,7 @@ AC_DEFUN([AM_RUN_LOG],
 
 # Check to make sure that the build environment is sane.    -*- Autoconf -*-
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1789,7 +1799,7 @@ AC_CONFIG_COMMANDS_PRE(
 rm -f conftest.file
 ])
 
-# Copyright (C) 2009-2014 Free Software Foundation, Inc.
+# Copyright (C) 2009-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1849,7 +1859,7 @@ AC_SUBST([AM_BACKSLASH])dnl
 _AM_SUBST_NOTMAKE([AM_BACKSLASH])dnl
 ])
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1877,7 +1887,7 @@ fi
 INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
 AC_SUBST([INSTALL_STRIP_PROGRAM])])
 
-# Copyright (C) 2006-2014 Free Software Foundation, Inc.
+# Copyright (C) 2006-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1896,7 +1906,7 @@ AC_DEFUN([AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE($@)])
 
 # Check how to create a tarball.                            -*- Autoconf -*-
 
-# Copyright (C) 2004-2014 Free Software Foundation, Inc.
+# Copyright (C) 2004-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2029,7 +2039,7 @@ AC_SUBST([am__untar])
 
 # Autoconf support for the Vala compiler
 
-# Copyright (C) 2008-2014 Free Software Foundation, Inc.
+# Copyright (C) 2008-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,

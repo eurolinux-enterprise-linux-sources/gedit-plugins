@@ -49,9 +49,7 @@
       <p>Navigieren Sie zu der Zeile, wo Sie ein Lesezeichen hinzufügen oder eines entfernen wollen.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>Alt</key><key>B</key></keyseq>, or
-      open the menu in the top-right corner and select
-      <gui style="menuitem">Toggle Bookmark</gui>.</p>
+      <p>Drücken Sie <keyseq><key>Strg</key><key>Alt</key><key>B</key></keyseq> oder öffnen Sie das Menü in der oberen rechten Ecke und wählen Sie <gui style="menuitem">Lesezeichen ein-/ausschalten</gui>.</p>
     </item>
   </steps>
   
@@ -66,9 +64,7 @@
   </list>
 
   <note>
-    <p>If you prefer to use the mouse, you can open the menu in the top-right
-    corner and select <gui style="menuitem">Go to Next Bookmark</gui> or
-    <gui style="menuitem">Go to Previous Bookmark</gui>.</p>
+    <p>Falls Sie die Maus bevorzugen, können Sie das Menü in der rechten oberen Ecke öffnen und <gui style="menuitem">Nächstes Lesezeichen</gui> oder <gui style="menuitem">Zum vorherigen Lesezeichen gehen</gui> wählen.</p>
   </note>
 
 </page>

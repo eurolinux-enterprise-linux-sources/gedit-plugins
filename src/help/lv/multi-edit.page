@@ -11,21 +11,14 @@
       <years>2011</years>
     </credit>
 
-    <desc>Edit a document in multiple places at once.</desc>
+    <desc>Rediģēt dokumentu vairākās vietās vienlaicīgi.</desc>
   </info>
 
-  <title>Multi Edit</title>
+  <title>Multirediģēšana</title>
 
-  <p>The <app>Multi Edit</app> plugin allows you to edit a document in multiple
-  places at once. This can be helpful when performing tedious editing tasks. To
-  enable the Multi Edit plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui>Preferences</gui><gui>Plugins</gui><gui>Multi Edit</gui></guiseq>.</p>
+  <p>Spraudnis <app>Multirediģēšana</app> ļauj rediģēt dokumentu vairākās vietās vienlaicīgi. Tas var būt noderīgs, veicot garlaicīgus rediģēšanas uzdevumus. Lai ieslēgtu multirediģēšanas spraudni, izvēlieties <guiseq><gui style="menu">gedit</gui> <gui>Iestatījumi</gui><gui>Spraudņi</gui><gui>Multirediģēšana</gui></guiseq>.</p>
   
-  <p>After you have enabled the plugin, turn-on Multi Edit mode by pressing
-  <keyseq><key>Ctrl</key><key>Shift</key><key>C</key></keyseq>, or clicking
-  <guiseq><gui style="menu">gedit</gui><gui>Multi Edit Mode</gui></guiseq>. You
-  can then select the points in your file that you would like start
-  editing.</p>
+  <p>Kad spraudnis ieslēgts, multirediģēšanu var sākt, nospiežot <keyseq><key>Ctrl</key><key>Shift</key><key>C</key></keyseq> vai izvēloties <guiseq><gui style="menu">gedit</gui><gui>Multirediģēšanas režīms</gui></guiseq>. </p>
   
   <p>Lai ievietotu datnē rediģēšanas punktus:</p>
   <steps>

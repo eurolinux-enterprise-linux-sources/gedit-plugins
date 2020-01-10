@@ -20,23 +20,19 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Autocomplete words or portions of code as you type.</desc>
+    <desc>Automātiskā vārdu vai koda daļu pabeigšana rakstīšanas laikā.</desc>
   </info>
 
-  <title>Word Completion</title>
+  <title>Vārdu pabeigšana</title>
 
-  <p>The <app>Word Completion</app> plugin can speed up your editing by
-  suggesting completions of words as you type. To enable the plugin:</p>
+  <p>Spraudnis <app>Vārdu pabeigšana</app> var paātrināt rediģēšanu, piedāvājot vārdus rakstīšanas laikā. Lai ieslēgtu spraudni:</p>
 
   <steps>
     <item>
-      <p>Select <guiseq><gui style="menu">Edit</gui>
-      <gui style="menuitem">Preferences</gui>
-      <gui style="tab">Plugins</gui></guiseq>.</p>
+      <p>Izvēlieties <guiseq><gui style="menu">Rediģēt</gui> <gui style="menuitem">Iestatījumi</gui> <gui>Spraudņi</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Select <gui style="menuitem">Word Completion</gui> to enable the
-      plugin.</p>
+      <p>Izvēlieties <gui style="menuitem">Vārdu pabeigšana</gui>, lai ieslēgtu spraudni.</p>
     </item>
   </steps>
 
