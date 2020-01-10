@@ -13,7 +13,13 @@
     <desc>Επισημάνει γραμμές που έχουν αλλάξει από την τελευταία καταχώρηση.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name> Μάριος Ζηντίλης</mal:name>
+      <mal:name>Ελληνική μεταφραστική ομάδα GNOME</mal:name>
+      <mal:email>team@gnome.gr</mal:email>
+      <mal:years>2009-2016</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Μάριος Ζηντίλης</mal:name>
       <mal:email>m.zindilis@dmajor.org</mal:email>
       <mal:years>2009</mal:years>
     </mal:credit>
@@ -26,8 +32,8 @@
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name> Θάνος Τρυφωνίδης</mal:name>
-      <mal:email>tomtryf@gmail.com</mal:email>
-      <mal:years>2012</mal:years>
+      <mal:email>tomtryf@gnom.org</mal:email>
+      <mal:years>2012, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -37,7 +43,7 @@
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name> Maria Mavridou</mal:name>
+      <mal:name> Μαρία Μαυρίδου</mal:name>
       <mal:email>mavridou@gmail.com</mal:email>
       <mal:years>2014</mal:years>
     </mal:credit>
@@ -66,8 +72,7 @@
   </terms>
 
   <note>
-    <p>Hover the mouse pointer on the red or orange margin to view the original
-    text in a tool tip.</p>
+    <p>Μετακινήστε το δείκτη του ποντικιού στο κόκκινο ή πορτοκαλί περιθώριο για να δείτε το πρωτότυπο κείμενο σε μια συμβουλή οθόνης.</p>
   </note>
 
 </page>

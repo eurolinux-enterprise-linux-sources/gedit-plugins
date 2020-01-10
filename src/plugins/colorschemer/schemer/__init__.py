@@ -18,7 +18,9 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import gi
+gi.require_version('Gedit', '3.0')
+gi.require_version('Gtk', '3.0')
 from gi.repository import GObject, Gio, Gedit, Gtk
 import os
 from .schemer import GUI
@@ -26,7 +28,7 @@ from .schemer import GUI
 
 class AppActivatable(GObject.Object, Gedit.AppActivatable):
 
-  app = GObject.property(type=Gedit.App)
+  app = GObject.Property(type=Gedit.App)
 
   def __init__(self):
     GObject.Object.__init__(self)

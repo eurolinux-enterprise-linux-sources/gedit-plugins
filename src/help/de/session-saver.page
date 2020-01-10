@@ -10,7 +10,7 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Save and restore your working sessions.</desc>
+    <desc>Ihre laufenden Sitzungen speichern und wiederherstellen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -33,10 +33,7 @@
 
   <title>Sitzungsspeicherung</title>
 
-  <p>The <app>Session Saver</app> plugin saves groups of files together so that
-  you can open them together at a later time. To enable the plugin, select
-  <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Preferences</gui>
-  <gui>Plugins</gui><gui>Session Saver</gui></guiseq>.</p>
+  <p>Das <app>Sitzungsspeicherung</app>-Plugin gruppiert Dateien, so dass Sie sie später alle auf einmal öffnen können. Um dieses Plugin zu aktivieren, wählen Sie <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui><gui>Sitzungsspeicherung</gui></guiseq>.</p>
 
   <steps>
     <title>So speichern Sie eine neue Sitzung:</title>
@@ -64,8 +61,7 @@
   <steps>
     <title>So löschen Sie eine existierende Sitzung:</title>
     <item>
-      <p>Select <guiseq><gui>File</gui><gui>Saved Sessions</gui><gui>Manage
-      saved sessions</gui></guiseq>.</p>
+      <p>Wählen Sie <guiseq><gui>Datei</gui><gui>Gespeicherte Sitzungen</gui><gui>Gespeicherte Sitzungen verwalten</gui></guiseq>.</p>
     </item>
     <item>
       <p>Wählen Sie den Namen der Sitzung, die Sie löschen wollen.</p>

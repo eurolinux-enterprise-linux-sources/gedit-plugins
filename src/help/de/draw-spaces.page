@@ -10,7 +10,7 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Show white space between words or portions of code.</desc>
+    <desc>Leerraum zwischen Wörtern und Code-Bestandteilen anzeigen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -31,7 +31,7 @@
     </mal:credit>
   </info>
 
-  <title>Draw Spaces</title>
+  <title>Leerzeichen anzeigen</title>
 
   <p>Das Plugin <app>Leerzeichen darstellen</app> dient zum Markieren von Leerzeichen und Tabulatoren sowie anderer Arten von Leerraum mit einer kleinen, sichtbaren Markierung. Indem Sie Leerraum sichtbar machen, können Sie viel leichter erkennen, wo dieser in einem Dokument verwendet wird, und können somit die Leerraumgestaltung einheitlicher handhaben.</p>
    
@@ -48,7 +48,7 @@
   
   <list>
     <title>Sie können das Plugin auch verwenden, um Folgendes zu markieren:</title>
-    <item><p>New lines</p></item>
+    <item><p>Zeilenumbrüche</p></item>
     <item><p>Geschützte Leerzeichen</p></item>
   </list>
    

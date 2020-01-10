@@ -10,7 +10,7 @@
       <email>tyagishobha@gmail.com</email>
     </credit>
 
-    <desc>Log user activity for documents which are opened in gedit</desc>
+    <desc>Benutzeraktivität für Dokumente protokollieren, die in Gedit geöffnet sind</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -31,21 +31,17 @@
     </mal:credit>
   </info>
 
-  <title>Zeitgeist dataprovider</title>
+  <title>Zeitgeist-Datenprovider</title>
 
-  <p>Zeitgeist is a service that logs user activities and events.  Zeitgeist
-  lets other applications access this information in the form of statistics and
-  timelines.The Zeitgeist dataprovider plugin for <app>gedit</app> records user
-  activity for documents used with gedit giving easy access to recently-used
-  and frequently-used files.</p>
+  <p>Zeitgeist ist ein Dienst, der Benutzeraktivitäten und Ereignisse protokolliert. Andere Anwendungen können in Form von Statistiken und Zeitleisten auf diese Informationen zugreifen. Das Plugin <gui>Datenlieferant für Zeitgeist</gui> für <app>gedit</app> zeichnet Benutzeraktivitäten für die mit Gedit verwendeten Dokumente auf, wodurch der Zugriff auf die kürzlich und häufig genutzten Dokumente möglich ist.</p>
 
   <steps>
-    <title>Enable Zeitgeist dataprovider</title>
+    <title>Datenlieferant für Zeitgeist aktivieren</title>
     <item>
       <p>Wählen Sie <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui></guiseq>.</p>
     </item>
     <item>
-	<p>Select <gui style="menuitem">Zeitgeist Dataprovider</gui>.</p>
+	<p>Wählen Sie <gui style="menuitem">Datenlieferant für Zeitgeist</gui>.</p>
     </item>
   </steps>
 

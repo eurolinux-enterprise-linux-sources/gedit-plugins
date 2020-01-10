@@ -1,4 +1,109 @@
 ====================
+gedit-plugins 3.22.0
+====================
+
+- Minor bugfixes, release the new stable version
+- Updated translations
+
+====================
+gedit-plugins 3.20.0
+====================
+
+- Minor bugfixes, release the new stable version
+- Updated translations
+
+====================
+gedit-plugins 3.18.0
+====================
+
+New features and fixes
+======================
+- No changes, release the new stable version
+
+====================
+gedit-plugins 3.17.1
+====================
+
+New features and fixes
+======================
+- Silence runtime warnings about gi.require_version in python
+- Misc bugfixes
+
+New and updated translations
+============================
+- ar (Khaled Hosny)
+- cs (Marek Černocký)
+- el (Dimitris Spingos (Δημήτρης Σπίγγος))
+- es (Daniel Mustieles)
+- he (Yosef Or Boczko)
+- hu (Gabor Kelemen)
+- it (Milo Casagrande)
+- ko (Changwoo Ryu)
+- lt (Aurimas Černius)
+- pl (Piotr Drąg)
+- pt (Pedro Albuquerque)
+- sk (Dušan Kazik)
+- tr (Simge Sezgin)
+
+====================
+gedit-plugins 3.17.0
+====================
+
+New features and fixes
+======================
+- Add Find in Files plugin
+- Misc bugfixes
+
+New and updated translations
+============================
+- ca (cubells)
+- cs (Marek Černocký)
+- it (Milo Casagrande)
+- pl (Piotr Drąg)
+- th (Akom Chotiphantawanon)
+
+====================
+gedit-plugins 3.16.0
+====================
+
+New features and fixes
+======================
+- Misc bugfixes
+
+New and updated translations
+============================
+- lt (Aurimas Černius)
+
+====================
+gedit-plugins 3.15.1
+====================
+
+New features and fixes
+======================
+- Misc bugfixes
+
+New and updated translations
+============================
+- bs (Emin Šehić)
+- el (Maria Mavridou)
+- sk (Dušan Kazik)
+- sv (Daniel Nylander)
+- zh_TW (Cheng-Chia Tseng)
+
+====================
+gedit-plugins 3.15.0
+====================
+
+New features and fixes
+======================
+- Misc bugfixes
+
+New and updated translations
+============================
+- eu (Inaki Larranaga Murgoitio)
+- tr (Muhammet Kara)
+
+====================
 gedit-plugins 3.14.1
 ====================
 

@@ -10,39 +10,45 @@
       <email its:translate="no">ola.hankus@gmail.com</email>
     </credit>
 
-    <desc>Highlight lines that have been changed since the last commit.</desc>
+    <desc>Markera rader som har ändrats sedan senaste incheckningen.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
   <title>Git</title>
 
-  <p>The <app>git</app> plugin will highlight lines that have been changed since
-  the last commit. Lines will be highlighted only on files that are already
-  tracked by git.</p>
+  <p>Insticksmodulen <app>git</app> kommer att markera rader som har ändras sedan senaste incheckningen. Rader kommer att markeras endast på filer som redan är spårade med git.</p>
 
-  <p>To enable the plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui style="menuitem">Preferences</gui><gui>Plugins</gui>
-  <gui>Git</gui></guiseq>.</p>
+  <p>För att aktivera insticksmodulen, välj <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Inställningar</gui><gui>Insticksmoduler</gui> <gui>Git</gui></guiseq>.</p>
 
-  <p>The changes are shown in the margin of the document in three different
-  colors:</p>
+  <p>Ändringarna visas i tre olika färger i dokumentets marginal:</p>
   <terms>
     <item>
-      <title>Green</title>
-      <p>Shows the new lines added to the document.</p>
+      <title>Grön</title>
+      <p>Visar de nya rader som lagts till i dokumentet.</p>
     </item>
     <item>
       <title>Orange</title>
-      <p>Shows the lines that have been modified in the document.</p>
+      <p>Visar de rader som har modifierats i dokumentet.</p>
     </item>
     <item>
-      <title>Red</title>
-      <p>Shows the parts of the document that have been deleted.</p>
+      <title>Röd</title>
+      <p>Visar de delar i dokumentet som har tagits bort.</p>
     </item>
   </terms>
 
   <note>
-    <p>Hover the mouse pointer on the red or orange margin to view the original
-    text in a tool tip.</p>
+    <p>Hovra muspekaren över den röda eller orange marginalen för att visa originaltexten i en inforuta.</p>
   </note>
 
 </page>

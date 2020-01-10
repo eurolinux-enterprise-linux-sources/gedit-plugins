@@ -10,7 +10,7 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Pick a color from a dialog and insert its hexadecimal representation.</desc>
+    <desc>Eine Farbe in einem Dialog auswählen und deren Hexadezimaldarstellung einfügen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -31,15 +31,11 @@
     </mal:credit>
   </info>
 
-  <title>Color Picker</title>
+  <title>Farbwähler</title>
 
-  <p>The <app>Color Picker</app> plugin helps you to insert the character codes
-  that represent a certain color. This can make it easier to choose and use the
-  correct color in your programs.</p>
+  <p>Das <app>Farbwähler</app>-Plugin hilft Ihnen dabei, Zeichencodes einzufügen, die eine bestimmte Farbe darstellen. Dadurch wird die richtige Auswahl der korrekten Farbe in Ihren Programmen erleichtert.</p>
   
-  <p>To enable the color picker plugin, select
-  <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Preferences</gui>
-  <gui>Plugins</gui><gui>Color Picker</gui></guiseq>.</p>
+  <p>Um das Farbwähler-Plugin zu aktivieren, wählen Sie <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui><gui>Farbwähler</gui></guiseq>.</p>
   
   <steps>
     <title>So öffnen und verwenden Sie den Farbwähler:</title>
@@ -47,8 +43,7 @@
       <p>Platzieren Sie die Eingabemarke an der Stelle in Ihrem Dokument, wo Sie den Farbcode einfügen wollen.</p>
     </item>
     <item>
-      <p>Select <guiseq><gui>Tools</gui><gui>Pick Color…</gui></guiseq>.  The
-      color picker dialog will appear.</p>
+      <p>Wählen Sie <guiseq><gui>Werkzeuge</gui><gui>Farbe wählen …</gui></guiseq>. Der Farbwähler-Dialog wird geöffnet.</p>
     </item>
     <item>
       <p>Klicken Sie im Farbwähler-Fenster auf die gewünschte Farbe.</p>

@@ -11,7 +11,7 @@
       <years>2011</years>
     </credit>
 
-    <desc>Edit a document in multiple places at once.</desc>
+    <desc>Ein Dokument an mehreren Stellen gleichzeitig bearbeiten.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -22,7 +22,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -32,12 +32,9 @@
     </mal:credit>
   </info>
 
-  <title>Multi Edit</title>
+  <title>Mehrfachbearbeitung</title>
 
-  <p>The <app>Multi Edit</app> plugin allows you to edit a document in multiple
-  places at once. This can be helpful when performing tedious editing tasks. To
-  enable the Multi Edit plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui>Preferences</gui><gui>Plugins</gui><gui>Multi Edit</gui></guiseq>.</p>
+  <p>Das <app>Mehrfachbearbeitung</app>-Plugin ermöglicht Ihnen die Bearbeitung eines Dokuments an verschiedenen Stellen gleichzeitig. Dies kann bei ermüdenden Bearbeitungsroutinen sinnvoll sein. Um dieses Plugin zu aktivieren, wählen Sie <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui><gui>Mehrfachbearbeitung</gui></guiseq>.</p>
   
   <p>Nachdem Sie das Plugin aktiviert haben, schalten Sie mit der Tastenkombination <keyseq><key>Strg</key><key>Umschalttaste</key><key>C</key></keyseq> oder durch Wählen von <guiseq><gui style="menu">gedit</gui><gui>Mehrfachbearbeitungsmodus</gui></guiseq> den Mehrfachbearbeitungsmodus ein. Sie können dann die Stellen in Ihrer Datei auswählen, an denen Sie mit der Bearbeitung beginnen wollen.</p>
   

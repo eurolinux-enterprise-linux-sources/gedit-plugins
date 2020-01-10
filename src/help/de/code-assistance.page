@@ -10,7 +10,7 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Real-time error highlighting for supported languages.</desc>
+    <desc>Echtzeit-Fehlerhervorhebung für unterstützte Sprachen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -31,7 +31,7 @@
     </mal:credit>
   </info>
 
-  <title>Code Assistance</title>
+  <title>Programmierhilfe</title>
   
   <!-- NOTE: This is draft documentation. It is not yet ready for translation. 
   Thank you! -->
@@ -53,11 +53,7 @@
 <section id="how-gedit-code-assistance-works">
   <title>So arbeitet das Plugin der Programmierhilfe</title>
   
-  <p>The plugin currently relies on information in the makefile to deduce the
-  Clang error-highlighting rules. It examines the
-  <code its:translate="no">make</code> rules and determines which targets
-  depend on the the file that is being parsed. The plugin then extracts the
-  compiler flags by simulating an execution of those targets.</p>
+  <p>Das Plugin arbeitet derzeit anhand der Informationen im Makefile und leitet sich so die Regeln zur Clang-Fehlerhervorhebung her. Es untersucht die <code its:translate="no">make</code>-Regeln und bestimmt, welche Ziele von der Datei abhängen, die verarbeitet wird. Das Plugin extrahiert dann die Compiler-Flags durch Simulation einer Ausführung dieser Ziele.</p>
 
   <p>Natürlich ist das nicht wirklich narrensicher. In zukünftigen Versionen wird es möglich sein, für dieses Plugin die Compiler-Flags manuell anzugeben.</p>
 

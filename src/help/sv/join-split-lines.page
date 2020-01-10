@@ -10,43 +10,46 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Join several lines of text or split long lines.</desc>
+    <desc>Sammanfoga flera rader text eller dela långa rader.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Join/Split Lines</title>
+  <title>Sammanfoga/Dela rader</title>
 
-  <p>The <app>Join/Split Lines</app> plugin can join shorter lines into one
-  longer line, or can split a long line into multiple shorter lines.</p>
+  <p>Insticksmodulen <app>Sammanfoga/Dela rader</app> kan sammanfoga kortare rader till en lång rad, eller dela upp en lång rad till flera kortare rader.</p>
   
-  <p>To enable this plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui style="menuitem">Preferences</gui><gui>Plugins</gui>
-  <gui>Join/Split Lines</gui></guiseq>.</p>
+  <p>För att aktivera denna insticksmodul, välj <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Inställningar</gui><gui>Insticksmoduler</gui> <gui>Sammanfoga/Dela rader</gui></guiseq>.</p>
 
   <steps>
-    <title>To join multiple lines into one longer line:</title>
+    <title>Att sammanfoga flera rader till en längre rad:</title>
     <item>
-      <p>Select the lines that you want to join. To do this, you can use the
-      mouse, or you can press <keyseq><key>Shift</key><key>Up Arrow</key>
-      </keyseq> or <keyseq><key>Shift</key><key>Down Arrow</key></keyseq>.</p>
+      <p>Markera de rader du vill sammanfoga. För att göra detta kan du använda musen eller trycka ned <keyseq><key>Skift</key><key>Pil upp</key> </keyseq> eller <keyseq><key>Skift</key><key>Pil ned</key></keyseq>.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>J</key></keyseq>.</p>
-      <p>The lines that you selected will be joined into one longer line.</p>
+      <p>Tryck ned <keyseq><key>Ctrl</key><key>J</key></keyseq>.</p>
+      <p>De rader du har markerat kommer att sammanfogas till en längre rad.</p>
     </item>
   </steps>
 
   <steps>
-    <title>To split one line into multiple lines:</title>
+    <title>För att dela upp en rad till flera rader:</title>
     <item>
-      <p>Select the line that you want to split by placing your cursor anywhere
-      on that line.</p>
+      <p>Markera raden du vill dela genom att placera din markör varsomhelst på den raden.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>Shift</key>
-      <key>J</key></keyseq>.</p>
-      <p>The line will be split into multiple lines. Spaces are used to
-      determine where it is safe to split a line, and the length of each line
-      will not exceed 80 characters.</p>
+      <p>Tryck ned <keyseq><key>Ctrl</key><key>Skift</key> <key>J</key></keyseq>.</p>
+      <p>Raden kommer att delas upp till flera rader. Blanksteg används för att bestämma var det är säkert att dela en rad, och längden för var rad kommer inte att överstiga 80 tecken.</p>
     </item>
   </steps>
 

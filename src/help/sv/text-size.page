@@ -17,51 +17,54 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Increase or decrease text size.</desc>
+    <desc>Öka eller minska textstorleken.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Text Size</title>
+  <title>Textstorlek</title>
 
-  <p>The text size plugin allows you to temporarily change the text size for
-  better readibility in <app>gedit</app> without changing the program's default
-  text size.</p>
+  <p>Insticksmodulen textstorlek låter dig tillfälligt ändra textstorlekar för bättre läsbarhet i <app>gedit</app> utan att ändra programmets standardtextstorlek.</p>
 
 <section id="enable-text-size">
-  <title>Enable Text Size Plugin</title>
+  <title>Aktivera insticksmodulen Textstorlek</title>
 
   <steps>
-    <title>To enable Text Size plugin:</title>
+    <title>För att aktivera insticksmodulen Textstorlek:</title>
     <item>
-      <p>Select <guiseq><gui style="menu">gedit</gui>
-      <gui style="menuitem">Preferences</gui>
-      <gui style="tab">Plugins</gui></guiseq>.</p>
+      <p>Välj <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Inställningar</gui> <gui style="tab">Insticksmoduler</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Select <gui style="menuitem">Text Size</gui> to enable the
-      plugin.</p>
+      <p>Använd <gui style="menuitem">Textstorlek</gui> för att aktivera insticksmodulen.</p>
     </item>
   </steps>
 
 </section>
 
 <section id="use-text-size">
-  <title>Use the <app>Text Size</app> plugin</title>
+  <title>Att använda insticksmodulen <app>Textstorlek</app></title>
 
-  <p>Once you have enabled the plugin, do any of the following to change the
-  text size in <app>gedit</app>:</p>
+  <p>När du väl har aktiverat insticksmodulen, gör något av följande för att ändra textstorleken i <app>gedit</app>:</p>
 
   <list>
     <item>
-      <p>To <em>increase</em> the text size, press
-      <keyseq><key>Ctrl</key><key>+</key></keyseq>.</p>
+      <p>För att <em>öka</em> textstorleken, tryck ned <keyseq><key>Ctrl</key><key>+</key></keyseq>.</p>
     </item>
     <item>
-      <p>To <em>decrease</em> the text size, press
-      <keyseq><key>Ctrl</key><key>-</key></keyseq>.</p>
+      <p>För att <em>minska</em> textstorleken, tryck ned <keyseq><key>Ctrl</key><key>-</key></keyseq>.</p>
     </item>
     <item>
-      <p>To <em>reset</em> the text size to the default size, press
-      <keyseq><key>Ctrl</key><key>0</key></keyseq>.</p>
+      <p>För att <em>återställa</em> textstorleken till ursprunglig storlek, tryck ned <keyseq><key>Ctrl</key><key>0</key></keyseq>.</p>
     </item>
   </list>
 

@@ -20,34 +20,36 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Autocomplete words or portions of code as you type.</desc>
+    <desc>Autokomplettera ord eller delar av kod medan du skriver.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Word Completion</title>
+  <title>Ordkomplettering</title>
 
-  <p>The <app>Word Completion</app> plugin can speed up your editing by
-  suggesting completions of words as you type. To enable the plugin:</p>
+  <p>Insticksmodulen <app>Ordkomplettering</app> kan snabba upp din redigering genom att föreslå kompletteringar av ord allteftersom du skriver. För att aktivera insticksmodulen:</p>
 
   <steps>
     <item>
-      <p>Select <guiseq><gui style="menu">Edit</gui>
-      <gui style="menuitem">Preferences</gui>
-      <gui style="tab">Plugins</gui></guiseq>.</p>
+      <p>Välj <guiseq><gui style="menu">Redigera</gui> <gui style="menuitem">Inställningar</gui> <gui style="tab">Insticksmoduler</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Select <gui style="menuitem">Word Completion</gui> to enable the
-      plugin.</p>
+      <p>Välj <gui style="menuitem">Ordkomplettering</gui> för att aktivera insticket.</p>
     </item>
   </steps>
 
-  <p>While editing, the <app>Word Completion</app> plugin will automatically
-  display a pop-up list of words that begin with the letters you have already
-  typed. Word suggestions are based upon words that appear elsewhere in your
-  document and upon pre-defined keywords if your document is of a recognised
-  format.</p>
+  <p>Under redigering kommer insticksmodulen <app>Ordkomplettering</app> automatiskt att visa en poppupplista över ord som börjar med de bokstäver du redan har skrivit. Ordförslag är baserade på ord som visas på andra ställen i ditt dokument och på fördefinierade nyckelord om ditt dokument är i ett igenkänt format.</p>
 
-  <p>To insert a suggested word, double-click on it in the pop-up list or press
-  <keyseq><key>Alt</key><key>Num</key></keyseq>, where <key>Num</key> is the
-  number displayed next to your desired word.</p>
+  <p>För att infoga ett föreslaget ord, dubbelklicka på det i poppupplistan eller tryck ned <keyseq><key>Alt</key><key>Sif</key></keyseq>, där <key>Sif</key> är siffran som visas intill ditt önskade ord.</p>
 
 </page>

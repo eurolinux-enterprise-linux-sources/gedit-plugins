@@ -3,6 +3,7 @@
 #  synctex.py - Synctex support with Gedit and Evince.
 #  
 #  Copyright (C) 2010 - José Aliste <jose.aliste@gmail.com>
+#  Copyright (C) 2015 - Germán Poo-Caamaño <gpoo@gnome.org>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,6 +26,7 @@ import dbus.mainloop.glib
 import logging
 import gettext
 import os
+import re
 from gpdefs import *
 
 try:
@@ -58,14 +60,18 @@ def apply_style (style, tag):
                           Pango.Underline.NONE)
     apply_style_prop(tag, style, "strikethrough")
 
-def parse_modeline(line):
-    index = line.find("mainfile:")
+def parse_modeline(text):
+    gedit_r = re.search(r'%+\s*mainfile:\s*(.*)$', text,
+                        re.IGNORECASE)
+    auctex_r = re.search(r'%+\s*TeX-master:\s*"(.*)"$', text,
+                         re.IGNORECASE)
+    if gedit_r:
+        return gedit_r.group(1)
+    elif auctex_r:
+        return auctex_r.group(1)
+    else:
+        return None
 
-    if line.startswith("%") and index > 0:
-        # Parse the modeline.
-        return line[index + len("mainfile:"):].strip()
-
-    return None
 
 class SynctexViewHelper:
     def __init__(self, view, window, plugin):
@@ -97,7 +103,7 @@ class SynctexViewHelper:
             self.sync_view(event.time)
 
     def on_saved_or_loaded(self, doc):
-        GObject.idle_add(self.update_location)
+        self.update_location()
 
     def get_output_file(self):
         file_output = None
@@ -222,7 +228,7 @@ class SynctexViewHelper:
 class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
     __gtype_name__ = "SynctexWindowActivatable"
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
     view_dict = {}
     _proxy_dict = {}
 
@@ -324,7 +330,7 @@ class SynctexWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
 class SynctexAppActivatable(GObject.Object, Gedit.AppActivatable):
 
-    app = GObject.property(type=Gedit.App)
+    app = GObject.Property(type=Gedit.App)
 
     def __init__(self):
         GObject.Object.__init__(self)

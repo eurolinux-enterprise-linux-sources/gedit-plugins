@@ -82,7 +82,7 @@ def rename(view, newfile):
     if doc.get_modified():
         raise commander.commands.exceptions.Execute('You have unsaved changes in your document')
 
-    if not doc.is_local():
+    if not doc.get_file().is_local():
         raise commander.commands.exceptions.Execute('You can only rename local files')
 
     f = doc.get_file().get_location()
@@ -201,7 +201,7 @@ def __default__(view, entry):
 Use this to apply the cool new feature\"\"\"
     pass
 
-# vi:ts=4:et
+# ex:ts=4:et
 """
 
 def new_command(view, entry, name):
@@ -238,4 +238,4 @@ def save_all(view):
 locals()['file'] = __default__
 move = rename
 
-# vi:ex:ts=4:et
+# ex:ts=4:et

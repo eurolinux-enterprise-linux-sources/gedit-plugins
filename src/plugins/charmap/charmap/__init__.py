@@ -17,10 +17,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from gi.repository import GObject, Gio, Pango, Gtk, Gedit, Gucharmap
-from .panel import CharmapPanel
 import sys
 import gettext
+
+import gi
+gi.require_version('Gedit', '3.0')
+gi.require_version('Pango', '1.0')
+gi.require_version('Gtk', '3.0')
+gi.require_version('Gucharmap', '2.90')
+from gi.repository import GObject, Gio, Pango, Gtk, Gedit, Gucharmap
+from .panel import CharmapPanel
 from gpdefs import *
 
 try:
@@ -29,10 +35,11 @@ try:
 except:
     _ = lambda s: s
 
+
 class CharmapPlugin(GObject.Object, Gedit.WindowActivatable):
     __gtype_name__ = "CharmapPlugin"
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)

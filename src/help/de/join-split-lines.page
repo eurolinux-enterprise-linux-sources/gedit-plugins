@@ -10,7 +10,7 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Join several lines of text or split long lines.</desc>
+    <desc>Textzeilen zusammenfassen oder lange Zeilen teilen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -31,7 +31,7 @@
     </mal:credit>
   </info>
 
-  <title>Join/Split Lines</title>
+  <title>Zeilen zusammenfügen/umbrechen</title>
 
   <p>Das <app>Zeilen zusammenfügen/umbrechen</app>-Plugin kann kurze Zeilen zu einer längeren Zeile zusammenfassen oder längere Zeilen in kürzere Zeilen umbrechen.</p>
   
@@ -54,8 +54,7 @@
       <p>Wählen Sie die zu teilende Zeile aus, indem Sie den Eingabecursor an einer beliebigen Stelle in dieser Zeile platzieren.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>Shift</key>
-      <key>J</key></keyseq>.</p>
+      <p>Drücken Sie <keyseq><key>Strg</key><key>Umschalttaste</key> <key>J</key></keyseq>.</p>
       <p>Die Zeile wird in mehrere Zeilen unterteilt. Leerzeichen werden dazu verwendet, einen sicheren Platz zum Teilen der Zeile zu finden. Die Länge jeder Zeile wird 80 Zeichen nicht überschreiten.</p>
     </item>
   </steps>

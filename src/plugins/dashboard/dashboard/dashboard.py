@@ -139,15 +139,15 @@ class DashView(Gtk.Box):
 class SearchEntry(Gtk.Entry):
 
     __gsignals__ = {
-        "clear": (GObject.SIGNAL_RUN_FIRST,
+        "clear": (GObject.SignalFlags.RUN_FIRST,
+                  GObject.TYPE_NONE,
+                  ()),
+        "search": (GObject.SignalFlags.RUN_FIRST,
                    GObject.TYPE_NONE,
-                   ()),
-        "search": (GObject.SIGNAL_RUN_FIRST,
-                    GObject.TYPE_NONE,
-                    (GObject.TYPE_STRING,)),
-        "close": (GObject.SIGNAL_RUN_FIRST,
-                   GObject.TYPE_NONE,
-                   ()),
+                   (GObject.TYPE_STRING,)),
+        "close": (GObject.SignalFlags.RUN_FIRST,
+                  GObject.TYPE_NONE,
+                  ()),
     }
 
     search_timeout = 0
@@ -155,7 +155,7 @@ class SearchEntry(Gtk.Entry):
     def __init__(self, accel_group = None):
         Gtk.Entry.__init__(self)
         self.set_width_chars(40)
-        self.set_placeholder_text(_("Type here to search..."))
+        self.set_placeholder_text(_("Type here to search…"))
         self.connect("changed", lambda w: self._queue_search())
 
         search_icon =\

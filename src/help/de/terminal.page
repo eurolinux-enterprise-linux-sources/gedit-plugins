@@ -17,7 +17,7 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Add a terminal console to the bottom pane.</desc>
+    <desc>Eine Terminalkonsole am unteren Rand hinzufügen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -28,7 +28,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -38,7 +38,7 @@
     </mal:credit>
   </info>
 
-  <title>Embedded Terminal</title>
+  <title>Eingebettetes Terminal</title>
 
   <p><app>gedit</app> kann eine eingebettete Version von <app>Gnome Terminal</app> anzeigen, der Befehlszeilenanwendung in GNOME. Diese wird am unteren Rand des <app>gedit</app>-Hauptfensters angezeigt. Auf diese Weise können Sie Skripte ausführen, benötigte Software installieren oder Ihr Programm testen, ohne <app>gedit</app> zu verlassen.</p>
 
@@ -46,7 +46,7 @@
   <title>Eingebettetes Terminal aktivieren</title>
 
   <steps>
-    <title>To enable the <app>Embedded Terminal</app> plugin:</title>
+    <title>So aktivieren Sie das Plugin für das <app>eingebettete Terminal</app>:</title>
     <item>
       <p>Wählen Sie <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui></guiseq>.</p>
     </item>

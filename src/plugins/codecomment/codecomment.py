@@ -21,6 +21,9 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('GtkSource', '3.0')
 from gi.repository import GObject, Gio, Gtk, GtkSource, Gedit
 import gettext
 from gpdefs import *
@@ -34,12 +37,12 @@ except:
 # If the language is listed here we prefer block comments over line comments.
 # Maybe this list should be user configurable, but just C comes to my mind...
 block_comment_languages = [
-    'c',
+    'c', 'chdr'
 ]
 
 class CodeCommentAppActivatable(GObject.Object, Gedit.AppActivatable):
 
-    app = GObject.property(type=Gedit.App)
+    app = GObject.Property(type=Gedit.App)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -54,7 +57,7 @@ class CodeCommentAppActivatable(GObject.Object, Gedit.AppActivatable):
 
 class CodeCommentWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -88,7 +91,7 @@ class CodeCommentWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
 class CodeCommentViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
-    view = GObject.property(type=Gedit.View)
+    view = GObject.Property(type=Gedit.View)
 
     def __init__(self):
         GObject.Object.__init__(self)

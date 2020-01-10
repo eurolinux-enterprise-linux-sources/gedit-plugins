@@ -17,7 +17,7 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Increase or decrease text size.</desc>
+    <desc>Die Textgröße erhöhen oder verringern.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -28,7 +28,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -40,7 +40,7 @@
 
   <title>Textgröße</title>
 
-  <p>Das <app>Textgröße</app>-Plugin ermöglicht das vorübergehende Ändern der Textgröße in <app>gedit</app>, ohne die vorgegebene Textgröße des Programms zu ändern.</p>
+  <p>Das <app>Textgröße</app>-Plugin ermöglicht zwecks besserer Lesbarkeit das vorübergehende Ändern der Textgröße in <app>gedit</app>, ohne die vorgegebene Textgröße des Programms zu ändern.</p>
 
 <section id="enable-text-size">
   <title>Plugin für Textgröße aktivieren</title>
@@ -58,7 +58,7 @@
 </section>
 
 <section id="use-text-size">
-  <title>Use the <app>Text Size</app> plugin</title>
+  <title>So verwenden Sie das <app>Textgrößen</app>-Plugin:</title>
 
   <p>Sobald das Plugin aktiviert ist, können Sie folgendermaßen die Textgröße in <app>gedit</app> ändern:</p>
 

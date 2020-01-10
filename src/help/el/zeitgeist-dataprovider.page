@@ -10,10 +10,16 @@
       <email>tyagishobha@gmail.com</email>
     </credit>
 
-    <desc>Log user activity for documents which are opened in gedit</desc>
+    <desc>Καταγραφή δραστηριότητας χρήστη για έγγραφα που είναι ανοικτά στο gedit</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name> Μάριος Ζηντίλης</mal:name>
+      <mal:name>Ελληνική μεταφραστική ομάδα GNOME</mal:name>
+      <mal:email>team@gnome.gr</mal:email>
+      <mal:years>2009-2016</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Μάριος Ζηντίλης</mal:name>
       <mal:email>m.zindilis@dmajor.org</mal:email>
       <mal:years>2009</mal:years>
     </mal:credit>
@@ -26,8 +32,8 @@
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name> Θάνος Τρυφωνίδης</mal:name>
-      <mal:email>tomtryf@gmail.com</mal:email>
-      <mal:years>2012</mal:years>
+      <mal:email>tomtryf@gnom.org</mal:email>
+      <mal:years>2012, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -37,27 +43,23 @@
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name> Maria Mavridou</mal:name>
+      <mal:name> Μαρία Μαυρίδου</mal:name>
       <mal:email>mavridou@gmail.com</mal:email>
       <mal:years>2014</mal:years>
     </mal:credit>
   </info>
 
-  <title>Zeitgeist dataprovider</title>
+  <title>Πάροχος δεδομένων Zeitgeist</title>
 
-  <p>Zeitgeist is a service that logs user activities and events.  Zeitgeist
-  lets other applications access this information in the form of statistics and
-  timelines.The Zeitgeist dataprovider plugin for <app>gedit</app> records user
-  activity for documents used with gedit giving easy access to recently-used
-  and frequently-used files.</p>
+  <p>Το Zeitgeist είναι μια υπηρεσία που καταγράφει τις δραστηριότητες του χρήστη και των συμβάντων. Το Zeitgeist επιτρέπει σε άλλες εφαρμογές να προσπελάσουν αυτήν την πληροφορία στη μορφή των στατιστικών και των χρονοδιαγραμμάτων. Το πρόσθετο παρόχου δεδομένων Zeitgeist για το <app>gedit</app> γράφει τη δραστηριότητα του χρήστη για έγγραφα που χρησιμοποιούνται με το gedit δίνοντας εύκολη πρόσβαση σε πρόσφατα και συχνά χρησιμοποιούμενα αρχεία.</p>
 
   <steps>
-    <title>Enable Zeitgeist dataprovider</title>
+    <title>Ενεργοποίηση του παρόχου δεδομένων Zeitgeist</title>
     <item>
       <p>Επιλέξτε <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Προτιμήσεις</gui> <gui style="tab">Πρόσθετα</gui></guiseq>.</p>
     </item>
     <item>
-	<p>Select <gui style="menuitem">Zeitgeist Dataprovider</gui>.</p>
+	<p>Επιλέξτε <gui style="menuitem">πάροχος δεδομένων Zeitgeist</gui>.</p>
     </item>
   </steps>
 

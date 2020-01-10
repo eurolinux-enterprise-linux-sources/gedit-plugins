@@ -22,7 +22,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Mustieles</mal:name>
       <mal:email>daniel.mustieles@gmail.com</mal:email>
-      <mal:years>2011-2014</mal:years>
+      <mal:years>2011-2015</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -46,7 +46,7 @@
 
   <title>Tamaño del texto</title>
 
-  <p>El complemento de tamaño del texto le permite cambiar temporalmente el tamaño del texto en <app>gedit</app> sin cambiar el tamaño del texto predeterminado del programa.</p>
+  <p>El complemento de tamaño del texto le permite cambiar temporalmente el tamaño del texto en <app>gedit</app> para una mejor lectura. sin tener que cambiar el tamaño del texto predeterminado del programa.</p>
 
 <section id="enable-text-size">
   <title>Activar el complemento Tamaño del texto</title>

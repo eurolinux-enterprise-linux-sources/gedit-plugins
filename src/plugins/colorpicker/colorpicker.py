@@ -20,6 +20,9 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('Gedit', '3.0')
 from gi.repository import GObject, Gio, Gtk, Gdk, Gedit
 import re
 import gettext
@@ -119,14 +122,14 @@ class ColorHelper:
 
 class ColorPickerAppActivatable(GObject.Object, Gedit.AppActivatable):
 
-    app = GObject.property(type=Gedit.App)
+    app = GObject.Property(type=Gedit.App)
 
     def __init__(self):
         GObject.Object.__init__(self)
 
     def do_activate(self):
         self.menu_ext = self.extend_menu("tools-section")
-        item = Gio.MenuItem.new(_("Pick _Color..."), "win.colorpicker")
+        item = Gio.MenuItem.new(_("Pick _Color…"), "win.colorpicker")
         self.menu_ext.prepend_menu_item(item)
 
     def do_deactivate(self):
@@ -135,7 +138,7 @@ class ColorPickerAppActivatable(GObject.Object, Gedit.AppActivatable):
 
 class ColorPickerWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -195,7 +198,7 @@ class ColorPickerWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
 class ColorPickerViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
-    view = GObject.property(type=Gedit.View)
+    view = GObject.Property(type=Gedit.View)
 
     def __init__(self):
         GObject.Object.__init__(self)

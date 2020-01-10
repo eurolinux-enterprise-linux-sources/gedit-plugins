@@ -10,7 +10,7 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Auto-complete closing brackets.</desc>
+    <desc>Klammernpaare automatisch vervollständigen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -21,7 +21,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -31,10 +31,9 @@
     </mal:credit>
   </info>
 
-  <title>Bracket Completion</title>
+  <title>Klammern schließen</title>
 
-  <p>The <app>Bracket Completion</app> plugin will auto-complete closing
-  brackets for curly braces, parentheses and square brackets.</p>
+  <p>Das Plugin <app>Klammer-Vervollständigung</app> schließt automatisch unvollständige Blöcke mit geschweiften, runden und eckigen Klammern.</p>
 
   <p>Um das Plugin zu aktivieren, wählen Sie <guiseq><gui style="menu">Bearbeiten</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui><gui>Klammer-Vervollständigung</gui></guiseq>.</p>
 

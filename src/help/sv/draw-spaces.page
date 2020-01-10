@@ -10,41 +10,44 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Show white space between words or portions of code.</desc>
+    <desc>Visa blanktecken mellan ord eller delar av kod.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Draw Spaces</title>
+  <title>Rita ut blanksteg</title>
 
-  <p>The <app>Draw Spaces</app> plugin is a simple plugin that can mark spaces,
-  tabs, and other types of whitespace with a small, visible marker. By making
-  whitespace visible, you can more easily see how whitespace is used in a
-  document, and can apply spacing strategies more consistently.</p>
+  <p>Insticksmodulen <app>Rita ut blanksteg</app> är ett enkelt instick som kan markera blanksteg, tabbar och andra typer av blanktecken med en liten synlig markör. Genom att göra blanktecken synliga kan du enklare se hur blanksteg används i ett dokument och kan därmed verkställa blankstegsstrategier mer konsistent.</p>
    
-  <p>To enable this plugin, select <guiseq><gui style="menu">gedit</gui>
-  <gui style="menuitem">Preferences</gui><gui>Plugins</gui> <gui>Draw
-  Spaces</gui></guiseq>. After you have enabled the plugin, you can set its
-  options by highlighting the plugin and selecting
-  <gui style="menuitem">Preferences</gui>.</p>
+  <p>För att aktivera denna insticksmodul, välj <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Inställningar</gui><gui>Insticksmoduler</gui> <gui>Rita ut blanksteg</gui></guiseq>. Efter att du har aktiverat denna insticksmodul kan du ställa in dess alternativ genom att markera insticket och välja <gui style="menuitem">Inställningar</gui>.</p>
   
   <list>
-    <title>By default, the <app>Draw Spaces</app> plugin will mark the
-    following types of whitespace in a file:</title>
-    <item><p>Spaces</p></item>
+    <title>Som standard kommer insticksmodulen <app>Rita ut blanksteg</app> att markera följande typer av blanktecken i en fil:</title>
+    <item><p>Blanksteg</p></item>
     <item><p>Tabulatorer</p></item>
-    <item><p>Leading spaces</p></item>
-    <item><p>Spaces in text</p></item>
-    <item><p>Trailing spaces</p></item>
+    <item><p>Inledande blanksteg</p></item>
+    <item><p>Blanksteg i text</p></item>
+    <item><p>Eftersläpande blanksteg</p></item>
   </list>
   
   <list>
-    <title>You can also set the plugin to mark:</title>
-    <item><p>New lines</p></item>
-    <item><p>Non-breaking spaces</p></item>
+    <title>Du kan också ställa in insticket till att markera:</title>
+    <item><p>Nyrader</p></item>
+    <item><p>Icke-brytande blanksteg</p></item>
   </list>
    
   <note style="tip">
-    <p>Though you will be able to see the dots when you work on a file, the
-    dots will not be visible when you print a file to paper.</p>
+    <p>Även om du kommer att se prickarna när du arbetar med en fil kommer inte prickarna att synas när du skriver ut en fil på papper.</p>
   </note>
 
 </page>

@@ -14,7 +14,7 @@
       <email its:translate="no">ch3pjw@bath.ac.uk</email>
     </credit>
 
-    <desc>Insert special characters just by clicking on them.</desc>
+    <desc>Sonderzeichen durch einfaches Anklicken einfügen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -25,7 +25,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -35,16 +35,14 @@
     </mal:credit>
   </info>
 
-  <title>Character Map</title>
+  <title>Zeichentabelle</title>
 
   <p>Das <app>Zeichentabelle</app>-Plugin ermöglicht Ihnen das Einfügen von Zeichen in Ihr Dokument, die Sie möglicherweise nicht einfach mit der Tastatur einfügen könnten. Um dieses Plugin zu aktivieren, wählen Sie <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui><gui>Zeichentabelle</gui></guiseq>.</p>
   
 <section id="using-character-map">
   <title>Die Zeichentabelle verwenden</title>
 
-  <p>Once the plugin is enabled, you can add characters from the
-  <gui style="tab">Character Map</gui> tab of the side panel
-  (<guiseq><gui>View</gui><gui>Side Panel</gui></guiseq>).</p>
+  <p>Sobald das Plugin aktiviert ist, können Sie Zeichen aus dem Reiter <gui style="tab">Zeichentabelle</gui> der Seitenleiste einfügen (<guiseq><gui>Ansicht</gui><gui>Seitenleiste</gui></guiseq>).</p>
   
   <steps>
     <item>
@@ -54,12 +52,10 @@
       <p>Um die Seitenleiste zu aktivieren, wählen Sie <guiseq><gui>Ansicht</gui><gui>Seitenleiste</gui></guiseq> oder drücken Sie <key>F9</key>.</p>
     </item>
     <item>
-      <p>Select the <gui>Character Map</gui> tab in the side panel.</p>
+      <p>Wählen Sie den Reiter <gui>Zeichentabelle</gui> in der Seitenleiste.</p>
     </item>
     <item>
-      <p>If neccessary, choose the character set to which your character
-      belongs from the list at the top of the <gui style="tab">Character
-      Map</gui> tab (for example, Arabic).</p>
+      <p>Wenn nötig, wählen Sie in der Liste oben im Reiter <gui style="tab">Zeichentabelle</gui> den Zeichensatz aus, der Ihr Sonderzeichen enthält (beispielsweise Arabisch).</p>
     </item>
     <item>
       <p>Doppelklicken Sie auf das gewünschte Zeichen, um es einzufügen.</p>

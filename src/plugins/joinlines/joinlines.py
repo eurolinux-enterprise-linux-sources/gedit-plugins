@@ -31,7 +31,7 @@ except:
 
 
 class JoinLinesAppActivatable(GObject.Object, Gedit.AppActivatable):
-    app = GObject.property(type=Gedit.App)
+    app = GObject.Property(type=Gedit.App)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -47,7 +47,7 @@ class JoinLinesAppActivatable(GObject.Object, Gedit.AppActivatable):
 
 class JoinLinesWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -84,7 +84,7 @@ class JoinLinesWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
 class JoinLinesViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
-    view = GObject.property(type=Gedit.View)
+    view = GObject.Property(type=Gedit.View)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -121,8 +121,6 @@ class JoinLinesViewActivatable(GObject.Object, Gedit.ViewActivatable):
         if doc is None:
             return
 
-        doc.begin_user_action()
-
         # If there is a selection use it, otherwise join the
         # next line
         try:
@@ -132,27 +130,7 @@ class JoinLinesViewActivatable(GObject.Object, Gedit.ViewActivatable):
             end = start.copy()
             end.forward_line()
 
-        end_mark = doc.create_mark(None, end)
-
-        if not start.ends_line():
-            start.forward_to_line_end()
-
-        # Include trailing spaces in the chunk to be removed
-        while start.backward_char() and start.get_char() in ('\t', ' '):
-            pass
-        start.forward_char()
-
-        while doc.get_iter_at_mark(end_mark).compare(start) == 1:
-            end = start.copy()
-            while end.get_char() in ('\r', '\n', ' ', '\t'):
-                end.forward_char()
-            doc.delete(start, end)
-
-            doc.insert(start, ' ')
-            start.forward_to_line_end()
-
-        doc.delete_mark(end_mark)
-        doc.end_user_action()
+        doc.join_lines(start, end)
 
     def split_lines(self):
         doc = self.view.get_buffer()

@@ -70,7 +70,9 @@
 
   <title>Tamanho do texto</title>
 
-  <p>O plug-in de Tamanho do texto permite que você altere temporariamente o tamanho do texto no <app>gedit</app> sem mudar o tamanho do texto padrão do programa.</p>
+  <p>The text size plugin allows you to temporarily change the text size for
+  better readability in <app>gedit</app> without changing the program's default
+  text size.</p>
 
 <section id="enable-text-size">
   <title>Habilitando o plug-in de tamanho do texto</title>

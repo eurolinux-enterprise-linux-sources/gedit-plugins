@@ -14,8 +14,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330,
-#  Boston, MA 02111-1307, USA.
+#  Foundation, Inc.  51 Franklin Street, Fifth Floor, Boston, MA
+#  02110-1301 USA.
 
 from gi.repository import GLib, GObject, Gtk, Gedit, Ggit
 
@@ -23,6 +23,8 @@ from .appactivatable import GitAppActivatable
 from .diffrenderer import DiffType, DiffRenderer
 from .windowactivatable import GitWindowActivatable
 
+import sys
+import os.path
 import difflib
 
 
@@ -35,9 +37,9 @@ class LineContext:
 
 
 class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
-    view = GObject.property(type=Gedit.View)
+    view = GObject.Property(type=Gedit.View)
 
-    status = GObject.property(type=Ggit.StatusFlags,
+    status = GObject.Property(type=Ggit.StatusFlags,
                               default=Ggit.StatusFlags.CURRENT)
 
     def __init__(self):
@@ -129,20 +131,28 @@ class GitViewActivatable(GObject.Object, Gedit.ViewActivatable):
 
         try:
             head = repo.get_head()
-            commit = repo.lookup(head.get_target(), Ggit.Commit.__gtype__)
+            commit = repo.lookup(head.get_target(), Ggit.Commit)
             tree = commit.get_tree()
-
-            relative_path = repo.get_workdir().get_relative_path(self.location)
+            relative_path = os.path.relpath(
+                os.path.realpath(self.location.get_path()),
+                repo.get_workdir().get_path()
+            )
 
             entry = tree.get_by_path(relative_path)
-            file_blob = repo.lookup(entry.get_id(), Ggit.Blob.__gtype__)
-            file_contents = file_blob.get_raw_content().decode('utf-8')
+            file_blob = repo.lookup(entry.get_id(), Ggit.Blob)
+            try:
+                gitconfig = repo.get_config()
+                encoding = gitconfig.get_string('gui.encoding')
+            except GLib.Error:
+                encoding = 'utf8'
+            file_contents = file_blob.get_raw_content().decode(encoding)
             self.file_contents_list = file_contents.splitlines()
 
             # Remove the last empty line added by gedit automatically
-            last_item = self.file_contents_list[-1]
-            if last_item[-1:] == '\n':
-                self.file_contents_list[-1] = last_item[:-1]
+            if self.file_contents_list:
+                last_item = self.file_contents_list[-1]
+                if last_item[-1:] == '\n':
+                    self.file_contents_list[-1] = last_item[:-1]
 
         except GLib.Error:
             # New file in a git repository

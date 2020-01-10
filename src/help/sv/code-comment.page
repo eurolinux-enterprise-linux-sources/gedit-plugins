@@ -10,44 +10,42 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Comment-out or uncomment a block of code.</desc>
+    <desc>Kommentera ut eller avkommentera ett kodblock.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Code comment</title>
+  <title>Kodkommentar</title>
 
-  <p>Code comments are portions of text that make it easier for people to
-  understand a program's code, but they don't affect how a program works.
-  Comments are separated from other parts of a program by special
-  characters.</p>
+  <p>Kodkommentarer är textdelar som gör det enklare att förstå programkod, men de påverkar inte hur programmet fungerar. Kommentarer är separerade från andra delar av programmet med specialtecken.</p>
   
-  <p>The <app>code comment</app> plugin makes it easier to quickly create or
-  remove code comments. To enable the code comment plugin, select
-  <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Preferences</gui>
-  <gui>Plugins</gui><gui>Code comment</gui></guiseq>.</p>
+  <p>Insticksmodulen <app>Kodkommentar</app> gör det enklare att snabbt skapa eller ta bort kodkommentarer. För att aktivera insticket för kodkommentarer, välj <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Inställningar</gui> <gui>Inställningar</gui><gui>Kodkommentar</gui></guiseq>.</p>
   
   <steps>
-    <title>To create or remove a comment:</title>
+    <title>För att skapa eller ta bort en kommentar:</title>
     <item>
-      <p>Highlight the portion of text where you want to add or remove a
-      comment.</p>
+      <p>Markera texten där du vill lägga till eller ta bort en kommentar.</p>
     </item>
     <item>
-      <p>To add a comment, click <guiseq><gui style="menu">gedit</gui>
-      <gui>Comment Code</gui></guiseq>, or press <keyseq><key>Ctrl</key>
-      <key>M</key></keyseq>.</p>
+      <p>För att lägga till en kommentar, klicka <guiseq><gui style="menu">gedit</gui> <gui>Kommentera kod</gui></guiseq> eller tryck ned <keyseq><key>Ctrl</key> <key>M</key></keyseq>.</p>
     </item>
     <item>
-      <p>To remove a comment, click <guiseq><gui style="menu">gedit</gui>
-      <gui>Uncomment Code</gui></guiseq>, or press <keyseq><key>Shift</key>
-      <key>Ctrl</key><key>M</key></keyseq>.</p>
+      <p>För att ta bort en kommentar, klicka på <guiseq><gui style="menu">gedit</gui> <gui>Avkommentera kod</gui></guiseq> eller tryck ned <keyseq><key>Skift</key> <key>Ctrl</key><key>M</key></keyseq>.</p>
     </item>
   </steps>
   
   <note style="tip">
-    <p><app>gedit</app> will automatically use the correct style of comment
-    based on the language or syntax of the file. If <app>gedit</app> doesn't
-    identify your language or syntax, you can select it from the language list
-    in the bottom <gui>Status bar</gui>.</p>
+    <p><app>gedit</app> kommer automatiskt att använda korrekt kommentarsstil baserat på språket eller syntaxen i filen. Om <app>gedit</app> inte identifierar ditt språk eller din syntax kan du välja det från språklistan längst ned i <gui>Statusraden</gui>.</p>
   </note>
 
 </page>

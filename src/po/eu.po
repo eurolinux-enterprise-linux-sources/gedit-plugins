@@ -1,15 +1,17 @@
-# translation of eu.po to Basque
+# Basque translation for gedit-plugins
 # Copyright (C) 2001, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+#
 #
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2008, 2010, 2014.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2008, 2010, 2014, 2015.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: gedit-plugins master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 12:28+0200\n"
-"PO-Revision-Date: 2014-07-15 12:41+0200\n"
+"POT-Creation-Date: 2015-02-07 12:46+0100\n"
+"PO-Revision-Date: 2015-02-07 12:48+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -114,12 +116,12 @@ msgid "Select and insert a color from a dialog (for HTML, CSS, PHP)"
 msgstr ""
 "Hautatu eta txertatu kolorea elkarrizketa-koadrotik (HTML, CSS eta PHPRako)"
 
-#: ../plugins/colorpicker/colorpicker.py:128
+#: ../plugins/colorpicker/colorpicker.py:129
 msgid "Pick _Color..."
 msgstr "Hautatu _kolorea..."
 
 #
-#: ../plugins/colorpicker/colorpicker.py:168
+#: ../plugins/colorpicker/colorpicker.py:169
 msgid "Pick Color"
 msgstr "Hautatu kolorea"
 
@@ -267,7 +269,7 @@ msgstr "Marraztu tabulazioak"
 
 #: ../plugins/drawspaces/gedit-drawspaces-configurable.ui.h:3
 msgid "Draw new lines"
-msgstr "Maraztu lerro berriak"
+msgstr "Marraztu lerro berriak"
 
 #: ../plugins/drawspaces/gedit-drawspaces-configurable.ui.h:4
 msgid "Draw non-breaking spaces"
@@ -325,18 +327,18 @@ msgstr "Elkartu/Zatitu lerroak"
 
 #: ../plugins/joinlines/gedit-joinlines.metainfo.xml.in.h:2
 msgid "Join or split multiple lines through Ctrl+J and Ctrl+Shift+J"
-msgstr "Elkartu edo zatitu lerroak Ktrl+K eta Ktrl+Maius+J erabiliz"
+msgstr ""
 
-#: ../plugins/joinlines/joinlines.py:106
+#: ../plugins/joinlines/joinlines.py:107
 msgid "_Join Lines"
 msgstr "_Elkartu lerroak"
 
-#: ../plugins/joinlines/joinlines.py:112
+#: ../plugins/joinlines/joinlines.py:113
 msgid "_Split Lines"
 msgstr "_Zatitu lerroak"
 
 #: ../plugins/multiedit/multiedit/appactivatable.py:36
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1305
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1349
 msgid "Multi Edit Mode"
 msgstr "Edizio anitzeko modua"
 
@@ -354,57 +356,57 @@ msgstr "Editatu dokumentua hainbat kokalekutan aldi berean"
 msgid "Multi edit"
 msgstr "Edizio anitzekoa"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:305
+#: ../plugins/multiedit/multiedit/viewactivatable.py:315
 msgid "Added edit point..."
 msgstr "Edizio-puntua gehituta..."
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:647
+#: ../plugins/multiedit/multiedit/viewactivatable.py:657
 msgid "Column Mode..."
 msgstr "Zutabearen modua..."
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:765
+#: ../plugins/multiedit/multiedit/viewactivatable.py:775
 msgid "Removed edit point..."
 msgstr "Edizio-puntua kenduta..."
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:928
+#: ../plugins/multiedit/multiedit/viewactivatable.py:941
 msgid "Cancelled column mode..."
 msgstr "Zutabearen modua bertan behera utzita..."
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1265
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1304
 msgid "Enter column edit mode using selection"
 msgstr "Sartu zutabearen edizio modua hautapena erabiliz"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1266
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1305
 msgid "Enter <b>smart</b> column edit mode using selection"
 msgstr "Sartu zutabearen edizio modu <b>azkarra</b> hautapena erabiltzean"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1267
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1306
 msgid "<b>Smart</b> column align mode using selection"
 msgstr "Zutabearen lerrokatze modu <b>azkarra</b> hautapena erabiltzean"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1268
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1307
 msgid "<b>Smart</b> column align mode with additional space using selection"
 msgstr ""
 "Zutabearen lerrokatze modu <b>azkarra</b> zuriune gehigarriarekin hautapena "
 "erabiltzean"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1270
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1309
 msgid "Toggle edit point"
 msgstr "Txandakatu edizio-puntua"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1271
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1310
 msgid "Add edit point at beginning of line/selection"
 msgstr "Gehitu edizio-puntua lerroaren/hautapenaren hasieran"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1272
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1311
 msgid "Add edit point at end of line/selection"
 msgstr "Gehitu edizio-puntua lerroaren/hautapenaren amaieran"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1273
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1312
 msgid "Align edit points"
 msgstr "Lerrokatu edizio-puntuak"
 
-#: ../plugins/multiedit/multiedit/viewactivatable.py:1274
+#: ../plugins/multiedit/multiedit/viewactivatable.py:1313
 msgid "Align edit points with additional space"
 msgstr "Lerrokatu edizio-puntuak tarte gehigarriarekin"
 
@@ -467,12 +469,12 @@ msgid ""
 msgstr ""
 "Korritze-barran zenbat lerro mantendu. Lerro horiek izango dituzu atzera "
 "korritu ahal izateko; kopuru hori gainditu ahala, lerroak galduz joango "
-"dira. 'scrollback_unlimited' TRUE (egia) bada, balio honi ezikusi egingo "
+"dira. 'scrollback_unlimited' TRUE (egia) bada, balio honi ez ikusi egingo "
 "zaio."
 
 #: ../plugins/terminal/org.gnome.gedit.plugins.terminal.gschema.xml.in.in.h:5
 msgid "Whether an unlimited number of lines should be kept in scrollback"
-msgstr "Korritze-barran mugarik gabeko lerro-kopurua mantenduko diren ala ez"
+msgstr "Korritze-barran mugarik gabeko lerro kopurua mantenduko diren ala ez"
 
 #: ../plugins/terminal/org.gnome.gedit.plugins.terminal.gschema.xml.in.in.h:6
 msgid ""
@@ -577,7 +579,7 @@ msgid ""
 "settings, or \"on\" or \"off\" to set the mode explicitly."
 msgstr ""
 "Balio erabilgarriak: 'system', kurtsore globala ezarpen keinukariak "
-"erabiltzeko; 'on' edo 'off' modua esplizitoki ezartzeko."
+"erabiltzeko; 'on' edo 'off' modua esplizituki ezartzeko."
 
 #: ../plugins/terminal/org.gnome.gedit.plugins.terminal.gschema.xml.in.in.h:23
 msgid "The cursor appearance"
@@ -621,7 +623,7 @@ msgid "Embed a terminal in the bottom pane."
 msgstr "Kapsulatu terminal bat azpiko panelean."
 
 #: ../plugins/terminal/gedit-terminal.metainfo.xml.in.h:1
-#: ../plugins/terminal/terminal.py:313
+#: ../plugins/terminal/terminal.py:311
 msgid "Terminal"
 msgstr "Terminala"
 
@@ -630,7 +632,7 @@ msgid "A simple terminal widget accessible from the bottom panel"
 msgstr "Azpiko paneletik erabilgarri dagoen terminal xume baten trepeta "
 
 #
-#: ../plugins/terminal/terminal.py:334
+#: ../plugins/terminal/terminal.py:332
 msgid "C_hange Directory"
 msgstr "_Aldatu direktorioa"
 
@@ -662,7 +664,7 @@ msgstr "Testuaren tamaina"
 
 #: ../plugins/wordcompletion/gedit-word-completion-configure.ui.h:1
 msgid "Interactive completion"
-msgstr "Osaketa elkarreragilea"
+msgstr "Osaketa interaktiboa"
 
 #: ../plugins/wordcompletion/gedit-word-completion-configure.ui.h:2
 msgid "Minimum word size:"
@@ -674,11 +676,11 @@ msgstr "Dokumentuko hitzak"
 
 #: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:1
 msgid "Interactive Completion"
-msgstr "Osaketa elkarreragilea"
+msgstr "Osaketa interaktiboa"
 
 #: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:2
 msgid "Whether to enable interactive completion."
-msgstr "Osaketa elkarreragilea gaitu edo ez."
+msgstr "Osaketa interaktiboa gaitu edo ez."
 
 #: ../plugins/wordcompletion/org.gnome.gedit.plugins.wordcompletion.gschema.xml.in.in.h:3
 msgid "Minimum Word Size"
@@ -729,6 +731,19 @@ msgstr ""
 "Erabiltzailearen jarduerak erregistratzen ditu eta maiz erabilitako azken "
 "fitxategiei atzipen azkarra ematen die"
 
+#~ msgid "Characters that are considered \"part of a word\""
+#~ msgstr "'Hitz baten zati' gisa hartzen diren karaktereak"
+
+#~ msgid ""
+#~ "When selecting text by word, sequences of these characters are considered "
+#~ "single words. Ranges can be given as \"A-Z\". Literal hyphen (not "
+#~ "expressing a range) should be the first character given."
+#~ msgstr ""
+#~ "Testua hitzez hitz hautatzen denean, karaktere-sekuentzia hauek hitz "
+#~ "bezala hartuko dira. Balio-bitarteak 'A-Z' moduan eman daitezke. Marratxo "
+#~ "literalak (balio-bitartea adierazten ez dutenak) lehen karaktere gisa "
+#~ "eman behar dira."
+
 #~ msgid "Toggle bookmark status of the current line"
 #~ msgstr "Txandakatu uneko lerroaren laster-markaren egoera"
 
@@ -765,19 +780,6 @@ msgstr ""
 
 #~ msgid "Start multi edit mode"
 #~ msgstr "Hasi edizio anitzeko modua"
-
-#~ msgid "Characters that are considered \"part of a word\""
-#~ msgstr "'Hitz baten zati' gisa hartzen diren karaktereak"
-
-#~ msgid ""
-#~ "When selecting text by word, sequences of these characters are considered "
-#~ "single words. Ranges can be given as \"A-Z\". Literal hyphen (not "
-#~ "expressing a range) should be the first character given."
-#~ msgstr ""
-#~ "Testua hitzez hitz hautatzen denean, karaktere-sekuentzia hauek hitz "
-#~ "bezala hartuko dira. Balio-bitarteak 'A-Z' moduan eman daitezke. Marratxo "
-#~ "literalak (balio-bitartea adierazten ez dutenak) lehen karaktere gisa "
-#~ "eman behar dira."
 
 #
 #~ msgid "_Insert"
@@ -950,7 +952,7 @@ msgstr ""
 
 #
 #~ msgid "Code content type"
-#~ msgstr "Kodearen eduki-mota"
+#~ msgstr "Kodearen eduki mota"
 
 #
 #~ msgid "Color of selected links"
@@ -979,7 +981,7 @@ msgstr ""
 
 #
 #~ msgid "Content type"
-#~ msgstr "Eduki-mota"
+#~ msgstr "Eduki mota"
 
 #~ msgid "Content type (deprecated)"
 #~ msgstr "Eduki mota (zaharkitua)"
@@ -1017,13 +1019,13 @@ msgstr ""
 #~ msgstr "Ezabatutako testua"
 
 #~ msgid "Direction"
-#~ msgstr "Norabidea"
+#~ msgstr "Noranzkoa"
 
 #~ msgid "Directionality"
-#~ msgstr "Norabidetasuna"
+#~ msgstr "Noranzkotasuna"
 
 #~ msgid "Directionality (deprecated)"
-#~ msgstr "Norabidetasuna (zaharkitua)"
+#~ msgstr "Noranzkotasuna (zaharkitua)"
 
 #~ msgid "Directory list"
 #~ msgstr "Direktorio-zerrenda"
@@ -1056,7 +1058,7 @@ msgstr ""
 #~ msgstr "Enfasia"
 
 #~ msgid "Encode type"
-#~ msgstr "Kodeketa-mota"
+#~ msgstr "Kodeketa mota"
 
 #~ msgid "Figure"
 #~ msgstr "Irudia"
@@ -1086,7 +1088,7 @@ msgstr ""
 #~ msgstr "Inprimakiaren sarrera"
 
 #~ msgid "Form input type"
-#~ msgstr "Inprimakiaren sarrera-mota"
+#~ msgstr "Inprimakiaren sarrera mota"
 
 #~ msgid "Form method"
 #~ msgstr "Inprimakiaren metodoa"

@@ -16,7 +16,7 @@
       <years>2014</years>
     </credit>
 
-    <desc>Record commonly-referenced locations with bookmarks.</desc>
+    <desc>Speichern häufig verwendeter Stellen in Lesezeichen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -27,7 +27,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -39,10 +39,7 @@
 
   <title>Lesezeichen</title>
 
-  <p><app>gedit</app> bookmarks allow you to highlight important lines of text
-  within your document or program, making them easier to find. You can also
-  move up or down between bookmarks, making document navigation a bit
-  faster.</p>
+  <p>Lesezeichen in <app>gedit</app> ermöglichen Ihnen die Hervorhebung wichtiger Textzeilen innerhalb Ihres Dokuments oder Programms, um diese leichter finden zu können. Sie können auch innerhalb der Lesezeichen hin- und herblättern, wodurch die Navigation im Dokument etwas beschleunigt wird.</p>
 
   <p>Um das Lesezeichen-Plugin zu aktivieren, wählen Sie <guiseq><gui style="menu">Bearbeiten</gui><gui style="menuitem">Einstellungen</gui><gui>Plugins</gui><gui>Lesezeichen</gui></guiseq>.</p>
 

@@ -11,18 +11,16 @@
 %endif
 
 Name:           gedit-plugins
-Version:        3.14.1
-Release:        5%{?dist}
+Version:        3.22.0
+Release:        1%{?dist}
 Summary:        Plugins for gedit
 
 Group:          Applications/Editors
 License:        GPLv2+
-URL:            http://live.gnome.org/GeditPlugins
-Source0:        http://download.gnome.org/sources/%{name}/3.14/%{name}-%{version}.tar.xz
+URL:            http://live.gnome.org/Gedit
+Source0:        http://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
 Patch0:         gedit-plugins-disable-python3.patch
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1239247
-Patch1: iter.get_char-returns-bytes-of-UTF-8-encoded-text.patch
 BuildRequires:  gedit-devel
 BuildRequires:  gnome-doc-utils
 BuildRequires:  gucharmap-devel
@@ -40,6 +38,7 @@ BuildRequires:  pygobject3-devel
 BuildRequires:  intltool
 BuildRequires:  libpeas-devel
 BuildRequires:  dbus-python-devel
+BuildRequires:  vala
 BuildRequires:  vte291-devel
 BuildRequires:  yelp-tools
 BuildRequires:  itstool
@@ -147,6 +146,12 @@ Requires:       %{name}-data = %{version}-%{release}
 %description -n gedit-plugin-drawspaces
 The gedit drawspaces plugin.
 
+%package -n     gedit-plugin-findinfiles
+Summary:        gedit findinfiles plugin
+Requires:       %{name}-data = %{version}-%{release}
+%description -n gedit-plugin-findinfiles
+The gedit findinfiles plugin.
+
 %package -n     gedit-plugin-joinlines
 Summary:        gedit joinlines plugin
 Requires:       %{name}-data = %{version}-%{release}
@@ -211,12 +216,10 @@ The gedit zeitgeist plugin.
 %if !%{with_python3}
 %patch0 -p1 -b .disable-python3
 %endif
-%patch1 -p1 -b .iter-bytes
 
 %build
-aclocal
-automake
-autoconf
+autopoint --force
+AUTOPOINT="intltoolize --automake --copy" autoreconf -f -i
 %if %{with_zeitgeist}
 %configure --enable-python
 %else
@@ -226,7 +229,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 %find_lang %{name} --with-gnome
 %find_lang gedit --with-gnome
 find $RPM_BUILD_ROOT/%{_libdir}/gedit/plugins -name "*.la" -exec rm {} \;
@@ -319,6 +322,11 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_libdir}/gedit/plugins/libdrawspaces.so
 %{_datadir}/appdata/gedit-drawspaces.metainfo.xml
 
+%files -n gedit-plugin-findinfiles
+%{_libdir}/gedit/plugins/findinfiles.plugin
+%{_libdir}/gedit/plugins/libfindinfiles.so
+%{_datadir}/appdata/gedit-findinfiles.metainfo.xml
+
 %files -n gedit-plugin-joinlines
 %{_libdir}/gedit/plugins/joinlines.*
 %{_datadir}/appdata/gedit-joinlines.metainfo.xml
@@ -361,6 +369,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %endif
 
 %changelog
+* Wed Mar 15 2017 Ray Strode <rstrode@redhat.com> - 3.22.0-1
+- Rebase to 3.22.0
+  Resolves: #1386865
+
 * Mon Aug 01 2016 Ray Strode <rstrode@redhat.com> - 3.14.1-5
 - Updated patch from Matej Cepl for python3→python2
   Resolves: #1360916

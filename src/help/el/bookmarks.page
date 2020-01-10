@@ -19,7 +19,13 @@
     <desc>Καταγραφή συχνά αναφερόμενων τοποθεσιών με σελιδοδείκτες</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name> Μάριος Ζηντίλης</mal:name>
+      <mal:name>Ελληνική μεταφραστική ομάδα GNOME</mal:name>
+      <mal:email>team@gnome.gr</mal:email>
+      <mal:years>2009-2016</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Μάριος Ζηντίλης</mal:name>
       <mal:email>m.zindilis@dmajor.org</mal:email>
       <mal:years>2009</mal:years>
     </mal:credit>
@@ -32,8 +38,8 @@
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name> Θάνος Τρυφωνίδης</mal:name>
-      <mal:email>tomtryf@gmail.com</mal:email>
-      <mal:years>2012</mal:years>
+      <mal:email>tomtryf@gnom.org</mal:email>
+      <mal:years>2012, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -43,7 +49,7 @@
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
-      <mal:name> Maria Mavridou</mal:name>
+      <mal:name> Μαρία Μαυρίδου</mal:name>
       <mal:email>mavridou@gmail.com</mal:email>
       <mal:years>2014</mal:years>
     </mal:credit>
@@ -61,9 +67,7 @@
       <p>Πλοηγηθείτε στη γραμμή που θέλετε να προσθέσετε ή να αφαιρέσετε τον σελιδοδείκτη.</p>
     </item>
     <item>
-      <p>Press <keyseq><key>Ctrl</key><key>Alt</key><key>B</key></keyseq>, or
-      open the menu in the top-right corner and select
-      <gui style="menuitem">Toggle Bookmark</gui>.</p>
+      <p>Πατήστε<keyseq><key>Ctrl</key><key>Alt</key><key>B</key></keyseq>, ή ανοίξτε το μενού από την πάνω δεξιά γωνία επιλέγοντας <gui style="menuitem">Εναλλαγή σελιδιδείκτη</gui>.</p>
     </item>
   </steps>
   
@@ -78,9 +82,7 @@
   </list>
 
   <note>
-    <p>If you prefer to use the mouse, you can open the menu in the top-right
-    corner and select <gui style="menuitem">Go to Next Bookmark</gui> or
-    <gui style="menuitem">Go to Previous Bookmark</gui>.</p>
+    <p>Εάν προτιμάτε τη χρήση του ποντικιού, μπορείτε να ανοίξετε το μενού από την πάνω δεξιά γωνία και να επιλέξετε <gui style="menuitem">Μετάβαση στον επόμενο σελιδοδείκτη</gui> ή <gui style="menuitem">Μετάβαση στον προηγούμενο σελιδοδείκτη</gui>.</p>
   </note>
 
 </page>

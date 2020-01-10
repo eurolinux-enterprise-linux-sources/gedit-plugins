@@ -14,8 +14,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330,
-#  Boston, MA 02111-1307, USA.
+#  Foundation, Inc.  51 Franklin Street, Fifth Floor, Boston, MA
+#  02110-1301 USA.
 
 from gi.repository import GLib, GObject, Gio, Gedit, Ggit
 
@@ -104,7 +104,7 @@ class GitStatusThread(WorkerThread):
 
 
 class GitWindowActivatable(GObject.Object, Gedit.WindowActivatable):
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     windows = weakref.WeakValueDictionary()
 
@@ -239,6 +239,9 @@ class GitWindowActivatable(GObject.Object, Gedit.WindowActivatable):
         if location is None:
             return
 
+        if location not in self.file_nodes:
+            return
+
         repo = self.get_repository(location)
         if repo is not None:
             self.git_status_thread.push(repo, location)
@@ -304,9 +307,6 @@ class GitWindowActivatable(GObject.Object, Gedit.WindowActivatable):
             self.git_status_thread.push(repo, location)
 
     def deleted(self, bus, msg, data=None):
-        # File browser's deleted signal is broken
-        return
-
         location = msg.location
         uri = location.get_uri()
 
@@ -315,7 +315,11 @@ class GitWindowActivatable(GObject.Object, Gedit.WindowActivatable):
             del self.monitors[uri]
 
         else:
-            del self.file_nodes[location]
+            try:
+                del self.file_nodes[location]
+
+            except KeyError:
+                pass
 
     def update_location(self, result):
         location, status = result

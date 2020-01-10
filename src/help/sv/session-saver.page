@@ -10,56 +10,62 @@
       <email its:translate="no">jwcampbell@gmail.com</email>
     </credit>
 
-    <desc>Save and restore your working sessions.</desc>
+    <desc>Spara och återställ dina arbetssessioner.</desc>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Daniel Nylander</mal:name>
+      <mal:email>po@danielnylander.se</mal:email>
+      <mal:years>2007, 2008, 2009</mal:years>
+    </mal:credit>
+  
+    <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
+      <mal:name>Josef Andersson</mal:name>
+      <mal:email>josef.andersson@fripost.org</mal:email>
+      <mal:years>2016</mal:years>
+    </mal:credit>
   </info>
 
-  <title>Session Saver</title>
+  <title>Sessionssparare</title>
 
-  <p>The <app>Session Saver</app> plugin saves groups of files together so that
-  you can open them together at a later time. To enable the plugin, select
-  <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Preferences</gui>
-  <gui>Plugins</gui><gui>Session Saver</gui></guiseq>.</p>
+  <p>Insticksmodulen <app>Sessionssparare</app> sparar ner grupper av filer tillsammans så att du kan öppna dem samtidigt vid ett senare tillfälle. För att aktivera insticket, välj <guiseq><gui style="menu">gedit</gui><gui style="menuitem">Inställningar</gui> <gui>Insticksmoduler</gui><gui>Sessionssparare</gui></guiseq>.</p>
 
   <steps>
-    <title>To save a new session:</title>
+    <title>Att spara en ny session:</title>
     <item>
-      <p>Select <guiseq><gui>File</gui><gui>Saved Sessions</gui><gui>Save
-      current session</gui></guiseq>.</p>
+      <p>Välj <guiseq><gui>Arkiv</gui><gui>Sparade sessioner</gui><gui>Spara aktuell session</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Type a session name in the <gui>Save session</gui> dialog box.</p>
+      <p>Skriv in ett sessionsnamn i dialogrutan <gui>Spara session</gui>.</p>
     </item>
     <item>
-      <p>Click <gui>Save</gui>.</p>
+      <p>Klicka på <gui>Spara</gui>.</p>
     </item>
   </steps>
   
   <steps>
-    <title>To open an existing session:</title>
+    <title>Att öppna en befintlig session:</title>
     <item>
-      <p>Select <guiseq><gui>File</gui><gui>Saved Sessions</gui></guiseq>.</p>
+      <p>Välj <guiseq><gui>Arkiv</gui><gui>Sparade sessioner</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Click the name of your desired session.</p>
+      <p>Klicka på namnet för din önskade session.</p>
     </item>
   </steps>
   
   <steps>
-    <title>To delete an existing session:</title>
+    <title>Att ta bort en session:</title>
     <item>
-      <p>Select <guiseq><gui>File</gui><gui>Saved Sessions</gui><gui>Manage
-      saved sessions</gui></guiseq>.</p>
+      <p>Markera <guiseq><gui>Arkiv</gui><gui>Sparade sessioner</gui><gui>Hantera sparade sessioner</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Select the name of the session that you want to delete.</p>
+      <p>Välj namnet på den session du vill ta bort.</p>
     </item>
     <item>
-      <p>Click <gui>Delete</gui>.</p>
+      <p>Klicka på <gui>Ta bort</gui>.</p>
     </item>
     <item>
-      <p>Click <gui>Close</gui>.</p>
-      <p>The session name will still be listed in your list of sessions until
-      you close <app>gedit</app>.</p>
+      <p>Klicka på <gui>Stäng</gui>.</p>
+      <p>Sessionsnamnet kommer att listas i din sessionslista tills du stänger <app>gedit</app>.</p>
     </item>
   </steps>
 

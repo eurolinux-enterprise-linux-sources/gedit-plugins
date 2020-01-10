@@ -15,7 +15,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Daniel Mustieles</mal:name>
       <mal:email>daniel.mustieles@gmail.com</mal:email>
-      <mal:years>2011-2014</mal:years>
+      <mal:years>2011-2015</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -47,7 +47,7 @@
       <p>Seleccione <guiseq><gui style="menu">gedit</gui> <gui style="menuitem">Preferencias</gui> <gui style="tab">Complementos</gui></guiseq>.</p>
     </item>
     <item>
-	<p>Select <gui style="menuitem">Zeitgeist Dataprovider</gui>.</p>
+	<p>Seleccione <gui style="menuitem">Proveedor de datos Zeitgeist</gui>.</p>
     </item>
   </steps>
 

@@ -23,9 +23,10 @@ from gi.repository import GLib, GObject, Gio, Gedit
 import sys, os
 import commander.commands as commands
 
+
 class CommanderAppActivatable(GObject.Object, Gedit.AppActivatable):
 
-    app = GObject.property(type=Gedit.App)
+    app = GObject.Property(type=Gedit.App)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -56,4 +57,4 @@ class CommanderAppActivatable(GObject.Object, Gedit.AppActivatable):
         self.app.remove_accelerator("win.commander", None)
         self.menu_ext = None
 
-# vi:ex:ts=4:et
+# ex:ts=4:et

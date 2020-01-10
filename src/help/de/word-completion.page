@@ -20,7 +20,7 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal-plugins.xml"/>
 
-    <desc>Autocomplete words or portions of code as you type.</desc>
+    <desc>Wörter oder Code-Bestandteile beim Eingeben automatisch vervollständigen.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Jan Arne Petersen</mal:name>
@@ -31,7 +31,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Mario Blättermann</mal:name>
       <mal:email>mario.blaettermann@gmail.com</mal:email>
-      <mal:years>2008-2013</mal:years>
+      <mal:years>2008-2013, 2016</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -41,7 +41,7 @@
     </mal:credit>
   </info>
 
-  <title>Word Completion</title>
+  <title>Wortvervollständigung</title>
 
   <p>Das <app>Wortvervollständigung</app>-Plugin beschleunigt die Bearbeitung, indem die Vervollständigung von Wörtern bereits bei der Eingabe vorgeschlagen wird. So aktivieren Sie das Plugin:</p>
 

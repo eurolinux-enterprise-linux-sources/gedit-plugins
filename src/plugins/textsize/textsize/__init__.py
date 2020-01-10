@@ -22,6 +22,9 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #  Boston, MA 02110-1301, USA.
 
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('Gedit', '3.0')
 from gi.repository import GObject, Gio, Gtk, Gdk, Gedit
 from .viewactivatable import TextSizeViewActivatable
 import gettext
@@ -36,7 +39,7 @@ except:
 
 class TextSizeAppActivatable(GObject.Object, Gedit.AppActivatable):
 
-    app = GObject.property(type=Gedit.App)
+    app = GObject.Property(type=Gedit.App)
 
     def __init__(self):
         GObject.Object.__init__(self)
@@ -63,7 +66,7 @@ class TextSizeAppActivatable(GObject.Object, Gedit.AppActivatable):
 
 class TextSizeWindowActivatable(GObject.Object, Gedit.WindowActivatable):
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)

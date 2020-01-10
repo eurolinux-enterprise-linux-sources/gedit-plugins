@@ -85,7 +85,9 @@
       <p>Selecione a aba <gui>Mapa de caracteres</gui> no painel lateral.</p>
     </item>
     <item>
-      <p>Se necessário, escolha o conjunto de caracteres ao qual seu caractere pertence na lista no topo da aba <gui style="tab">Mapa de caracteres</gui> (ex.: Arábico).</p>
+      <p>If necessary, choose the character set to which your character
+      belongs from the list at the top of the <gui style="tab">Character
+      Map</gui> tab (for example, Arabic).</p>
     </item>
     <item>
       <p>Clique duas vezes no caractere desejado para inseri-lo.</p>

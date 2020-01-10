@@ -20,11 +20,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301  USA
 
-import gi
-gi.require_version('Vte', '2.91')
-from gi.repository import GObject, GLib, Gio, Pango, Gdk, Gtk, Gedit, Vte
 import os
 import gettext
+
+import gi
+gi.require_version('Gedit', '3.0')
+gi.require_version('Gtk', '3.0')
+gi.require_version('Vte', '2.91')
+from gi.repository import GObject, GLib, Gio, Pango, Gdk, Gtk, Gedit, Vte
+
 from gpdefs import *
 
 try:
@@ -160,7 +164,7 @@ class GeditTerminalPanel(Gtk.Box):
 
     __gsignals__ = {
         "populate-popup": (
-            GObject.SIGNAL_RUN_LAST,
+            GObject.SignalFlags.RUN_LAST,
             None,
             (GObject.TYPE_OBJECT,)
         )
@@ -297,7 +301,7 @@ class GeditTerminalPanel(Gtk.Box):
 class TerminalPlugin(GObject.Object, Gedit.WindowActivatable):
     __gtype_name__ = "TerminalPlugin"
 
-    window = GObject.property(type=Gedit.Window)
+    window = GObject.Property(type=Gedit.Window)
 
     def __init__(self):
         GObject.Object.__init__(self)
